@@ -157,14 +157,57 @@ class Abilities{
     std::map<std::string, int> skills;
     std::map<std::string, int> knowledges;
 public:
-    void setTalents(std::map<std::string, int> mapTalents){
-        // use key to upgrade associated value by int
+    Abilities(){
+    // just for testing the class, the parser will initialize the maps
+        talents.insert(std::pair<std::string, int>("Alertness", 0));
+        talents.insert(std::pair<std::string, int>("Awareness", 0));
+        talents.insert(std::pair<std::string, int>("Leadership", 0));
     }
-    void setSkills(std::map<std::string, int> mapSkills){
+    bool setTalents(std::map<std::string, int> mapTalents){
+        std::map<std::string, int>::iterator itrmapTalents;
         // use key to upgrade associated value by int
+        for(itrmapTalents = mapTalents.begin(); itrmapTalents != mapTalents.end(); itrmapTalents++){
+            std::string talent(itrmapTalents->first);
+            if (talents.count(talent)==0){
+                //if one of the talent doesn't exist return false
+                return false;
+            }
+            talents[talent] += itrmapTalents->second;
+        }
+        return true;
     }
-    void setKnowledge(std::map<std::string, int> mapKnow){
+    void speak() {
+        std::map<std::string, int>::iterator itrmapTalents;
         // use key to upgrade associated value by int
+        for (itrmapTalents = talents.begin(); itrmapTalents != talents.end(); itrmapTalents++) {
+            std::cout << itrmapTalents->first << " " << itrmapTalents->second<<std::endl;
+        }
+    }
+    bool setSkills(std::map<std::string, int> mapSkills){
+        std::map<std::string, int>::iterator itrmap;
+        // use key to upgrade associated value by int
+        for(itrmap = mapSkills.begin(); itrmap != mapSkills.end(); itrmap++){
+            std::string skill(itrmap->first);
+            if (talents.count(skill)==0){
+                //if one of the talent doesn't exist return false
+                return false;
+            }
+            talents[skill] += itrmap->second;
+        }
+        return true;
+    }
+    bool setKnowledges(std::map<std::string, int> mapKnowledges){
+        std::map<std::string, int>::iterator itrmap;
+        // use key to upgrade associated value by int
+        for(itrmap = mapKnowledges.begin(); itrmap != mapKnowledges.end(); itrmap++){
+            std::string skill(itrmap->first);
+            if (talents.count(skill)==0){
+                //if one of the talent doesn't exist return false
+                return false;
+            }
+            talents[skill] += itrmap->second;
+        }
+        return true;
     }
 };
 
@@ -172,8 +215,8 @@ public:
  * Same as abilities except the maps are empty and the key will be checked against the
  * available disciplines/backgrounds
  * example : setDiscipline(<"Thaumaturgie": 2> will add thaumaturgie to the Discipline map
- * after checking that it is a valide discipline, if the key is already in Discipline,
- * it will increase the value by 2.
+ * after checking that it is a valid discipline, if the key is already in Discipline,
+ * it will just increase the value by 2.
  */
 class Advantages{
     std::map<std::string, int> Disciplines; // map selected discipline to points
@@ -183,6 +226,12 @@ class Advantages{
     int VirtueConscience=1;
     int VirtueInstinct=1;
     int VirtueCourage=1;
+public:
+    void increaseVirtue(int conscience, int instinct, int courage){
+        VirtueConscience += conscience;
+        VirtueInstinct += instinct;
+        VirtueCourage += courage;
+    };
 
 };
 
@@ -198,9 +247,19 @@ public:
     void setAttributes(Attributes attri){
         attrib = attri;
     }
+
+    void setAbilities(Abilities abilities) {
+        abil = abilities;
+    }
+
+    void setAdvantages(Advantages advantages) {
+        advan = advantages;
+    }
+
     void talk(){
         std::cout << background.getName();
     }
+
 };
 
 
@@ -227,8 +286,12 @@ public:
     void StepTwo(Attributes attri){
         ch.setAttributes(attri);
     };
-    void StepThree(){};
-    void StepFour(){};
+    void StepThree(Abilities ability){
+        ch.setAbilities(ability);
+    };
+    void StepFour(Advantages advantages) {
+        ch.setAdvantages(advantages);
+    };
     void StepFive(){};
     Character getCharacter(){return ch;};
 };
@@ -253,10 +316,34 @@ int main() {
     attri.setSocial(2,2,1);
     attri.setMental(1,1,1);
     cr.StepTwo(attri);
+
+
     // third step, select abilities
-    cr.StepThree();
+    Abilities abilities;
+    std::map<std::string, int>newAbilities;
+    // lets try to add a fake ability
+    newAbilities.insert(std::pair<std::string, int>("Coucou", 2));
+    bool abilitiesAdded = abilities.setTalents(newAbilities);
+    std::cout << "Did it work ? " << abilitiesAdded << std::endl; // return false
+    // Now let's add a real ability
+    std::map<std::string, int>newRealAbilities;
+    newRealAbilities.insert(std::pair<std::string, int>("Alertness", 2));
+    abilitiesAdded = abilities.setTalents(newRealAbilities);
+    std::cout << "Did it work ? " << abilitiesAdded << std::endl; // return true
+    // It worked
+    // lets add two at the time
+    abilities.speak();
+    newRealAbilities.insert(std::pair<std::string, int>("Awareness", 2));
+    newRealAbilities.insert(std::pair<std::string, int>("Leadership", 2));
+    abilitiesAdded = abilities.setTalents(newRealAbilities);
+    std::cout << "Did it work ? " << abilitiesAdded << std::endl; // return true
+    abilities.speak();
+    cr.StepThree(abilities);
+
+
     // fourth step, select advantages
-    cr.StepFour();
+    Advantages advantages;
+    cr.StepFour(advantages);
     // fifth step,
     cr.StepFive();
     Character myCharacter = cr.getCharacter();
