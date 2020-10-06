@@ -28,13 +28,26 @@ class Clan{
     std::string chosenClanDescription;
     std::map<std::string, std::string> allClan; // map clan name to clan description
 public:
-    void parseClan(){}; // set the allClan map after parsing
+    Clan(){
+        //All clan will be filled by the parser, this is just a test
+        allClan.insert(std::pair<std::string, std::string>("DLAD", "The Best of the best."));
+    };
     std::map<std::string, std::string> getAvailableClan(){return allClan;}; //return the map allClan;
-    void setClan(std::string choiceClan){}; // Will set the desired Clan and description
+    bool setClan(std::string choiceClan){
+        //return false if clan doesn't exist, else set him
+        if (allClan.count(choiceClan)==0){return false;}
+        chosenClanName = choiceClan;
+        chosenClanDescription = allClan[chosenClanName];
+        return true;
+    }; // Will set the desired Clan and description using the map, check if Clan exist, else return false
     std::string getClan(){return chosenClanName;};
     std::string getClanDescription(){return chosenClanDescription;};
     auto deeperParser(std::string askedClan){}; // will return (probably) a map with the nickname/sect/etc for a Clan to
                                                 // be displayed in a new window
+    void talk(){
+      std::cout << "My clan's name is " << chosenClanName << std::endl;
+      std::cout << "Its " << chosenClanDescription << std::endl;
+    };
 };
 
 /**
@@ -46,11 +59,22 @@ class Nature{
     std::string chosenDescription;
     std::map<std::string, std::string> all; // map name to description
 public:
-    void parseClan(){}; // set the allClan map after parsing
+    Nature(){
+        // This is just dummy values, the map all will be filled by the parser
+        all.insert(std::pair<std::string, std::string>("Bon Vivant", "Unlife is for pleasure."));
+        all.insert(std::pair<std::string, std::string>("Capitalist", "Why give it away for free when you can sell it"));
+    };
     void getAvailable(){}; //return the map all;
-    void setChoice(std::string choice){}; // Will set the desired choice and description
+    bool setChoice(std::string choice){
+        //return false if clan doesn't exist, else set him
+        if (all.count(choice)==0){return false;}
+        chosenNature=choice;
+        chosenDescription = all[chosenNature];
+        return true;
+        }; // Will set the desired choice and description
     std::string getChoice(){return chosenNature;};
     std::string getChoiceDescription(){return chosenDescription;};
+
 };
 
 
@@ -76,12 +100,29 @@ public:
     void setChronicle(std::string name){Chronicle=name;};
     void setGeneration(std::string name){Generation=name;};
     void setSire(std::string name){Sire=name;};
+    void setConcept(std::string concept){Concept=concept;}
     void setClan(Clan choice){clan=choice;};
     void setNature(Nature choice){nature=choice;};
     void setDeamenor(Nature choice){demeanor=choice;};
     // Getters
     std::string getName(){return Name;};
     std::string getPlayer(){return Player;};
+
+    void presentBackground(){
+      std::cout << "#############BACKGROUND#############" << std::endl;
+      std::cout << "My name is " << Name << std::endl;
+      std::cout << "I'm the player : " << Player << std::endl;
+      std::cout << "We're playing the chronicle :" << Chronicle << std::endl;
+      std::cout << "My concept is :" << Concept << std::endl;
+      std::cout << "I'm a vampire of the " << Generation << std::endl;
+      std::cout << "My Sire was " << Sire << std::endl;
+      std::cout << "Let me tell you about my clan :" << std::endl;
+      clan.talk();
+      std::cout << "I say i'm a " << nature.getChoice() << std::endl;
+      std::cout << "But truth is, i'm really more a "<< demeanor.getChoice() << std::endl;
+      std::cout << "####################################" << std::endl;
+
+    };
 
 };
 
@@ -145,6 +186,21 @@ public:
         Intelligence=intell;
         Wits=wits;
     }
+    void summary(){
+        std::cout << "#Physical " << std::endl;
+        std::cout << "Strength : " << Strength<< std::endl;
+        std::cout << "Dexterity : " << Dexterity << std::endl;
+        std::cout << "Stamina : " << Stamina << std::endl;
+        std::cout << "#Social" << std::endl;
+        std::cout << "Charisma : " << Charisma << std::endl;
+        std::cout << "Manipulation : " << Manipulation << std::endl;
+        std::cout << "Appearance : " << Appearance << std::endl;
+        std::cout << "#Mental "<< std::endl;
+        std::cout << "Perception : " << Perception << std::endl;
+        std::cout << "Intelligence : " << Intelligence << std::endl;
+        std::cout << "Wits : " << Wits << std::endl;
+
+    }
 };
 
 /**
@@ -177,11 +233,14 @@ public:
         return true;
     }
     void speak() {
+        std::cout << "#Talents :" << std::endl;
         std::map<std::string, int>::iterator itrmapTalents;
         // use key to upgrade associated value by int
         for (itrmapTalents = talents.begin(); itrmapTalents != talents.end(); itrmapTalents++) {
             std::cout << itrmapTalents->first << " " << itrmapTalents->second<<std::endl;
         }
+        std::cout << "#Skills :" << std::endl;
+        std::cout << "#Knowledges :" << std::endl;
     }
     bool setSkills(std::map<std::string, int> mapSkills){
         std::map<std::string, int>::iterator itrmap;
@@ -214,7 +273,7 @@ public:
 /**
  * Same as abilities except the maps are empty and the key will be checked against the
  * available disciplines/backgrounds
- * example : setDiscipline(<"Thaumaturgie": 2> will add thaumaturgie to the Discipline map
+ * example : setDiscipline(<"Thaumaturgy": 2> will add thaumaturgie to the Discipline map
  * after checking that it is a valid discipline, if the key is already in Discipline,
  * it will just increase the value by 2.
  */
@@ -227,23 +286,93 @@ class Advantages{
     int VirtueInstinct=1;
     int VirtueCourage=1;
 public:
+    Advantages(){
+        // parser will initialize AvailableDisciplines and AvailableBackgrounds
+        // lets just put dummy value for now
+        AvailableDisciplines.insert(std::pair<std::string, std::string>("Thaumaturgy", "description"));
+        AvailableDisciplines.insert(std::pair<std::string, std::string>("Fortitude", "description"));
+        AvailableBackgrounds.insert(std::pair<std::string, std::string>("Mentor", "description"));
+        AvailableBackgrounds.insert(std::pair<std::string, std::string>("Herd", "description"));
+
+    };
+
     void increaseVirtue(int conscience, int instinct, int courage){
         VirtueConscience += conscience;
         VirtueInstinct += instinct;
         VirtueCourage += courage;
     };
 
+    void increaseDiscipline(std::map<std::string, int> disciplineToAdd){
+        std::map<std::string, int>::iterator itr;
+        // use key to upgrade associated value by int
+        for(itr = disciplineToAdd.begin(); itr != disciplineToAdd.end(); itr++){
+            std::string discipline(itr->first); // get the key
+            if (Disciplines.count(discipline)==0){
+                //if one of the discipline doesn't exist add it with value
+                Disciplines[discipline] = itr->second;
+            }else {
+                Disciplines[discipline] += itr->second;
+            }
+        }
+    };
+
+    void increaseBackgrounds(std::map<std::string, int> backgroundToAdd){
+        std::map<std::string, int>::iterator itr;
+        // use key to upgrade associated value by int
+        for(itr = backgroundToAdd.begin(); itr != backgroundToAdd.end(); itr++){
+            std::string background(itr->first); // get the key
+            if (backgrounds.count(background)==0){
+                //if one of the discipline doesn't exist add it with value
+                backgrounds[background] = itr->second;
+            }else {
+                backgrounds[background] += itr->second;
+            }
+        }
+    };
+
+    std::map<std::string, std::string> getAvailableDisciplines(){
+        return AvailableDisciplines;
+    }
+
+    std::map<std::string, int> getDisciplines(){
+        return Disciplines;
+    }
+
+    std::map<std::string, std::string> getAvailableBackgrounds(){
+        return AvailableBackgrounds;
+    }
+
+    std::map<std::string, int> getBackgrounds(){
+        return backgrounds;
+    }
+
+    void talk(){
+        std::cout << "#Disciplines" << std::endl;
+        std::map<std::string, int>::iterator itr;
+        for(itr = Disciplines.begin(); itr != Disciplines.end(); itr++) {
+            std::cout << itr->first << " : " << itr->second << std::endl;
+        }
+        std::cout << "#Backgrounds" << std::endl;
+        for(itr = backgrounds.begin(); itr != backgrounds.end(); itr++) {
+            std::cout << itr->first << " : " << itr->second << std::endl;
+        }
+        std::cout << "#Virtues" << std::endl;
+        std::cout << "Conscience : " <<VirtueConscience << std::endl;
+        std::cout << "Instinct : " <<VirtueInstinct << std::endl;
+        std::cout << "Courage : " <<VirtueCourage << std::endl;
+
+    };
 };
 
 /**
  * Hold all the informations about the character
  */
 class Character{
-public:
     Attributes attrib;
     Abilities abil;
     Advantages advan;
     CharacterBackground background;
+public:
     void setAttributes(Attributes attri){
         attrib = attri;
     }
@@ -256,8 +385,19 @@ public:
         advan = advantages;
     }
 
+    CharacterBackground& getBackground(){
+        return background;
+    }
+
     void talk(){
-        std::cout << background.getName();
+        background.presentBackground();
+        std::cout << "########## Attributes #######" << std::endl;
+        attrib.summary();
+        std::cout << "########## Abilities #######" << std::endl;
+        abil.speak();
+        std::cout << "########## Advantages #######" << std::endl;
+        advan.talk();
+        std::cout << "########## Etc #######" << std::endl;
     }
 
 };
@@ -270,18 +410,21 @@ public:
  */
 class CharacterCreation{
     Character ch;
+    CharacterBackground &background = ch.getBackground();
 public:
     void StepZero(std::string name, std::string player,std::string chronicle,std::string generation,std::string sire){
-        ch.background.setName(name);
-        ch.background.setName(player);
-        ch.background.setChronicle(chronicle);
-        ch.background.setGeneration(generation);
-        ch.background.setSire(sire);
+
+        background.setName(name);
+        background.setPlayer(player);
+        background.setChronicle(chronicle);
+        background.setGeneration(generation);
+        background.setSire(sire);
     };
     void StepOne(std::string concept, Clan clan, Nature nature, Nature demeanor){
-        ch.background.setClan(clan);
-        ch.background.setNature(nature);
-        ch.background.setDeamenor(demeanor);
+        background.setClan(clan);
+        background.setConcept(concept);
+        background.setNature(nature);
+        background.setDeamenor(demeanor);
     };
     void StepTwo(Attributes attri){
         ch.setAttributes(attri);
@@ -301,14 +444,16 @@ public:
 
 int main() {
     CharacterCreation cr;
-    cr.StepZero("Hugo", "Hugo", "Chroniques de test", "Premiere generation", "Moi meme");
+    cr.StepZero("Hugdrula", "Hugo", "Chroniques de test", "Premiere generation", "Moi meme");
+
+
     // we create a clan/Nature/Demeanor for testing
     Clan bestClan;
-    bestClan.setClan("Clan des meilleurs");
+    bestClan.setClan("DLAD"); // if clan doesn't exist, return false so we can check it in the GUI
     // we create a nature architect and a demeanor trickster for testing
     Nature architect, trickster;
-    architect.setChoice("Architect");
-    trickster.setChoice("Trickster");
+    architect.setChoice("Bon Vivant");
+    trickster.setChoice("Capitalist");
     cr.StepOne("student", bestClan, architect, trickster); // We have everything to complete the first step
     // second step, set attributes
     Attributes attri;
@@ -341,12 +486,40 @@ int main() {
     cr.StepThree(abilities);
 
 
-    // fourth step, select advantages
+    // fourth step, select advantages and virtues
+    // lets create an advantage obj
     Advantages advantages;
-    cr.StepFour(advantages);
+    // We will set the virtue
+    advantages.increaseVirtue(3,3,1);
+    // Now let's add a discipline
+    std::map<std::string, int>discipline;
+    discipline.insert(std::pair<std::string, int>("Thaumaturgy", 2));
+    advantages.increaseDiscipline(discipline); // Thaumaturgy is added with value 2 to the discipline
+    advantages.increaseDiscipline(discipline); // thaumaturgy already exist so its just increased by 2
+    // Lets see what discipline we have
+    std::cout << "Our disciplines : " << std::endl;
+    advantages.talk();
+    // we can add N disciplines at the same time, without affecting those already present
+    discipline.clear();
+    discipline.insert(std::pair<std::string, int>("Fortitude", 3));
+    discipline.insert(std::pair<std::string, int>("Animalism", 1));
+    advantages.increaseDiscipline(discipline);
+    // Lets see what discipline we have
+    std::cout << "Our disciplines : " << std::endl;
+    advantages.talk();
+    // let's add a background
+    std::map<std::string, int>backg;
+    backg.insert(std::pair<std::string, int>("Mentor", 2));
+    advantages.increaseBackgrounds(backg);
+    // We add the advantages to our character using the character creation object
+    cr.StepFour(advantages); // nb: backgrounds works the same as disciplines
+
+
     // fifth step,
     cr.StepFive();
     Character myCharacter = cr.getCharacter();
-    myCharacter.talk();
+    std::cout << "@@@@@@@@@@@ Fiche Personnage @@@@@@@@@@@@@" << std::endl;
+    myCharacter.talk(); // Let's see what we have at the end
     return 0;
 }
+
