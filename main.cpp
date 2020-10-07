@@ -2,7 +2,7 @@
 
 int main() {
     /********** character init **********/
-    CharacterCreation cr;
+    CharacterCreation cr; // the cr object will handle the character generation step by step
     cr.StepZero("Hugdrula", "Hugo", "Chroniques de test",
                 "Fourth", "Sr. Tempel");
 
@@ -15,20 +15,20 @@ int main() {
     nature.setChoice("Bon Vivant");
     demeanor.setChoice("Capitalist");
     std::string concept("student"); // choose concept
-    cr.StepOne(concept, bestClan, nature, demeanor); // We have everything to complete the first step
+    cr.StepOne(concept, bestClan, nature, demeanor); // We have everything to complete the first step, character is updated
 
     /********* second step, set attributes *************/
     Attributes attri;
     attri.setPhysical(3,3,1);
     attri.setSocial(2,2,1);
     attri.setMental(1,1,1);
-    cr.StepTwo(attri); // complete the first step, push the changes to the character
+    cr.StepTwo(attri); // complete the second step, push the changes to the character
 
     /********* third step, select abilities *************/
     Abilities abilities;
     // lets try to add a fake ability
     std::map<std::string, int>newAbilities;
-    newAbilities.insert(std::pair<std::string, int>("Coucou", 2));
+    newAbilities.insert(std::pair<std::string, int>("Coucou", 2)); // coucou is not an ability returned by the parser
     bool abilitiesAdded = abilities.setTalents(newAbilities); // return false, do nothing
     // Now let's add a real ability
     std::map<std::string, int>newRealAbilities;
@@ -49,7 +49,7 @@ int main() {
     newRealAbilities.insert(std::pair<std::string, int>("Academics", 2));
     newRealAbilities.insert(std::pair<std::string, int>("Computer", 2));
     abilities.setKnowledges(newRealAbilities);
-    cr.StepThree(abilities);
+    cr.StepThree(abilities); // push step 3
 
     /********* fourth step, select advantages and virtues *************/
     // lets create an advantage obj
@@ -70,7 +70,7 @@ int main() {
     std::map<std::string, int>backg;
     backg.insert(std::pair<std::string, int>("Mentor", 2));
     advantages.increaseBackgrounds(backg);
-    // We add the advantages to our character using the character creation object
+    // We push the step four
     cr.StepFour(advantages);
 
     /*********  fifth step *************/
@@ -84,7 +84,7 @@ int main() {
     int instinct= cr.getCharacter().getAdvantages().getInstinct();
     int courage= cr.getCharacter().getAdvantages().getCourage();
     HumanityWill hw(conscience, instinct, courage);
-    cr.StepFive(bloodPool, hw);
+    cr.StepFive(bloodPool, hw); // assign blood pool and humanity/willpower to character
     // return the character
     Character myCharacter = cr.getCharacter();
     std::cout << "@@@@@@@@@@@ Fiche Personnage @@@@@@@@@@@@@" << std::endl;
