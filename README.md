@@ -1,12 +1,12 @@
 # MiniProject C++ 
 
 ## Files :
-characterClass.h contains all the prototypes. 
-ProjectClasses.cpp contains all the classes declarations
-main.cpp shows how to use the classes and output a text character sheet. 
+characterClass.h contains all the prototypes.  
+ProjectClasses.cpp contains all the classes declarations.  
+main.cpp shows how to use the classes and output a text character sheet.  
 
 ## Output of main.cpp
-  ```
+```
   @@@@@@@@@@@ Fiche Personnage @@@@@@@@@@@@@
   #############BACKGROUND#############
   My name is Hugdrula
@@ -62,4 +62,4 @@ main.cpp shows how to use the classes and output a text character sheet.
   Blood Pool : 50/50
   Humanity points : 6
   Willpower points : 2
-    ```
+```
