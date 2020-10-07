@@ -11,6 +11,20 @@ It reflects page 88 of the rules book as well as the futur GUI.
 The character generation is made step by step (from 0 to 5). Each step will be a view of the upcoming GUI.  
 For example for the step 0, the GUI will ask for the name, player, generation, sir, etc. By clicking next, those informations
 will be fed to the character creation method "stepZero". 
+At the end the CharacterCreation class will return the Character object. 
+\\
+Safeguards, such as checking that the user don't choose more than 3 discplines will be implemented in the GUI rather 
+than in the characters classes.
+
+Each object (clan, disciplines, nature, etc) is created and given to the characterCreation class that will add it to the 
+character object.  
+
+The classes presented here don't handle all the informations, for two reasons : 
+- Without parsing it's difficult to see for the moment how to organise them, what type they will be or the method needed to interact with them. 
+- The classes presented here are enough to generate the character sheet, the additional informations will probably be parsed in another way and 
+just invocated by the GUI if the user click on a "more detail" button for example. However this step may be not needed as the page of the rule book 
+holding the informations may be shown to stay consistent with the final output, rather than displaying the additionnal information directly in the GUI.   
+
 
 
 ## Output of main.cpp
