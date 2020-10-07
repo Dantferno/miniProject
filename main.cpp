@@ -4,7 +4,7 @@ int main() {
     /********** character init **********/
     CharacterCreation cr;
     cr.StepZero("Hugdrula", "Hugo", "Chroniques de test",
-                "Fourth", "Moi meme");
+                "Fourth", "Sr. Tempel");
 
     /********* first step ************/
     // we create a clan/Nature/Demeanor for testing

@@ -1,9 +1,17 @@
 # MiniProject C++ 
 
-## Files :
+## Files content:
 characterClass.h contains all the prototypes.  
 ProjectClasses.cpp contains all the classes declarations.  
 main.cpp shows how to use the classes and output a text character sheet.  
+
+## Logic 
+The character creation is handled by a specific class : CharacterCreation.  
+It reflects page 88 of the rules book as well as the futur GUI. 
+The character generation is made step by step (from 0 to 5). Each step will be a view of the upcoming GUI.  
+For example for the step 0, the GUI will ask for the name, player, generation, sir, etc. By clicking next, those informations
+will be fed to the character creation method "stepZero". 
+
 
 ## Output of main.cpp
 ```
@@ -14,7 +22,7 @@ main.cpp shows how to use the classes and output a text character sheet.
   We're playing the chronicle :Chroniques de test
   My concept is :student
   I'm a vampire of the Fourth generation
-  My Sire was Moi meme
+  My Sire was Sr. Tempel
   Let me tell you about my clan :
   My clan's name is DLAD
   Its The Best of the best.
