@@ -28,7 +28,12 @@ The classes presented here don't handle all the informations, for two reasons :
 just invocated by the GUI if the user click on a "more detail" button for example. However this step may be not needed as the page of the rule book 
 holding the informations may be shown to stay consistent with the final output, rather than displaying the additionnal information directly in the GUI.   
 
+## Usage 
 
+Compilation using Cmake, just run :
+```
+    cmake CmakeLists.txt
+```
 
 ## Output of main.cpp
 ```
