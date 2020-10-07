@@ -228,7 +228,7 @@ class HumanityWill{
     int humanityPoints;
     int willpowerPoints;
 public:
-    HumanityWill();
+    HumanityWill(); // so the object can be constructed without conscience, etc
     HumanityWill(int conscience, int instinct, int courage);
     int getHumanity();
     int getWillpower();
