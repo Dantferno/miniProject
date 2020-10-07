@@ -438,6 +438,7 @@ void Character::talk() {
     std::cout << "########## Etc #######" << std::endl;
     bloodPool.talk();
     humanityWill.talk();
+    health.talk();
 }
 
 void Character::setBloodPool(BloodPool bloodPool1) {
@@ -456,14 +457,34 @@ Advantages Character::getAdvantages() {
     return advan;
 }
 
+Health Character::getHealth() {
+    return health;
+}
+
+int Character::getExperience() {
+    return AvailableExperiencePoint;
+}
+
+HumanityWill Character::getHumanityWill() {
+    return humanityWill;
+}
+
+Attributes Character::getAttributes() {
+    return attrib;
+}
+
+void Character::setExperience(int points) {
+    AvailableExperiencePoint += points;
+}
+
 
 /**
  * Character creation declaration
  */
 
 
-void CharacterCreation::StepZero(std::string name, std::string player, std::string chronicle, std::string generation,
-                                 std::string sire) {
+void CharacterCreation::StepZero(std::string name, std::string player, std::string chronicle,
+                                 std::string generation, std::string sire) {
 
     background.setName(name);
     background.setPlayer(player);
@@ -563,4 +584,58 @@ void HumanityWill::talk() const {
     std::cout << "Humanity points : " << humanityPoints << std::endl;
     std::cout << "Willpower points : "<< willpowerPoints << std::endl;
 }
+
+
+/**
+ * Health declaration
+ *
+ */
+
+void Health::setHurt(bool hurt) {isHurt = hurt;}
+
+void Health::setBruised(bool bruise) {isBruised = bruise;}
+
+void Health::setInjured(bool injured) {isInjured = injured;}
+
+void Health::setWounded(bool wound) {isWounded = wound;}
+
+void Health::setMauled(bool mauled) {isMauled = mauled;}
+
+void Health::setCrippled(bool cripple) {isCrippled = cripple;}
+
+void Health::setIncapacitaded(bool inc) {isIncapacitaded = inc;}
+
+void Health::setTorpor(bool t) {torpor = t;}
+
+bool Health::getBruised() {return isBruised;}
+
+bool Health::getHurt() {return isHurt;}
+
+bool Health::getInjured() {return isInjured;}
+
+bool Health::getWounded() {return isWounded;}
+
+bool Health::getMauled() {return isMauled;}
+
+bool Health::getCrippled() {return isCrippled;}
+
+bool Health::getIncapacitated() {return isIncapacitaded;}
+
+bool Health::getTorpor() {return torpor;}
+
+void Health::talk() {
+    std::cout << "######### Health status ##########" << std::endl;
+    if(isBruised){std::cout<<"I'm bruised" << std::endl;}else{std::cout<<"I'm not bruised" << std::endl;}
+    if(isHurt){std::cout<<"I'm hurt" << std::endl;}else{std::cout<<"I'm not Hurt" << std::endl;}
+    if(isInjured){std::cout<<"I'm injured" << std::endl;}else{std::cout<<"I'm not injured" << std::endl;}
+    if(isWounded){std::cout<<"I'm wounded" << std::endl;}else{std::cout<<"I'm not wounded" << std::endl;}
+    if(isMauled){std::cout<<"I'm mauled" << std::endl;}else{std::cout<<"I'm not mauled" << std::endl;}
+    if(isCrippled){std::cout<<"I'm crippled" << std::endl;}else{std::cout<<"I'm not crippled" << std::endl;}
+    if(isIncapacitaded){std::cout<<"I'm incapacitated" << std::endl;}else{std::cout<<"I'm not incapacitated" << std::endl;}
+    if(torpor){std::cout<<"I'm in torpor" << std::endl;}else{std::cout<<"I'm not in torpor" << std::endl;}
+}
+
+
+
+
 

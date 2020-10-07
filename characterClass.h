@@ -236,6 +236,49 @@ public:
 
 
 /**
+ *  Health status of the player
+ */
+
+class Health{
+    bool isBruised = false;
+    bool isHurt = false;
+    bool isInjured =false;
+    bool isWounded =false;
+    bool isMauled =false;
+    bool isCrippled = false;
+    bool isIncapacitaded = false;
+    bool torpor = false;
+public:
+    //setters
+    void setBruised(bool);
+    void setHurt(bool);
+    void setInjured(bool);
+    void setWounded(bool);
+    void setMauled(bool);
+    void setCrippled(bool);
+    void setIncapacitaded(bool);
+    void setTorpor(bool);
+    //getters
+    bool getBruised();
+    bool getHurt();
+    bool getInjured();
+    bool getWounded();
+    bool getMauled();
+    bool getCrippled();
+    bool getIncapacitated();
+    bool getTorpor();
+    void talk();
+};
+
+
+/**
+ * Experience
+ */
+
+
+
+
+/**
  * Hold all the informations about the character
  */
 class Character{
@@ -245,6 +288,8 @@ class Character{
     CharacterBackground background;
     BloodPool bloodPool;
     HumanityWill humanityWill;
+    Health health;
+    int AvailableExperiencePoint;
 public:
     void setAttributes(Attributes);
 
@@ -256,11 +301,21 @@ public:
 
     void setHumanityWill(HumanityWill);
 
+    Attributes getAttributes();
+
     CharacterBackground& getBackground();
 
     Advantages getAdvantages();
 
     BloodPool getBloodPool();
+
+    HumanityWill getHumanityWill();
+
+    Health getHealth();
+
+    int getExperience();
+
+    void setExperience(int);
 
     void talk();
 
