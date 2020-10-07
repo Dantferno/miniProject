@@ -92,4 +92,15 @@ Compilation using Cmake, just run :
   Blood Pool : 50/50
   Humanity points : 6
   Willpower points : 2
+  ######### Health status ##########
+  I'm not bruised
+  I'm not Hurt
+  I'm not injured
+  I'm not wounded
+  I'm not mauled
+  I'm not crippled
+  I'm not incapacitated
+  I'm not in torpor
+  ###### Experience #######
+  0 points
 ```

@@ -439,6 +439,7 @@ void Character::talk() {
     bloodPool.talk();
     humanityWill.talk();
     health.talk();
+    std::cout << "###### Experience #######" << std::endl << getExperience() << " points" << std::endl;
 }
 
 void Character::setBloodPool(BloodPool bloodPool1) {
