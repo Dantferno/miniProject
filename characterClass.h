@@ -40,14 +40,14 @@ class Clan{
     std::string chosenClanDescription;
     std::map<std::string, std::string> allClan; // map clan name to clan description
 public:
-    Clan();
-    std::map<std::string, std::string> getAvailableClan(); //return the map allClan;
+    Clan(); // Fill the allClan map from the parser
+    std::map<std::string, std::string> getAvailableClan(); //return the map allClan, useful for displaying all clan in a listbox in the GUI
     bool setClan(std::string choiceClan); // Will set the desired Clan and description using the map, check if Clan exist, else return false
     std::string getClan();
     std::string getClanDescription();
     auto deeperParser(std::string askedClan); // will return (probably) a multimap with the nickname/sect/etc for a Clan to
-    // be displayed in a new window
-    void talk();
+                                              // be displayed in a new window
+    void talk(); // cout a text description of the class
 };
 
 
@@ -64,13 +64,12 @@ public:
     bool setChoice(std::string choice); // Will set the desired choice and description using clan name
     std::string getChoice(); // get chosenNature
     std::string getChoiceDescription(); // get chosenDescription
-
 };
 
 
 /**
- * CharacterBackground will hold all the background of the Vampire.
- *
+ * CharacterBackground holds all the background of the Vampire.
+ * Everything in here will not change once created
  */
 class CharacterBackground{
     std::string Name;
@@ -98,7 +97,7 @@ public:
     std::string getPlayer();
     std::string getGeneration();
 
-    void presentBackground();
+    void presentBackground(); // cout text description of the Vampire background
 
 };
 
@@ -143,7 +142,7 @@ public:
 
     void setMental(int percep, int intell, int wits);
 
-    void summary() const;
+    void summary() const; // cout text description of the attributes
 };
 
 
@@ -157,11 +156,11 @@ class Abilities{
     std::map<std::string, int> skills;
     std::map<std::string, int> knowledges;
 public:
-    Abilities();
-    bool setTalents(std::map<std::string, int> mapTalents);
-    bool setSkills(std::map<std::string, int> mapSkills);
-    bool setKnowledges(std::map<std::string, int> mapKnowledges);
-    void speak();
+    Abilities(); // fill talents, skills and knowledges from the parser with all the available choices
+    bool setTalents(std::map<std::string, int> mapTalents); // increase talents if it exist
+    bool setSkills(std::map<std::string, int> mapSkills); // increase skill if it exist
+    bool setKnowledges(std::map<std::string, int> mapKnowledges); // increase knowledges if it exist
+    void speak(); // cout text description of the chosen abilities
 };
 
 
@@ -181,11 +180,11 @@ class Advantages{
     int VirtueInstinct=1;
     int VirtueCourage=1;
 public:
-    Advantages();
+    Advantages(); // fill AvailableDisciplines and AvailableBackgrounds from the parser
 
-    void increaseVirtue(int conscience, int instinct, int courage);
+    void increaseVirtue(int conscience, int instinct, int courage); // set virtue
 
-    void increaseDiscipline(std::map<std::string, int> disciplineToAdd);
+    void increaseDiscipline(std::map<std::string, int> disciplineToAdd); // add discipline with points if in AvailableDisciplines
 
     void increaseBackgrounds(std::map<std::string, int> backgroundToAdd);
 
@@ -203,7 +202,7 @@ public:
 
     std::map<std::string, int> getBackgrounds();
 
-    void talk();
+    void talk(); // cout text description of the chosen disciplines and backgrounds
 };
 
 /**
@@ -213,7 +212,7 @@ class BloodPool{
     int maxBloodPool;
     int currentBloodPool;
 public:
-    void setMaxBloodPool(std::string generation);
+    void setMaxBloodPool(std::string generation); // set max blood pool according to Vampire generation
     int getMaxBloodPool();
     void setCurrentBloodPool(int blood);
     int getCurrentBloodPool();
@@ -279,9 +278,9 @@ class CharacterCreation{
 public:
     void StepZero(std::string name, std::string player,std::string chronicle,std::string generation,std::string sire);
     void StepOne(std::string concept, Clan clan, Nature nature, Nature demeanor);
-    void StepTwo(Attributes attri);
-    void StepThree(Abilities ability);
-    void StepFour(Advantages advantages);
+    void StepTwo(Attributes);
+    void StepThree(Abilities);
+    void StepFour(Advantages);
     void StepFive(BloodPool, HumanityWill);
     Character getCharacter();
 };

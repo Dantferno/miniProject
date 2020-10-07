@@ -66,7 +66,7 @@ auto Parser::parseKnowledges(){
  */
 
 Clan::Clan() {
-    allClan = Parser::parseClan();
+    allClan = Parser::parseClan(); // set available clan from the parser
 }
 
 std::map<std::string, std::string> Clan::getAvailableClan() {return allClan;}
@@ -95,7 +95,7 @@ void Clan::talk() {
  */
 
 
-Nature::Nature() {all = Parser::parseNature();}
+Nature::Nature() {all = Parser::parseNature();} // set available Nature from the parser
 
 
 bool Nature::setChoice(std::string choice) {

@@ -48,7 +48,7 @@ int main() {
     newRealAbilities.clear();
     newRealAbilities.insert(std::pair<std::string, int>("Academics", 2));
     newRealAbilities.insert(std::pair<std::string, int>("Computer", 2));
-    abilities.setKnowledges(newRealAbilities);
+    abilities.setKnowledges(newRealAbilities); // add knowledges
     cr.StepThree(abilities); // push step 3
 
     /********* fourth step, select advantages and virtues *************/

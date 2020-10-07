@@ -17,7 +17,7 @@ that will not be usefull if we extend the program (meaning more than just the cr
 \
 
 Safeguards, such as checking that the user don't choose more than 3 discplines will be implemented in the GUI rather 
-than in the characters classes.
+than in the character class, if not it will be implemented in the CharacterCreation class.
 
 Each object (clan, disciplines, nature, etc) is created and given to the characterCreation class that will add it to the 
 character object.  
