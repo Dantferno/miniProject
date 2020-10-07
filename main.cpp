@@ -7,21 +7,22 @@ int main() {
                 "Fourth", "Sr. Tempel");
 
     /********* first step ************/
-    // we create a clan/Nature/Demeanor for testing
+    // we create a clan/Nature/Demeanor
     Clan bestClan;
     bestClan.setClan("DLAD"); // if clan doesn't exist, return false so we can check it in the GUI
-    // we create a nature architect and a demeanor trickster for testing
-    Nature architect, trickster;
-    architect.setChoice("Bon Vivant");
-    trickster.setChoice("Capitalist");
-    cr.StepOne("student", bestClan, architect, trickster); // We have everything to complete the first step
+    // we create a nature "Bon Vivant" and a demeanor "Capitalist" for testing
+    Nature nature, demeanor;
+    nature.setChoice("Bon Vivant");
+    demeanor.setChoice("Capitalist");
+    std::string concept("student"); // choose concept
+    cr.StepOne(concept, bestClan, nature, demeanor); // We have everything to complete the first step
 
     /********* second step, set attributes *************/
     Attributes attri;
     attri.setPhysical(3,3,1);
     attri.setSocial(2,2,1);
     attri.setMental(1,1,1);
-    cr.StepTwo(attri);
+    cr.StepTwo(attri); // complete the first step, push the changes to the character
 
     /********* third step, select abilities *************/
     Abilities abilities;
