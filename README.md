@@ -9,7 +9,7 @@ main.cpp shows how to use the classes and output a text character sheet.
 The character creation is handled by a specific class : CharacterCreation.  
 It reflects page 88 of the rules book as well as the futur GUI. 
 The character generation is made step by step (from 0 to 5). Each step will be a View of the upcoming GUI.  
-For example for the step 0, the GUI will ask for the name, player, generation, sir, etc. By clicking next, those informations
+For example, for the step 0, the GUI will ask for the name, player, generation, sir, etc. By clicking "next", those informations
 will be fed to the character creation method "stepZero". 
 At the end the CharacterCreation class will return the Character object.  
 The CharacterCreation class allows to pass only one object between views, and free the Character object of initialization method 
@@ -23,7 +23,7 @@ Each object (clan, disciplines, nature, etc) is created and given to the charact
 character object.  
 
 The classes presented here don't handle all the informations, for two reasons : 
-- Without parsing it's difficult to see for the moment how to organise them, what type they will be or the method needed to interact with them. 
+- Without parsing, it's difficult to see for the moment how to organise them, what type they will be or the method needed to interact with them. 
 - The classes presented here are enough to generate the character sheet, the additional informations will probably be parsed in another way and 
 just invocated by the GUI if the user click on a "more detail" button for example. However this step may be not needed as the page of the rule book 
 holding the informations may be shown to stay consistent with the final output, rather than displaying the additionnal information directly in the GUI.   
