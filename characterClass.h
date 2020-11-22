@@ -9,6 +9,8 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <istream>
+#include <fstream>
 
 /**
  * Emulate what the real parser will return
@@ -17,53 +19,19 @@
 class Parser{
     std::string filePath;
 public:
-    static auto parseClan();
-    static auto parseNature();
+    static std::vector<std::string> parseClan(); // return vector fill with clan name
+    static std::vector<std::string> parseNature();
+    static std::vector<std::string> parseTalents();
+    static std::vector<std::string> parseSkills();
+    static std::vector<std::string> parseDisciplines();
+    static std::vector<std::string> parseBackgrounds();
+
     static auto parseAttributes();
     static auto parseAbilities();
-    static auto parseSkills();
-    static auto parseKnowledges();
+    static std::vector<std::string> parseKnowledges();
     static auto parseAllies();
     static auto parseVirtues();
-    static auto parseDisciplines();
     static auto parseComplexesDisciplines();
-    static auto parseBackgrounds();
-};
-
-/**
- * Clan will display the available Clan/description
- * Clan can be set/get from here
- * A deeper parser is available to show on the GUI the nickname/sect/etc properly
- */
-class Clan{
-    std::string chosenClanName;
-    std::string chosenClanDescription;
-    std::map<std::string, std::string> allClan; // map clan name to clan description
-public:
-    Clan(); // Fill the allClan map from the parser
-    std::map<std::string, std::string> getAvailableClan(); //return the map allClan, useful for displaying all clan in a listbox in the GUI
-    bool setClan(std::string choiceClan); // Will set the desired Clan and description using the map, check if Clan exist, else return false
-    std::string getClan();
-    std::string getClanDescription();
-    auto deeperParser(std::string askedClan); // will return (probably) a multimap with the nickname/sect/etc for a Clan to
-                                              // be displayed in a new window
-    void talk(); // cout a text description of the class
-};
-
-
-/**
- * Hold the available Nature/Demeanor
- * Set and get Nature name and description
- */
-class Nature{
-    std::string chosenNature;
-    std::string chosenDescription;
-    std::map<std::string, std::string> all; // map name to description
-public:
-    Nature();
-    bool setChoice(std::string choice); // Will set the desired choice and description using clan name
-    std::string getChoice(); // get chosenNature
-    std::string getChoiceDescription(); // get chosenDescription
 };
 
 
@@ -75,10 +43,10 @@ class CharacterBackground{
     std::string Name;
     std::string Player;
     std::string Chronicle;
-    Nature nature;
-    Nature demeanor;
+    std::string nature;
+    std::string demeanor;
     std::string Concept;
-    Clan clan;
+    std::string clan;
     std::string Generation;
     std::string Sire;
 public:
@@ -89,13 +57,18 @@ public:
     void setGeneration(std::string name);
     void setSire(std::string name);
     void setConcept(std::string concept);
-    void setClan(Clan choice);
-    void setNature(Nature choice);
-    void setDeamenor(Nature choice);
+    void setClan(std::string choice);
+    void setNature(std::string choice);
+    void setDeamenor(std::string choice);
     // Getters
     std::string getName();
     std::string getPlayer();
     std::string getGeneration();
+    std::string getChronicle();
+    std::string getSire();
+    std::string getConcept();
+    std::string getClan();
+
 
     void presentBackground(); // cout text description of the Vampire background
 
@@ -153,8 +126,8 @@ public:
 
 class Abilities{
     std::map<std::string, int> talents;
-    std::map<std::string, int> skills;
-    std::map<std::string, int> knowledges;
+    std::vector<std::string> skills;
+    std::vector<std::string> knowledges;
 public:
     Abilities(); // fill talents, skills and knowledges from the parser with all the available choices
     bool setTalents(std::map<std::string, int> mapTalents); // increase talents if it exist
@@ -332,7 +305,7 @@ class CharacterCreation{
     CharacterBackground &background = ch.getBackground();
 public:
     void StepZero(std::string name, std::string player,std::string chronicle,std::string generation,std::string sire);
-    void StepOne(std::string concept, Clan clan, Nature nature, Nature demeanor);
+    void StepOne(std::string concept, std::string clan, std::string nature, std::string demeanor);
     void StepTwo(Attributes);
     void StepThree(Abilities);
     void StepFour(Advantages);

@@ -2,6 +2,7 @@
 // Created by hugo.
 //
 
+
 #include "characterClass.h"
 
 /*
@@ -9,16 +10,44 @@
  * just some dummy value to test the rest of the code
  */
 
-auto Parser::parseClan() {
-    std::map<std::string, std::string> allClan;
-    allClan.insert(std::pair<std::string, std::string>("DLAD", "The Best of the best."));
+std::vector<std::string> Parser::parseClan() {
+    std::vector<std::string> allClan;
+    std::string filepath = "/home/hugo/CLionProjects/miniProject/VampireV5.txt";
+    std::string line;
+    std::ifstream infile(filepath);
+
+    while(std::getline(infile, line)){
+        if (!line.rfind("--", 0)){ //if line starts with "--"
+            line.erase(0,2);
+            allClan.push_back(line);
+        }
+        if (!line.rfind("Noiad", 0)){ // stop at the last clan
+            break;
+        }
+    }
     return allClan;
 }
 
-auto Parser::parseNature() {
-    std::map<std::string, std::string> all;
-    all.insert(std::pair<std::string, std::string>("Bon Vivant", "Unlife is for pleasure."));
-    all.insert(std::pair<std::string, std::string>("Capitalist", "Why give it away for free when you can sell it"));
+std::vector<std::string> Parser::parseNature() {
+    std::vector<std::string> all;
+    std::string filepath = "/home/hugo/CLionProjects/miniProject/VampireV5.txt";
+    std::string line;
+    int lineNumber=0;
+    std::ifstream infile(filepath);
+
+    while(std::getline(infile, line)){
+        lineNumber++;
+        if (lineNumber >= 365){
+            if (!line.rfind("--", 0)){ //if line starts with "--"
+                line.erase(0,2);
+                all.push_back(line);
+            }
+            if (!line.rfind("Visionary", 0)){ // stop at the last nature
+                break;
+            }
+        }
+
+    }
     return all;
 }
 
@@ -31,84 +60,122 @@ auto Parser::parseAbilities() {
     return talents;
 }
 
-auto Parser::parseDisciplines() {
-    std::map<std::string, std::string> AvailableDisciplines; // map all disciplined to description, set by the parser
-    AvailableDisciplines.insert(std::pair<std::string, std::string>("Thaumaturgy", "description"));
-    AvailableDisciplines.insert(std::pair<std::string, std::string>("Fortitude", "description"));
+ std::vector<std::string> Parser::parseDisciplines() {
+    std::vector<std::string> AvailableDisciplines; // map all disciplined to description, set by the parser
+     std::string filepath = "/home/hugo/CLionProjects/miniProject/VampireV5.txt";
+     std::string line;
+     int lineNumber=0;
+     std::ifstream infile(filepath);
+
+     while(std::getline(infile, line)){
+         lineNumber++;
+         if (lineNumber >= 365){
+             if (!line.rfind("--", 0)){ //if line starts with "--"
+                 line.erase(0,2);
+                 AvailableDisciplines.push_back(line);
+             }
+             if (!line.rfind("Visceratika", 0)){ // stop at the last nature
+                 break;
+             }
+         }
+
+     }
     return AvailableDisciplines;
 }
 
-auto Parser::parseBackgrounds() {
-    std::map<std::string, std::string> AvailableBackgrounds;
-    AvailableBackgrounds.insert(std::pair<std::string, std::string>("Mentor", "description"));
-    AvailableBackgrounds.insert(std::pair<std::string, std::string>("Herd", "description"));
+std::vector<std::string> Parser::parseBackgrounds() {
+    std::vector<std::string> AvailableBackgrounds;
+    std::string filepath = "/home/hugo/CLionProjects/miniProject/VampireV5.txt";
+    std::string line;
+    int lineNumber=0;
+    std::ifstream infile(filepath);
+
+    while(std::getline(infile, line)){
+        lineNumber++;
+        if (lineNumber >= 930){
+            if (!line.rfind("--", 0)){ //if line starts with "--"
+                line.erase(0,2);
+                AvailableBackgrounds.push_back(line);
+            }
+            if (!line.rfind("Status", 0)){ // stop at the last nature
+                break;
+            }
+        }
+
+    }
     return AvailableBackgrounds;
 }
 
-auto Parser::parseSkills() {
-    std::map<std::string, int> skills;
-    skills.insert(std::pair<std::string, int>("Etiquette", 0));
-    skills.insert(std::pair<std::string, int>("Firearms", 0));
-    skills.insert(std::pair<std::string, int>("Melee", 0));
-    return skills;
+
+std::vector<std::string> Parser::parseKnowledges(){
+    std::vector<std::string> allKnowledges;
+    std::string filepath = "/home/hugo/CLionProjects/miniProject/VampireV5.txt";
+    std::string line;
+    int lineNumber=0;
+    std::ifstream infile(filepath);
+
+    while(std::getline(infile, line)){
+        lineNumber++;
+        if (lineNumber >= 818){
+            if (!line.rfind("--", 0)){ //if line starts with "--"
+                line.erase(0,2);
+                allKnowledges.push_back(line);
+            }
+            if (!line.rfind("Expert Knowledge", 0)){ // stop at the last nature
+                break;
+            }
+        }
+
+    }
+    return allKnowledges;
 }
 
-auto Parser::parseKnowledges(){
-    std::map<std::string, int> knowledges;
-    knowledges.insert(std::pair<std::string, int>("Academics", 0));
-    knowledges.insert(std::pair<std::string, int>("Computer", 0));
-    knowledges.insert(std::pair<std::string, int>("Finance", 0));
-    return knowledges;
+std::vector<std::string> Parser::parseTalents() {
+    std::vector<std::string> allTalents;
+    std::string filepath = "/home/hugo/CLionProjects/miniProject/VampireV5.txt";
+    std::string line;
+    int lineNumber=0;
+    std::ifstream infile(filepath);
+
+    while(std::getline(infile, line)){
+        lineNumber++;
+        if (lineNumber >= 592){
+            if (!line.rfind("--", 0)){ //if line starts with "--"
+                line.erase(0,2);
+                allTalents.push_back(line);
+            }
+            if (!line.rfind("Hobby Talent", 0)){ // stop at the last nature
+                break;
+            }
+        }
+
+    }
+    return allTalents;
 }
 
-/**
- * Clan class declarations
- */
+std::vector<std::string> Parser::parseSkills() {
+    std::vector<std::string> allSkills;
+    std::string filepath = "/home/hugo/CLionProjects/miniProject/VampireV5.txt";
+    std::string line;
+    int lineNumber=0;
+    std::ifstream infile(filepath);
 
-Clan::Clan() {
-    allClan = Parser::parseClan(); // set available clan from the parser
+    while(std::getline(infile, line)){
+        lineNumber++;
+        if (lineNumber >= 705){
+            if (!line.rfind("--", 0)){ //if line starts with "--"
+                line.erase(0,2);
+                allSkills.push_back(line);
+            }
+            if (!line.rfind("Professional Skill", 0)){ // stop at the last nature
+                break;
+            }
+        }
+
+    }
+    return allSkills;
 }
 
-std::map<std::string, std::string> Clan::getAvailableClan() {return allClan;}
-
-bool Clan::setClan(std::string choiceClan) {
-    //return false if clan doesn't exist, else set him
-    if (allClan.count(choiceClan)==0){return false;}
-    chosenClanName = choiceClan;
-    chosenClanDescription = allClan[chosenClanName];
-    return true;
-}
-
-std::string Clan::getClan() {return chosenClanName;}
-
-std::string Clan::getClanDescription() {return chosenClanDescription;}
-
-auto Clan::deeperParser(std::string askedClan) {}
-
-void Clan::talk() {
-    std::cout << "My clan's name is " << chosenClanName << std::endl;
-    std::cout << "Its " << chosenClanDescription << std::endl;
-}
-
-/**
- * Nature declaration
- */
-
-
-Nature::Nature() {all = Parser::parseNature();} // set available Nature from the parser
-
-
-bool Nature::setChoice(std::string choice) {
-    //return false if clan doesn't exist, else set him
-    if (all.count(choice)==0){return false;}
-    chosenNature=choice;
-    chosenDescription = all[chosenNature];
-    return true;
-}
-
-std::string Nature::getChoice() {return chosenNature;}
-
-std::string Nature::getChoiceDescription() {return chosenDescription;}
 
 /**
  * CharacterBackground declaration
@@ -126,11 +193,11 @@ void CharacterBackground::setConcept(std::string concept) {Concept=concept;}
 
 void CharacterBackground::setSire(std::string name) {Sire=name;}
 
-void CharacterBackground::setClan(Clan choice) {clan=choice;}
+void CharacterBackground::setClan(std::string choice) {clan=choice;}
 
-void CharacterBackground::setNature(Nature choice) {nature=choice;}
+void CharacterBackground::setNature(std::string choice) {nature=choice;}
 
-void CharacterBackground::setDeamenor(Nature choice) {demeanor=choice;}
+void CharacterBackground::setDeamenor(std::string choice) {demeanor=choice;}
 
 std::string CharacterBackground::getName() {return Name;}
 
@@ -144,16 +211,32 @@ void CharacterBackground::presentBackground() {
     std::cout << "My concept is :" << Concept << std::endl;
     std::cout << "I'm a vampire of the " << Generation << " generation" << std::endl;
     std::cout << "My Sire was " << Sire << std::endl;
-    std::cout << "Let me tell you about my clan :" << std::endl;
-    clan.talk();
-    std::cout << "I say i'm a " << nature.getChoice() << std::endl;
-    std::cout << "But truth is, i'm really more a "<< demeanor.getChoice() << std::endl;
+    std::cout << "Let me tell you about my clan :" << clan <<  std::endl;
+
+    std::cout << "I say i'm a " << nature << std::endl;
+    std::cout << "But truth is, i'm really more a "<< demeanor << std::endl;
     std::cout << "####################################" << std::endl;
 
 }
 
 std::string CharacterBackground::getGeneration() {
     return Generation;
+}
+
+std::string CharacterBackground::getChronicle() {
+    return Chronicle;
+}
+
+std::string CharacterBackground::getSire() {
+    return Sire;
+}
+
+std::string CharacterBackground::getConcept() {
+    return Concept;
+}
+
+std::string CharacterBackground::getClan() {
+    return clan;
 }
 
 /**
@@ -199,28 +282,18 @@ void Attributes::setWits(int value) {Wits=value;}
 int Attributes::getWits() {return Wits;}
 
 void Attributes::setPhysical(int strength, int dexterity, int stamina) {
-
-    if(strength+dexterity+stamina>7){
-        throw std::invalid_argument( "Too much points" );
-    }
     Strength = strength;
     Dexterity = dexterity;
     Stamina = stamina;
 }
 
 void Attributes::setSocial(int charisma, int manip, int appear) {
-    if(charisma+manip+appear>5){
-        throw std::invalid_argument( "Too much points" );
-    }
     Charisma = charisma;
     Manipulation = manip;
     Appearance = appear;
 }
 
 void Attributes::setMental(int percep, int intell, int wits) {
-    if(percep+intell+wits>3){
-        throw std::invalid_argument( "Too much points" );
-    }
     Perception=percep;
     Intelligence=intell;
     Wits=wits;
@@ -268,52 +341,52 @@ bool Abilities::setTalents(std::map<std::string, int> mapTalents)
     }
     return true;
 }
-
-bool Abilities::setSkills(std::map<std::string, int> mapSkills)
-{
-    std::map<std::string, int>::iterator itrmap;
-    // use key to upgrade associated value by int
-    for(itrmap = mapSkills.begin(); itrmap != mapSkills.end(); itrmap++){
-        std::string skill(itrmap->first);
-        if (skills.count(skill)==0){
-            //if one of the talent doesn't exist return false
-            return false;
-        }
-        skills[skill] += itrmap->second;
-    }
-    return true;
-}
+//
+//bool Abilities::setSkills(std::map<std::string, int> mapSkills)
+//{
+//    std::map<std::string, int>::iterator itrmap;
+//    // use key to upgrade associated value by int
+//    for(itrmap = mapSkills.begin(); itrmap != mapSkills.end(); itrmap++){
+//        std::string skill(itrmap->first);
+//        if (skills.count(skill)==0){
+//            //if one of the talent doesn't exist return false
+//            return false;
+//        }
+//        skills[skill] += itrmap->second;
+//    }
+//    return true;
+//}
 
 bool Abilities::setKnowledges(std::map<std::string, int> mapKnowledges)
 {
-    std::map<std::string, int>::iterator itrmap;
-    // use key to upgrade associated value by int
-    for(itrmap = mapKnowledges.begin(); itrmap != mapKnowledges.end(); itrmap++){
-        std::string knowledge(itrmap->first);
-        if (knowledges.count(knowledge)==0){
-            //if one of the talent doesn't exist return false
-            return false;
-        }
-        knowledges[knowledge] += itrmap->second;
-    }
+//    std::map<std::string, int>::iterator itrmap;
+//    // use key to upgrade associated value by int
+//    for(itrmap = mapKnowledges.begin(); itrmap != mapKnowledges.end(); itrmap++){
+//        std::string knowledge(itrmap->first);
+//        if (knowledges.count(knowledge)==0){
+//            //if one of the talent doesn't exist return false
+//            return false;
+//        }
+//        knowledges[knowledge] += itrmap->second;
+//    }
     return true;
 }
 
 void Abilities::speak()
 {
-    std::cout << "#Talents :" << std::endl;
-    std::map<std::string, int>::iterator itrmapTalents;
-    for (itrmapTalents = talents.begin(); itrmapTalents != talents.end(); itrmapTalents++) {
-        std::cout << itrmapTalents->first << " " << itrmapTalents->second<<std::endl;
-    }
-    std::cout << "#Skills :" << std::endl;
-    for (itrmapTalents = skills.begin(); itrmapTalents != skills.end(); itrmapTalents++) {
-        std::cout << itrmapTalents->first << " " << itrmapTalents->second<<std::endl;
-    }
-    std::cout << "#Knowledges :" << std::endl;
-    for (itrmapTalents = knowledges.begin(); itrmapTalents != knowledges.end(); itrmapTalents++) {
-        std::cout << itrmapTalents->first << " " << itrmapTalents->second<<std::endl;
-    }
+//    std::cout << "#Talents :" << std::endl;
+//    std::map<std::string, int>::iterator itrmapTalents;
+//    for (itrmapTalents = talents.begin(); itrmapTalents != talents.end(); itrmapTalents++) {
+//        std::cout << itrmapTalents->first << " " << itrmapTalents->second<<std::endl;
+//    }
+//    std::cout << "#Skills :" << std::endl;
+//    for (itrmapTalents = skills.begin(); itrmapTalents != skills.end(); itrmapTalents++) {
+//        std::cout << itrmapTalents->first << " " << itrmapTalents->second<<std::endl;
+//    }
+//    std::cout << "#Knowledges :" << std::endl;
+//    for (itrmapTalents = knowledges.begin(); itrmapTalents != knowledges.end(); itrmapTalents++) {
+//        std::cout << itrmapTalents->first << " " << itrmapTalents->second<<std::endl;
+//    }
 }
 
 
@@ -327,8 +400,6 @@ Advantages::Advantages()
 {
     // parser will initialize AvailableDisciplines and AvailableBackgrounds
     // lets just put dummy value for now
-    AvailableDisciplines = Parser::parseDisciplines();
-    AvailableBackgrounds = Parser::parseBackgrounds();
 
 }
 
@@ -494,7 +565,7 @@ void CharacterCreation::StepZero(std::string name, std::string player, std::stri
     background.setSire(sire);
 }
 
-void CharacterCreation::StepOne(std::string concept, Clan clan, Nature nature, Nature demeanor) {
+void CharacterCreation::StepOne(std::string concept, std::string clan, std::string nature, std::string demeanor) {
 background.setClan(clan);
 background.setConcept(concept);
 background.setNature(nature);
