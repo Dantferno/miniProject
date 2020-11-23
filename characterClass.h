@@ -125,15 +125,32 @@ public:
  */
 
 class Abilities{
-    std::map<std::string, int> talents;
+    std::vector<std::string>  talents;
+    std::vector<int>  chosenTalents; // index of selected talents from talents
+    std::vector<int>  valueTalents; // number of points for each selected talents
+
     std::vector<std::string> skills;
+    std::vector<int> chosenSkills;
+    std::vector<int> valueSkills;
     std::vector<std::string> knowledges;
+    std::vector<int> chosenKnowledges;
+    std::vector<int> valueKnowledges;
 public:
     Abilities(); // fill talents, skills and knowledges from the parser with all the available choices
-    bool setTalents(std::map<std::string, int> mapTalents); // increase talents if it exist
-    bool setSkills(std::map<std::string, int> mapSkills); // increase skill if it exist
-    bool setKnowledges(std::map<std::string, int> mapKnowledges); // increase knowledges if it exist
-    void speak(); // cout text description of the chosen abilities
+    // setters
+    void setTalents(std::vector<int>); // increase talents if it exist
+    void setValueTalents(std::vector<int>);
+    void setSkills(std::vector<int>); // increase skill if it exist
+    void setValueSkills(std::vector<int>);
+    void setKnowledges(std::vector<int>); // increase knowledges if it exist
+    void setValueKnowledges(std::vector<int>);
+    // getters
+    std::vector<int> getTalents();
+    std::vector<int> getValueTalents();
+    std::vector<int> getSkills();
+    std::vector<int> getValueSkills();
+    std::vector<int> getKnowledge();
+    std::vector<int> getValueKnowledge();
 };
 
 
@@ -155,11 +172,13 @@ class Advantages{
 public:
     Advantages(); // fill AvailableDisciplines and AvailableBackgrounds from the parser
 
-    void increaseVirtue(int conscience, int instinct, int courage); // set virtue
+    void setDisciplines(std::vector<std::string>, std::vector<int>);
 
-    void increaseDiscipline(std::map<std::string, int> disciplineToAdd); // add discipline with points if in AvailableDisciplines
+    void setBackgrounds(std::vector<std::string>, std::vector<int>);
 
-    void increaseBackgrounds(std::map<std::string, int> backgroundToAdd);
+    std::map<std::string, int>  getDisciplines();
+
+    void setVirtue(int conscience, int instinct, int courage);
 
     int getConscience();
 
@@ -167,9 +186,16 @@ public:
 
     int getCourage();
 
+    void increaseVirtue(int conscience, int instinct, int courage); // set virtue
+
+    void increaseDiscipline(std::map<std::string, int> disciplineToAdd); // add discipline with points if in AvailableDisciplines
+
+    void increaseBackgrounds(std::map<std::string, int> backgroundToAdd);
+
+
     std::map<std::string, std::string> getAvailableDisciplines();
 
-    std::map<std::string, int> getDisciplines();
+
 
     std::map<std::string, std::string> getAvailableBackgrounds();
 
@@ -277,6 +303,8 @@ public:
     Attributes getAttributes();
 
     CharacterBackground& getBackground();
+
+    Abilities getAbilities();
 
     Advantages getAdvantages();
 

@@ -45,6 +45,10 @@ public:
 
 protected:
     //Override default signal handler:
+    void fillPlayerInfo(const Cairo::RefPtr<Cairo::Context>& cr);
+    void fillAttributes(const Cairo::RefPtr<Cairo::Context>& cr);
+    void fillAbilities(const Cairo::RefPtr<Cairo::Context>& cr);
+    void fillAdvantages(const Cairo::RefPtr<Cairo::Context>& cr);
     bool on_draw(const Cairo::RefPtr<Cairo::Context>& cr) override;
     Character ch;
     double m_radius;
@@ -144,6 +148,7 @@ public:
     void Page3();
     void initPage4();
     void Page4();
+    void initPage5();
     void Page5();
     void Page6();
     void FinalPage(); // display constructed character sheet
@@ -158,12 +163,15 @@ public:
     void addDisciplineClicked();
     void removeDisciplineClicked();
     void ApplyPage3();
+    void generateCh();
 
     // block talents
     void changeTotalSocial();
     void changeTotalPhysical();
     void changeTotalMental();
     int checkCorrectRepartition();
+
+    void go5();
 };
 
 

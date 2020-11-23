@@ -322,73 +322,58 @@ void Attributes::summary() const {
 
 Abilities::Abilities()
 {
-    talents = Parser::parseAbilities();
+    talents = Parser::parseTalents();
     skills = Parser::parseSkills();
     knowledges = Parser::parseKnowledges();
 }
 
-bool Abilities::setTalents(std::map<std::string, int> mapTalents)
-{
-    std::map<std::string, int>::iterator itrmapTalents;
-    // use key to upgrade associated value by int
-    for(itrmapTalents = mapTalents.begin(); itrmapTalents != mapTalents.end(); itrmapTalents++){
-        std::string talent(itrmapTalents->first);
-        if (talents.count(talent)==0){
-            //if one of the talent doesn't exist return false
-            return false;
-        }
-        talents[talent] += itrmapTalents->second;
-    }
-    return true;
-}
-//
-//bool Abilities::setSkills(std::map<std::string, int> mapSkills)
-//{
-//    std::map<std::string, int>::iterator itrmap;
-//    // use key to upgrade associated value by int
-//    for(itrmap = mapSkills.begin(); itrmap != mapSkills.end(); itrmap++){
-//        std::string skill(itrmap->first);
-//        if (skills.count(skill)==0){
-//            //if one of the talent doesn't exist return false
-//            return false;
-//        }
-//        skills[skill] += itrmap->second;
-//    }
-//    return true;
-//}
-
-bool Abilities::setKnowledges(std::map<std::string, int> mapKnowledges)
-{
-//    std::map<std::string, int>::iterator itrmap;
-//    // use key to upgrade associated value by int
-//    for(itrmap = mapKnowledges.begin(); itrmap != mapKnowledges.end(); itrmap++){
-//        std::string knowledge(itrmap->first);
-//        if (knowledges.count(knowledge)==0){
-//            //if one of the talent doesn't exist return false
-//            return false;
-//        }
-//        knowledges[knowledge] += itrmap->second;
-//    }
-    return true;
+void Abilities::setTalents(std::vector<int> v) {
+    chosenTalents = v;
 }
 
-void Abilities::speak()
-{
-//    std::cout << "#Talents :" << std::endl;
-//    std::map<std::string, int>::iterator itrmapTalents;
-//    for (itrmapTalents = talents.begin(); itrmapTalents != talents.end(); itrmapTalents++) {
-//        std::cout << itrmapTalents->first << " " << itrmapTalents->second<<std::endl;
-//    }
-//    std::cout << "#Skills :" << std::endl;
-//    for (itrmapTalents = skills.begin(); itrmapTalents != skills.end(); itrmapTalents++) {
-//        std::cout << itrmapTalents->first << " " << itrmapTalents->second<<std::endl;
-//    }
-//    std::cout << "#Knowledges :" << std::endl;
-//    for (itrmapTalents = knowledges.begin(); itrmapTalents != knowledges.end(); itrmapTalents++) {
-//        std::cout << itrmapTalents->first << " " << itrmapTalents->second<<std::endl;
-//    }
+void Abilities::setSkills(std::vector<int> v) {
+    chosenSkills=v;
 }
 
+void Abilities::setKnowledges(std::vector<int> v) {
+    chosenKnowledges=v;
+}
+
+void Abilities::setValueTalents(std::vector<int> v) {
+    valueTalents = v;
+}
+
+void Abilities::setValueSkills(std::vector<int> v) {
+    valueSkills = v;
+}
+
+void Abilities::setValueKnowledges(std::vector<int> v) {
+    valueKnowledges =v;
+}
+
+std::vector<int> Abilities::getTalents() {
+    return chosenTalents;
+}
+
+std::vector<int> Abilities::getValueTalents() {
+    return valueTalents;
+}
+
+std::vector<int> Abilities::getSkills() {
+    return chosenSkills;
+}
+
+std::vector<int> Abilities::getValueSkills() {
+    return valueSkills;
+}
+
+std::vector<int> Abilities::getKnowledge() {
+    return chosenKnowledges;
+}
+
+std::vector<int> Abilities::getValueKnowledge() {
+    return valueKnowledges;
+}
 
 
 /**
@@ -477,6 +462,29 @@ int Advantages::getInstinct(){return VirtueInstinct;}
 
 int Advantages::getCourage(){return VirtueCourage;}
 
+void Advantages::setDisciplines(std::vector<std::string>v1, std::vector<int>v2) {
+    std::map<std::string, int> disciplines;
+    for (int i = 0; i < v1.size(); ++i) {
+        disciplines[v1[i]] = v2[i];
+    }
+    Disciplines = disciplines;
+}
+
+void Advantages::setBackgrounds(std::vector<std::string> v1, std::vector<int> v2) {
+    std::map<std::string, int> background;
+    for (int i = 0; i < v1.size(); ++i) {
+        background[v1[i]] = v2[i];
+    }
+    backgrounds = background;
+}
+
+void Advantages::setVirtue(int conscience, int instinct, int courage) {
+    this->VirtueConscience = conscience;
+    this->VirtueInstinct = instinct;
+    this->VirtueCourage = courage;
+}
+
+
 /**
  * Character declarations
  */
@@ -503,7 +511,6 @@ void Character::talk() {
     std::cout << "########## Attributes #######" << std::endl;
     attrib.summary();
     std::cout << "########## Abilities #######" << std::endl;
-    abil.speak();
     std::cout << "########## Advantages #######" << std::endl;
     advan.talk();
     std::cout << "########## Etc #######" << std::endl;
@@ -547,6 +554,10 @@ Attributes Character::getAttributes() {
 
 void Character::setExperience(int points) {
     AvailableExperiencePoint += points;
+}
+
+Abilities Character::getAbilities() {
+    return abil;
 }
 
 

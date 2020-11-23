@@ -11,7 +11,7 @@ LINK_DIRECTORIES(${GTKMM_LIBRARY_DIRS})
 # Add other flags to the compiler
 ADD_DEFINITIONS(${GTKMM_CFLAGS_OTHER})
 
-add_executable(miniProject main.cpp characterClass.h ProjectClasses.cpp GUI.h GUI.cpp)
+add_executable(miniProject main.cpp characterClass.h ProjectClasses.cpp GUI.h GUI.cpp drawingPart.cpp)
 
 
 TARGET_LINK_LIBRARIES(miniProject ${GTKMM_LIBRARIES})
