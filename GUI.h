@@ -49,6 +49,7 @@ protected:
     void fillAttributes(const Cairo::RefPtr<Cairo::Context>& cr);
     void fillAbilities(const Cairo::RefPtr<Cairo::Context>& cr);
     void fillAdvantages(const Cairo::RefPtr<Cairo::Context>& cr);
+    void fillRest(const Cairo::RefPtr<Cairo::Context>& cr);
     bool on_draw(const Cairo::RefPtr<Cairo::Context>& cr) override;
     Character ch;
     double m_radius;
@@ -95,7 +96,7 @@ class MyGrid: public Gtk::Grid
     /**** Page 4 ****/
     Gtk::Image abilitiesImage;
     // talents part
-    Gtk::Label abilitiesLabel, talentsLabel, skillsLabel, knowledgesLabel;
+    Gtk::Label abilitiesLabel, talentsLabel, skillsLabel, knowledgesLabel, pointsTalents, pointsSkills, pointsKnowledges;
     Gtk::ComboBoxText talentsCombo, skillsCombo, knowledgesCombo;
     Gtk::SpinButton talentsSpin, skillsSpin, knowledgesSpin;
     Gtk::Button goBack3, goPage5, addTalent, removeTalent, addSkills, removeSkills, addKnowledges, removeKnowledges;
@@ -109,16 +110,29 @@ class MyGrid: public Gtk::Grid
 
 
     /*** Page 5 ***/
+    std::string selectedClan = "None"; // keep track if user changed clan for the disciplines
     int backgroundClicked =0, disciplineClicked=0;
     std::vector<Gtk::ComboBoxText*> backgroundList,  disciplineList;
     std::vector<Gtk::SpinButton*>  spinBackgroundList,  spinDisciplineList;
     Gtk::Image advantagesImage;
-    Gtk::Label advantageLabel, disciplineLabel, backgroundLabel, virtuesLabel, conscienceLabel, instinctLabel, courageLabel;
+    Gtk::Label advantageLabel, disciplineLabel, backgroundLabel, virtuesLabel, conscienceLabel, instinctLabel, courageLabel,
+    pointsDiscipline, pointsBackground, pointsVirtue;
     Gtk::ComboBoxText disciplineCombo, backgroundCombo;
     Gtk::SpinButton disciplineSpin, backgroundSpin, virtueSpin1, virtueSpin2, virtueSpin3;
     Gtk::Button goPage6, addDisciplines, removeDisciplines, addBackgrounds, removeBackgrounds;
     std::vector<std::string> allDisciplines = Parser::parseDisciplines();
     std::vector<std::string> allBackgrounds = Parser::parseBackgrounds();
+
+    /**** Freebie page ****/
+    sigc::connection signalConnectionDisciplineAdd, signalCBackgrounds, signalTalent, signalSkill, signalKnowledges,
+    removeTalentSignal, removeSkillSignal, removeKnowledegeSignal, removeDisciplineSignal, removeBackgroundSignal; // keep reference to sigc::connection to disconnect it
+    Gtk::ScrolledWindow scrolledAbilities, scrolledAdvantages;
+    bool isFreebieePage;
+    Gtk::Grid frameAdvantages, frameAbilities;
+    Gtk::Button goFinal, goBackFreebie;
+    Gtk::Label freebieLabel;
+    Gtk::HSeparator hsep1;
+    int disciplineChoiceCount, talentChoiceCount, skillChoiceCount, knowledgeChoiceCount, backgroundChoiceCount; // number selected before freebie
 
     /*** Page 6 ***/
     Gtk::Image moreImage;
@@ -150,8 +164,11 @@ public:
     void Page4();
     void initPage5();
     void Page5();
+    void initFreebie();
+    void FreebiePage();
     void Page6();
     void FinalPage(); // display constructed character sheet
+    // button binding
     void addTalentClicked();
     void removeTalentClicked();
     void addSkillsClicked();
@@ -162,6 +179,23 @@ public:
     void removeBackgroundClicked();
     void addDisciplineClicked();
     void removeDisciplineClicked();
+
+    // Freebie Page binding
+    void addFreebieTalent();
+    void addFreebieSkills();
+    void addFreebieKnowledges();
+    void addFreebieDiscipline();
+    void addFreebieBackgrounds();
+
+    void removeFreebieTalent();
+    void removeFreebieSkills();
+    void removeFreebieKnowledges();
+    void removeFreebieDiscipline();
+    void removeFreebieBackgrounds();
+
+
+
+
     void ApplyPage3();
     void generateCh();
 
@@ -169,6 +203,12 @@ public:
     void changeTotalSocial();
     void changeTotalPhysical();
     void changeTotalMental();
+    void changeTotalTalents();
+    void changeTotalSkill();
+    void changeTotalKnowledge();
+    void changeTotalDiscipline();
+    void changeTotalBackground();
+    void changeTotalVirtue();
     int checkCorrectRepartition();
 
     void go5();

@@ -176,6 +176,92 @@ std::vector<std::string> Parser::parseSkills() {
     return allSkills;
 }
 
+std::vector<std::string> Parser::getClanDiscipline(std::string clan) {
+    std::vector<std::string> clanDiscipline;
+    if(clan=="Assamite"){
+        clanDiscipline.push_back("Celerity");clanDiscipline.push_back("Obfuscate");clanDiscipline.push_back("Quietus");
+    }else if (clan=="Brujah"){
+        clanDiscipline.push_back("Celerity");clanDiscipline.push_back("Potence");clanDiscipline.push_back("Presence");
+    }else if (clan=="Followers of Set"){
+        clanDiscipline.push_back("Obfuscate");clanDiscipline.push_back("Presence");clanDiscipline.push_back("Serpentis");
+    }else if (clan=="Gangrel"){
+        clanDiscipline.push_back("Animalism");clanDiscipline.push_back("Fortitude");clanDiscipline.push_back("Protean");
+    }else if (clan=="Giovanni"){
+        clanDiscipline.push_back("Dominate");clanDiscipline.push_back("Necromancy");clanDiscipline.push_back("Potence");
+    }else if (clan=="Lasombra"){
+        clanDiscipline.push_back("Dominate");clanDiscipline.push_back("Obtenebration");clanDiscipline.push_back("Potence");
+    }else if (clan=="Malkavian"){
+        clanDiscipline.push_back("Auspex");clanDiscipline.push_back("Dementation");clanDiscipline.push_back("Obfuscate");
+    }else if (clan=="Nosferatu"){
+        clanDiscipline.push_back("Animalism");clanDiscipline.push_back("Obfuscate");clanDiscipline.push_back("Potence");
+    }else if (clan=="Ravnos"){
+        clanDiscipline.push_back("Animalism");clanDiscipline.push_back("Chimerstry");clanDiscipline.push_back("Fortitude");
+    }else if (clan=="Toreador"){
+        clanDiscipline.push_back("Auspex");clanDiscipline.push_back("Celerity");clanDiscipline.push_back("Presence");
+    }else if (clan=="Tremere"){
+        clanDiscipline.push_back("Auspex");clanDiscipline.push_back("Dominate");clanDiscipline.push_back("Thaumaturgy");
+    }else if (clan=="Tzimisce"){
+        clanDiscipline.push_back("Animalism");clanDiscipline.push_back("Auspex");clanDiscipline.push_back("Vicissitude");
+    }else if (clan=="Ventrue"){
+        clanDiscipline.push_back("Presence");clanDiscipline.push_back("Fortitude");clanDiscipline.push_back("Dominate");
+    }else if (clan=="Baali"){
+        clanDiscipline.push_back("Daimoinon");clanDiscipline.push_back("Presence");clanDiscipline.push_back("Obfuscate");
+    }else if (clan=="Blood Brothers"){
+        clanDiscipline.push_back("Fortitude");clanDiscipline.push_back("Potence");clanDiscipline.push_back("Sanguinus");
+    }else if (clan=="Daughters of Cacophony"){
+        clanDiscipline.push_back("Fortitude");clanDiscipline.push_back("Melpominee");clanDiscipline.push_back("Presence");
+    }else if (clan=="Gargoyles"){
+        clanDiscipline.push_back("Flight");clanDiscipline.push_back("Fortitude");clanDiscipline.push_back("Potence");clanDiscipline.push_back("Visceratika");
+    }else if (clan=="Harbingers of Skulls"){
+        clanDiscipline.push_back("Auspex");clanDiscipline.push_back("Fortitude");clanDiscipline.push_back("Necromancy");
+    }else if (clan=="Kiasyd"){
+        clanDiscipline.push_back("Dominate");clanDiscipline.push_back("Mytherceria");
+        clanDiscipline.push_back("Obtenebration");
+    }else if (clan=="Nagaraja"){
+        clanDiscipline.push_back("Auspex");clanDiscipline.push_back("Necromancy");
+        clanDiscipline.push_back("Dominate");
+    }else if (clan=="Salubri"){
+        clanDiscipline.push_back("Auspex");clanDiscipline.push_back("Fortitude");
+        clanDiscipline.push_back("Obeah");
+    }else if (clan=="Samedi"){
+        clanDiscipline.push_back("Fortitude");clanDiscipline.push_back("Obfuscate");
+        clanDiscipline.push_back("Thanatosis");
+    }else if (clan=="True Brujah"){
+        clanDiscipline.push_back("Potence");clanDiscipline.push_back("Presence");
+        clanDiscipline.push_back("Temporis");
+    }else if (clan=="Ahrimanes"){
+        clanDiscipline.push_back("Animalism");clanDiscipline.push_back("Presence");
+        clanDiscipline.push_back("Spiritus");
+    }else if (clan=="Anda"){
+        clanDiscipline.push_back("Animalism");clanDiscipline.push_back("Fortitude");
+        clanDiscipline.push_back("Protean");
+    }else if (clan=="Cappadocians"){
+        clanDiscipline.push_back("Auspex");clanDiscipline.push_back("Fortitude");
+        clanDiscipline.push_back("Necromancy");
+    }else if (clan=="Children of Osiris"){
+        clanDiscipline.push_back("?");
+
+
+
+
+
+
+    }else if (clan=="Lamia"){
+        clanDiscipline.push_back("Fortitude");clanDiscipline.push_back("Necromancy");
+        clanDiscipline.push_back("Potence");
+    }else if (clan=="Lhiannan"){
+        clanDiscipline.push_back("Animalism");clanDiscipline.push_back("Ogham");
+        clanDiscipline.push_back("Presence");
+    }else if (clan=="Noiad"){
+        clanDiscipline.push_back("Animalism");clanDiscipline.push_back("Auspex");
+        clanDiscipline.push_back("Protean");
+    }else if (clan=="Caitiff"){
+        clanDiscipline = Parser::parseDisciplines();
+    }
+
+    return clanDiscipline;
+}
+
 
 /**
  * CharacterBackground declaration
@@ -237,6 +323,14 @@ std::string CharacterBackground::getConcept() {
 
 std::string CharacterBackground::getClan() {
     return clan;
+}
+
+std::string CharacterBackground::getNature() {
+    return nature;
+}
+
+std::string CharacterBackground::getDemeanor() {
+    return demeanor;
 }
 
 /**
@@ -608,21 +702,22 @@ Character CharacterCreation::getCharacter() {return ch;}
  */
 
 // Set maxBloodPool according to character Generation
-void BloodPool::setMaxBloodPool(std::string generation) {
-    std::map<std::string, int> generationToBlood;
-    generationToBlood.insert(std::pair<std::string, int>("Third",100));
-    generationToBlood.insert(std::pair<std::string, int>("Fourth",50));
-    generationToBlood.insert(std::pair<std::string, int>("Fifth",40));
-    generationToBlood.insert(std::pair<std::string, int>("Sixth",30));
-    generationToBlood.insert(std::pair<std::string, int>("Seventh",20));
-    generationToBlood.insert(std::pair<std::string, int>("Eighth",15));
-    generationToBlood.insert(std::pair<std::string, int>("Ninth",14));
-    generationToBlood.insert(std::pair<std::string, int>("Tenth",13));
-    generationToBlood.insert(std::pair<std::string, int>("Eleventh",12));
-    generationToBlood.insert(std::pair<std::string, int>("Twelfth",11));
-    generationToBlood.insert(std::pair<std::string, int>("Thirteenth+",10));
-    maxBloodPool = generationToBlood[generation];
-    std::cout << maxBloodPool;
+void BloodPool::setMaxBloodPool() {
+//    std::map<std::string, int> generationToBlood;
+//    generationToBlood.insert(std::pair<std::string, int>("Third",100));
+//    generationToBlood.insert(std::pair<std::string, int>("Fourth",50));
+//    generationToBlood.insert(std::pair<std::string, int>("Fifth",40));
+//    generationToBlood.insert(std::pair<std::string, int>("Sixth",30));
+//    generationToBlood.insert(std::pair<std::string, int>("Seventh",20));
+//    generationToBlood.insert(std::pair<std::string, int>("Eighth",15));
+//    generationToBlood.insert(std::pair<std::string, int>("Ninth",14));
+//    generationToBlood.insert(std::pair<std::string, int>("Tenth",13));
+//    generationToBlood.insert(std::pair<std::string, int>("Eleventh",12));
+//    generationToBlood.insert(std::pair<std::string, int>("Twelfth",11));
+//    generationToBlood.insert(std::pair<std::string, int>("Thirteenth+",10));
+//    maxBloodPool = generationToBlood[generation];
+//    std::cout << maxBloodPool;
+    maxBloodPool = rand() % 10 +1;
     setCurrentBloodPool(maxBloodPool);
 }
 
@@ -657,7 +752,7 @@ int HumanityWill::getWillpower() {
 }
 
 HumanityWill::HumanityWill(int conscience, int instinct, int courage) {
-    humanityPoints = courage + conscience;
+    humanityPoints = conscience;
     willpowerPoints = courage;
 }
 

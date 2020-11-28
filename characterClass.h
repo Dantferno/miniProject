@@ -25,6 +25,7 @@ public:
     static std::vector<std::string> parseSkills();
     static std::vector<std::string> parseDisciplines();
     static std::vector<std::string> parseBackgrounds();
+    static std::vector<std::string> getClanDiscipline(std::string);
 
     static auto parseAttributes();
     static auto parseAbilities();
@@ -68,6 +69,8 @@ public:
     std::string getSire();
     std::string getConcept();
     std::string getClan();
+    std::string getNature();
+    std::string getDemeanor();
 
 
     void presentBackground(); // cout text description of the Vampire background
@@ -211,7 +214,7 @@ class BloodPool{
     int maxBloodPool;
     int currentBloodPool;
 public:
-    void setMaxBloodPool(std::string generation); // set max blood pool according to Vampire generation
+    void setMaxBloodPool(); // set max blood pool according to Vampire generation
     int getMaxBloodPool();
     void setCurrentBloodPool(int blood);
     int getCurrentBloodPool();

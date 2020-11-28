@@ -32,6 +32,14 @@ MyGrid::MyGrid() {
     myfont.set_size(15000);
     myfont.set_family("Arial");
     this->set_row_spacing(10);
+    nextButton.override_font(myfont);
+    nextButton.set_label("Create new character.");
+    nextButton.signal_clicked().connect(sigc::mem_fun(*this,
+                                                      &MyGrid::Page2));
+    message.set_label("Welcome on the Vampire creation interface.");
+    message.override_font(myfont);
+    nextButton.set_size_request(100,50);
+
     Page1();
 }
 
@@ -39,18 +47,13 @@ void MyGrid::Page1(){
     // Clean widgets
     for (Widget *element : this->get_children ())
         this->remove (*element);
-    nextButton.override_font(myfont);
-    nextButton.set_label("Create new character.");
-    nextButton.signal_clicked().connect(sigc::mem_fun(*this,
-                                                      &MyGrid::Page2));
 
-    //coverVampire.set("/home/hugo/Pictures/covervampire.png");
 
-    message.set_label("Welcome on the Vampire creation interface.");
-    message.override_font(myfont);
-    this->attach(message, 0, 0, 1, 1);
-    //this->attach(coverVampire,0,1,1,1);
-    nextButton.set_size_request(100,50);
+    coverVampire.set("/home/hugo/Pictures/covervampire.png");
+
+
+    //this->attach(message, 0, 0, 1, 1);
+    this->attach(coverVampire,0,1,1,1);
     this->attach(nextButton,0,2,2,1);
     // This packs the button into the Window (a container);
     this->show_all();
@@ -65,7 +68,7 @@ void MyGrid::initPage2() {
     sirLabel.set_label("Sire :");
     conceptLabel.set_text("Concept :");
     clanLabel.set_text("Clan :");
-    comboClan.append("None");
+    comboClan.append("Caitiff");
     for (std::string clanName : Parser::parseClan()){
         comboClan.append(clanName);
     }
@@ -94,6 +97,8 @@ void MyGrid::Page2() {
     if (!isSavedPage2){
         initPage2();
     }
+    goPage2.set_label("Next");
+    goPage3.set_label("Next");
     // Clean widgets
     for (Widget *element : this->get_children ())
         this->remove (*element);
@@ -163,12 +168,19 @@ void MyGrid::savePage2(){
     sirEntry.set_text(sirEntry.get_text());
     conceptEntry.set_text(conceptEntry.get_text());
 
-    if (!isSavedPage2) {
-        isSavedPage2 = true;
-        initPage3();
-    }
-    comboNature.set_active_text(comboNature.get_active_text());
-    Page3();
+//    if(nameEntry.get_text()!="" && playerEntry.get_text()!="" && chronicleEntry.get_text()!="" && sirEntry.get_text()!="" && conceptEntry.get_text()!="") {
+//        if (!isSavedPage2) {
+//            isSavedPage2 = true;
+//            initPage3();
+//        }
+//        comboNature.set_active_text(comboNature.get_active_text());
+//        Page3();
+//    }else{
+//        Gtk::MessageDialog d("Missing Input", false, Gtk::MESSAGE_INFO);
+//        d.set_secondary_text("Please fill all the fields.");
+//        d.run();
+//    }
+    initPage3();Page3(); // <----- delete this after uncomment
 }
 
 void MyGrid::InitializeCr(){
@@ -258,7 +270,8 @@ void MyGrid::Page3(){
     // Clean widgets
     for (Widget *element : this->get_children ())
         this->remove (*element);
-
+    goPage2.set_label("Go back");
+    goPage4.set_label("Next");
     /***** Attributes ******/
     this->attach(attributesLabel, 0,0,6,1);
     // Physical
@@ -322,93 +335,22 @@ void MyGrid::ApplyPage3(){
     perceptionSpin.set_value(perceptionSpin.get_value());
     intelligenceSpin.set_value(intelligenceSpin.get_value());
     witsSpin.set_value(witsSpin.get_value());
-    //if (checkCorrectRepartition()==1){ // if repartition is not correct
-     //   Gtk::MessageDialog d("Repartition error", false, Gtk::MESSAGE_INFO);
-      //  d.set_secondary_text("Please put the points (7/5/3)");
-      //  d.run();
-    //}else {
-/*        Attributes attri;
-        attri.setPhysical(strengthSpin.get_value_as_int(), dexteritySpin.get_value_as_int(),
-                          staminaSpin.get_value_as_int());
-        attri.setSocial(charismaSpin.get_value_as_int(), manipulationSpin.get_value_as_int(),
-                        appearanceSpin.get_value_as_int());
-        attri.setMental(perceptionSpin.get_value_as_int(), intelligenceSpin.get_value_as_int(),
-                        witsSpin.get_value_as_int());
-        cr.StepTwo(attri);
-        cr.getCharacter().talk();*/
-if (!isSavedPage3){initPage4();isSavedPage3=true;}
+//    if (checkCorrectRepartition()==1){ // if repartition is not correct
+//         Gtk::MessageDialog d("Repartition error", false, Gtk::MESSAGE_INFO);
+//        d.set_secondary_text("Please put (7/5/3) points.");
+//       d.run();
+//    }else {
+
+    if (!isSavedPage3){initPage4();isSavedPage3=true;}
         Page4();
     //}
 }
 
-void MyGrid::removeTalentClicked(){
-    talentClicked--;
-    this->remove(addTalent);
-    this->remove(removeTalent);
-    this->remove(*wList.back());
-    this->remove(*spinListTalent.back());
-    wList.pop_back();
-    std::cout << "Wlist :" << wList.size() << std::endl;
-    spinListTalent.pop_back();
-    if (talentClicked >=1){
-
-        this->attach(addTalent, 0, 3+talentClicked,1,1);
-        this->attach(removeTalent,1, 3+talentClicked,1,1);
-    }else{
-        this->attach(addTalent, 0, 3+talentClicked,1,1);
-    }
-
-    this->show_all();
-}
-
-void MyGrid::addTalentClicked(){
-    // increase talentClicked to update the positions
-    talentClicked ++;
-    std::cout << "Talent clicked" << talentClicked << std::endl;
-    // remove the add button
-    this->remove(addTalent);
-    this->remove(removeTalent);
-    // add a combobox and spinbox
-    Gtk::ComboBoxText *addedP = new Gtk::ComboBoxText;
-    Gtk::SpinButton *addedSpinP = new Gtk::SpinButton;
-    // configure them
-
-    // Copy allTalents but pop back talents selected in another combobox
-    std::vector<std::string> availableTalents;
-    for(std::string talent : allTalents){
-        availableTalents.push_back(talent);
-        for (Gtk::ComboBoxText *c : wList){
-            if(c->get_active_text().raw() == talent){
-                availableTalents.pop_back();
-            }
-        }
-    }
-    // if no more talents are available, don't reattach the "add" button
-    if(availableTalents.size() >= 2){
-        this->attach(addTalent, 0, 3+talentClicked,1,1);
-    }
-    // add Available talents to the combobox
-    for(std::string talent : availableTalents){
-        addedP->append(talent);
-    }
-
-    addedP->set_active(0);
-    addedSpinP->set_range(1,3);
-    addedSpinP->set_increments(1,1);
-    // store them in vectors
-    wList.push_back(addedP);
-    spinListTalent.push_back(addedSpinP);
-    // add remove Talent button (configured in Page4)
-
-    this->attach(removeTalent,1, 3+talentClicked,1,1);
-    // attach and show
-    this->attach(*addedP,0,2+talentClicked,1,1);
-    this->attach(*addedSpinP, 1,2+talentClicked,1,1);
-    this->show_all();
-}
-
 
 void MyGrid::initPage4(){
+    pointsTalents.set_text("1");
+    pointsSkills.set_text("1");
+    pointsKnowledges.set_text("1");
     abilitiesLabel.set_text("Abilities");
     talentsLabel.set_text("Talents :");
     for(std::string talent : allTalents){talentsCombo.append(talent);}
@@ -418,15 +360,16 @@ void MyGrid::initPage4(){
     talentsSpin.set_range(1,3);
     talentsSpin.set_value(1);
     talentsSpin.set_increments(1,1);
+    talentsSpin.signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::changeTotalTalents));
     spinListTalent.push_back(&talentsSpin);
 
     addTalent.set_label("Add talent");
-    addTalent.signal_clicked().connect(sigc::mem_fun(*this,
+    signalTalent = addTalent.signal_clicked().connect(sigc::mem_fun(*this,
                                                      &MyGrid::addTalentClicked));
 
     // configure remove talent button but don't display it yet
     removeTalent.set_label("Remove talent");
-    removeTalent.signal_clicked().connect(sigc::mem_fun(*this,
+    removeTalentSignal = removeTalent.signal_clicked().connect(sigc::mem_fun(*this,
                                                         &MyGrid::removeTalentClicked));
 
     skillsLabel.set_label("Skills :");
@@ -437,13 +380,13 @@ void MyGrid::initPage4(){
     skillsSpin.set_range(1,3);
     skillsSpin.set_value(1);
     skillsSpin.set_increments(1,1);
-
+    skillsSpin.signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::changeTotalSkill));
     spinListSkills.push_back(&skillsSpin);
 
     addSkills.set_label("Add skill");
-    addSkills.signal_clicked().connect(sigc::mem_fun(*this, &MyGrid::addSkillsClicked));
+    signalSkill = addSkills.signal_clicked().connect(sigc::mem_fun(*this, &MyGrid::addSkillsClicked));
     removeSkills.set_label("Remove skill");
-    removeSkills.signal_clicked().connect(sigc::mem_fun(*this,
+    removeSkillSignal = removeSkills.signal_clicked().connect(sigc::mem_fun(*this,
                                                         &MyGrid::removeSkillsClicked));
 
     knowledgesLabel.set_label("Knowledges :");
@@ -454,13 +397,14 @@ void MyGrid::initPage4(){
     knowledgesSpin.set_range(1,3);
     knowledgesSpin.set_value(1);
     knowledgesSpin.set_increments(1,1);
+    knowledgesSpin.signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::changeTotalKnowledge));
     spinListKnowledges.push_back(&knowledgesSpin);
 
     addKnowledges.set_label("Add knowledge");
-    addKnowledges.signal_clicked().connect(sigc::mem_fun(*this, &MyGrid::addKnowledgesClicked));
+    signalKnowledges = addKnowledges.signal_clicked().connect(sigc::mem_fun(*this, &MyGrid::addKnowledgesClicked));
 
     removeKnowledges.set_label("Remove knowledge");
-    removeKnowledges.signal_clicked().connect(sigc::mem_fun(*this, &MyGrid::removeKnowledgesClicked));
+    removeKnowledegeSignal=removeKnowledges.signal_clicked().connect(sigc::mem_fun(*this, &MyGrid::removeKnowledgesClicked));
 
     goPage3.signal_clicked().connect(sigc::mem_fun(*this, &MyGrid::Page3));
     goPage3.set_label("Go back");
@@ -474,12 +418,14 @@ void MyGrid::Page4(){
     // Clean widgets
     for (Widget *element : this->get_children ())
         this->remove (*element);
-
+    goPage3.set_label("Go back");
+    goPage5.set_label("Next");
     this->attach(abilitiesLabel, 0,0,8,1);
 
     /******* Talents *******/
 
     this->attach(talentsLabel,0,1,2,1);
+    this->attach(pointsTalents, 1,1,1,1);
     // add talents to the combobox and attach
     int yPos = 2;
     for(Gtk::ComboBoxText *gt : wList){
@@ -494,6 +440,7 @@ void MyGrid::Page4(){
 
     this->attach(addTalent,0,yPos,1,1);
     /******* Skills *******/
+    this->attach(pointsSkills,4,1,1,1);
     this->attach(skillsLabel, 3,1,2,1);
     yPos = 2;
     // add skills to the combobox and attach
@@ -510,6 +457,7 @@ void MyGrid::Page4(){
     this->attach(addSkills, 3,yPos,1,1);
 
     /******* Knowledges ******/
+    this->attach(pointsKnowledges,7,1,1,1);
     this->attach(knowledgesLabel,6,1,2,1);
     yPos=2;
     for(Gtk::ComboBoxText *ct : knowledgesList){
@@ -542,21 +490,26 @@ void MyGrid::go5(){
         initPage5();
         isSavedPage5 = true;
     }
+    std::cout << comboClan.get_active_text();
     Page5();
 }
 
 
 void MyGrid::initPage5() {
+    pointsDiscipline.set_text("1");
+    pointsBackground.set_text("1");
+    pointsVirtue.set_text("1");
     advantageLabel.set_label("Advantages");
     disciplineLabel.set_label("Disciplines :");
     backgroundLabel.set_label("Background :");
     virtuesLabel.set_label("Virtues :");
 
-    for(std::string di : allDisciplines){disciplineCombo.append(di);}
+    for(std::string di : Parser::getClanDiscipline(comboClan.get_active_text())){disciplineCombo.append(di);}
     disciplineCombo.set_active(0);
     disciplineSpin.set_increments(1,1);
     disciplineSpin.set_range(1,5);
     disciplineSpin.set_value(1);
+    disciplineSpin.signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::changeTotalDiscipline));
     disciplineList.push_back(&disciplineCombo);
     spinDisciplineList.push_back(&disciplineSpin);
     for(std::string ba : allBackgrounds){backgroundCombo.append(ba);}
@@ -564,6 +517,7 @@ void MyGrid::initPage5() {
     backgroundSpin.set_increments(1,1);
     backgroundSpin.set_range(1,5);
     backgroundSpin.set_value(1);
+    backgroundSpin.signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::changeTotalBackground));
     backgroundList.push_back(&backgroundCombo);
     spinBackgroundList.push_back(&backgroundSpin);
 
@@ -574,27 +528,31 @@ void MyGrid::initPage5() {
     virtueSpin1.set_range(1,5);
     virtueSpin1.set_value(1);
     virtueSpin1.set_increments(1,1);
+    virtueSpin1.signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::changeTotalVirtue));
     virtueSpin2.set_range(1,5);
     virtueSpin2.set_value(1);
     virtueSpin2.set_increments(1,1);
+    virtueSpin2.signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::changeTotalVirtue));
     virtueSpin3.set_range(1,5);
     virtueSpin3.set_value(1);
     virtueSpin3.set_increments(1,1);
+    virtueSpin3.signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::changeTotalVirtue));
+
 
     addDisciplines.set_label("Add disciplines");
-    addDisciplines.signal_clicked().connect(sigc::mem_fun(*this, &MyGrid::addDisciplineClicked));
+    signalConnectionDisciplineAdd = addDisciplines.signal_clicked().connect(sigc::mem_fun(*this, &MyGrid::addDisciplineClicked));
     removeDisciplines.set_label("Remove disciplines");
-    removeDisciplines.signal_clicked().connect(sigc::mem_fun(*this, &MyGrid::removeDisciplineClicked));
+    removeDisciplineSignal = removeDisciplines.signal_clicked().connect(sigc::mem_fun(*this, &MyGrid::removeDisciplineClicked));
 
     addBackgrounds.set_label("Add background");
-    addBackgrounds.signal_clicked().connect(sigc::mem_fun(*this, &MyGrid::addBackgroundClicked));
+    signalCBackgrounds = addBackgrounds.signal_clicked().connect(sigc::mem_fun(*this, &MyGrid::addBackgroundClicked));
     removeBackgrounds.set_label("Remove background");
-    removeBackgrounds.signal_clicked().connect(sigc::mem_fun(*this, &MyGrid::removeBackgroundClicked));
+    removeBackgroundSignal=removeBackgrounds.signal_clicked().connect(sigc::mem_fun(*this, &MyGrid::removeBackgroundClicked));
 
     goPage4.set_label("Back");
     goPage6.set_label("Next");
     goPage6.signal_clicked().connect(sigc::mem_fun(*this,
-                                                   &MyGrid::Page6));
+                                                   &MyGrid::initFreebie));
 }
 
 
@@ -602,17 +560,34 @@ void MyGrid::Page5(){
     // Clean widgets
     for (Widget *element : this->get_children ())
         this->remove (*element);
+    // if clan has changed delete previous discipline
+    if (selectedClan!=comboClan.get_active_text()){
+        disciplineCombo.remove_all();
+        disciplineList.clear();
+        spinDisciplineList.clear();
+        for(std::string di : Parser::getClanDiscipline(comboClan.get_active_text())){disciplineCombo.append(di);}
+        disciplineCombo.set_active(0);
+        disciplineCombo.set_sensitive(true);
+        disciplineList.push_back(&disciplineCombo);
+        disciplineSpin.set_value(1);
+        spinDisciplineList.push_back(&disciplineSpin);
+        disciplineClicked=0;
+    }
 
+    selectedClan = comboClan.get_active_text();
+    goPage4.set_label("Back");
+    goPage6.set_label("Next");
     this->attach(vsep3, 3,1,1,3);
     this->attach(vsep4, 6,1,1,3);
 
     // layout first row of label
     this->attach(advantageLabel,0,0,8,1);
-
+    this->attach(pointsDiscipline,1,1,1,1);
     this->attach(disciplineLabel,0,1, 2,1);
     this->attach(backgroundLabel,4,1,2,1);
+    this->attach(pointsBackground, 5,1,1,1);
     this->attach(virtuesLabel,7,1,1,1);
-
+    this->attach(pointsVirtue,8,1,1,1);
     // add the combobox/spin
     int yPos = 2;
     for(Gtk::ComboBoxText *ct : disciplineList){
@@ -624,7 +599,12 @@ void MyGrid::Page5(){
         this->attach(*sp, 1,yPos,1,1);
         yPos++;
     }
-    this->attach(addDisciplines,0,yPos,1,1);
+    // attach add discipline only if they are more disciplines
+    if(disciplineList.size()!=Parser::getClanDiscipline(selectedClan).size()){
+        this->attach(addDisciplines,0,yPos,1,1);
+    }
+    // attach remove discipline if they are more than one discipline displayed
+    if(disciplineList.size()>1){this->attach(removeDisciplines,1,yPos,1,1);}
     yPos=2;
     for(Gtk::ComboBoxText *ct : backgroundList){
         this->attach(*ct, 4,yPos,1,1);
@@ -661,9 +641,223 @@ void MyGrid::Page5(){
     this->show_all();
 }
 
+void MyGrid::initFreebie() {
+    // Set previous user choice as minimum value of Freebie
+    strengthSpin.set_range(strengthSpin.get_value(), 5);
+    dexteritySpin.set_range(dexteritySpin.get_value(), 5);
+    staminaSpin.set_range(staminaSpin.get_value(), 5);
+    charismaSpin.set_range(charismaSpin.get_value(), 5);
+    manipulationSpin.set_range(manipulationSpin.get_value(), 5);
+    appearanceSpin.set_range(appearanceSpin.get_value(), 5);
+    perceptionSpin.set_range(perceptionSpin.get_value(), 5);
+    intelligenceSpin.set_range(intelligenceSpin.get_value(), 5);
+    witsSpin.set_range(witsSpin.get_value(), 10);
+
+    virtueSpin1.set_range(virtueSpin1.get_value(), 5);
+    virtueSpin2.set_range(virtueSpin2.get_value(), 5);
+    virtueSpin3.set_range(virtueSpin3.get_value(), 5);
+
+    // Rebinding of add elements and remove elements button
+    talentChoiceCount = wList.size();
+    signalTalent.disconnect();
+    addTalent.signal_clicked().connect(sigc::mem_fun(*this, &MyGrid::addFreebieTalent));
+    removeTalentSignal.disconnect();
+    removeTalent.signal_clicked().connect(sigc::mem_fun(*this, &MyGrid::removeFreebieTalent));
+
+    skillChoiceCount = skillsList.size();
+    signalSkill.disconnect();
+    addSkills.signal_clicked().connect(sigc::mem_fun(*this, &MyGrid::addFreebieSkills));
+    removeSkillSignal.disconnect();
+    removeSkills.signal_clicked().connect(sigc::mem_fun(*this, &MyGrid::removeFreebieSkills));
+
+    knowledgeChoiceCount = knowledgesList.size();
+    signalKnowledges.disconnect();
+    addKnowledges.signal_clicked().connect(sigc::mem_fun(*this, &MyGrid::addFreebieKnowledges));
+    removeKnowledegeSignal.disconnect();
+    removeKnowledges.signal_clicked().connect(sigc::mem_fun(*this, &MyGrid::removeFreebieKnowledges));
+
+    disciplineChoiceCount = disciplineList.size();
+    signalConnectionDisciplineAdd.disconnect();
+    addDisciplines.signal_clicked().connect(sigc::mem_fun(*this, &MyGrid::addFreebieDiscipline));
+    removeDisciplineSignal.disconnect();
+    removeDisciplines.signal_clicked().connect(sigc::mem_fun(*this, &MyGrid::removeFreebieDiscipline));
+
+    backgroundChoiceCount = backgroundList.size();
+    signalCBackgrounds.disconnect();
+    addBackgrounds.signal_clicked().connect(sigc::mem_fun(*this, &MyGrid::addFreebieBackgrounds));
+    removeBackgroundSignal.disconnect();
+    removeBackgrounds.signal_clicked().connect(sigc::mem_fun(*this, &MyGrid::removeFreebieBackgrounds));
+    goFinal.set_label("Generate PDF");
+    goFinal.signal_clicked().connect(sigc::mem_fun(*this, &MyGrid::Page6));
+    FreebiePage();
+}
+
+void MyGrid::FreebiePage(){
+    // Clean widgets
+    for (Widget *element : this->get_children ())
+        this->remove (*element);
+
+
+    /***** Attributes ******/
+    freebieLabel.set_label("Freebie points");
+    this->attach(freebieLabel, 0,0,6,1);
+
+    // Physical
+    this->attach(physicalLabel, 0,1,2,1);
+    //strength
+    this->attach(strengthLabel,0,2,1,1);
+    this->attach(strengthSpin,1,2,1,1);
+    // dexterity
+    this->attach(dexterityLabel, 0,3,1,1);
+    this->attach(dexteritySpin, 1,3,1,1);
+    // stamina
+    this->attach(staminaLabel, 0,4,1,1);
+    this->attach(staminaSpin, 1,4,1,1);
+    // // Social
+    this->attach(socialLabel,2,1,2,1);
+    // Charisma
+    this->attach(charismaLabel, 2,2,1,1);
+    this->attach(charismaSpin, 3,2,1,1);
+    // Manipulation
+    this->attach(manipulationLabel, 2,3,1,1);
+    this->attach(manipulationSpin, 3,3,1,1);
+    // Appearance
+    this->attach(appearanceLabel, 2,4,1,1);
+    this->attach(appearanceSpin, 3,4,1,1);
+    // // Mental
+    this->attach(mentalLabel, 4,1,2,1);
+    // Perception
+    this->attach(perceptionLabel, 4,2,1,1);
+    this->attach(perceptionSpin, 5,2,1,1);
+    // intelligence
+    this->attach(intelligenceLabel,4,3,1,1);
+    this->attach(intelligenceSpin,5,3,1,1);
+    //wits
+    this->attach(witsLabel, 4,4,1,1);
+    this->attach(witsSpin, 5,4,1,1);
+
+    this->attach(conscienceLabel, 7,2,1,1),
+    this->attach(instinctLabel, 7,3,1,1);
+    this->attach(courageLabel,7,4,1,1);
+
+    this->attach(virtuesLabel,7,1,1,1);
+    this->attach(virtueSpin1,8,2,1,1);
+    this->attach(virtueSpin2,8,3,1,1);
+    this->attach(virtueSpin3,8,4,1,1);
+
+
+    this->attach(hsep1, 0, 6, 10, 1);
+
+    /**** abilities ****/
+    this->attach(abilitiesLabel, 0,7,8,1);
+
+    /******* Talents *******/
+
+    this->frameAbilities.attach(talentsLabel,0,1,2,1);
+    // add talents to the combobox and attach
+    int yPos = 2;
+    for(Gtk::ComboBoxText *gt : wList){
+        gt->set_sensitive(false);
+        this->frameAbilities.attach(*gt, 0,yPos,1,1);
+        yPos++;
+    }
+    yPos=2;
+    for(Gtk::SpinButton *sp : spinListTalent){
+        this->frameAbilities.attach(*sp,1,yPos,1,1);
+        yPos++;
+    }
+
+    this->frameAbilities.attach(addTalent,0,yPos,1,1);
+    /******* Skills *******/
+    this->frameAbilities.attach(skillsLabel, 3,1,2,1);
+    yPos = 2;
+    // add skills to the combobox and attach
+    for(Gtk::ComboBoxText *gt : skillsList){
+        gt->set_sensitive(false);
+        this->frameAbilities.attach(*gt, 3,yPos,1,1);
+        yPos++;
+    }
+    yPos=2;
+    for(Gtk::SpinButton *sp : spinListSkills){
+        this->frameAbilities.attach(*sp,4,yPos,1,1);
+        yPos++;
+    }
+
+    this->frameAbilities.attach(addSkills, 3,yPos,1,1);
+
+    /******* Knowledges ******/
+    this->frameAbilities.attach(knowledgesLabel,6,1,2,1);
+    yPos=2;
+    for(Gtk::ComboBoxText *ct : knowledgesList){
+        ct->set_sensitive(false);
+        this->frameAbilities.attach(*ct, 6,yPos,1,1);
+        yPos++;
+    }
+    yPos = 2;
+    for(Gtk::SpinButton *sp : spinListKnowledges){
+        this->frameAbilities.attach(*sp, 7,yPos,1,1);
+        yPos++;
+    }
+    this->frameAbilities.attach(addKnowledges,6,yPos,1,1);
+
+    scrolledAbilities.add(frameAbilities);
+    scrolledAbilities.set_min_content_height(250);
+    this->attach(scrolledAbilities, 0,20,10,10);
+    /***** Advanatges *****/
+
+
+    // layout first row of label
+    this->frameAdvantages.attach(advantageLabel,0,0,8,1);
+
+    this->frameAdvantages.attach(disciplineLabel,0,1, 2,1);
+    this->frameAdvantages.attach(backgroundLabel,4,1,2,1);
+    this->frameAdvantages.attach(virtuesLabel,7,1,1,1);
+
+    // add the combobox/spin
+    yPos = 2;
+    for(Gtk::ComboBoxText *ct : disciplineList){
+        ct->set_sensitive(false);
+        this->frameAdvantages.attach(*ct,0,yPos,1,1);
+        yPos++;
+    }
+    yPos=2;
+    for(Gtk::SpinButton *sp : spinDisciplineList){
+        this->frameAdvantages.attach(*sp, 1,yPos,1,1);
+        yPos++;
+    }
+    // attach add discipline only if they are more disciplines
+    if(disciplineList.size()!=allDisciplines.size()){
+        this->frameAdvantages.attach(addDisciplines,0,yPos,1,1);
+    }
+
+    //if(disciplineList.size()>1){this->attach(removeDisciplines,1,yPos,1,1);}
+    yPos=2;
+    for(Gtk::ComboBoxText *ct : backgroundList){
+        ct->set_sensitive(false);
+        this->frameAdvantages.attach(*ct, 4,yPos,1,1);
+        yPos++;
+    }
+    yPos=2;
+    for(Gtk::SpinButton *sp : spinBackgroundList){
+        this->frameAdvantages.attach(*sp,5,yPos,1,1);
+        yPos++;
+    }
+    this->frameAdvantages.attach(addBackgrounds, 4,yPos,1,1);
+
+    scrolledAdvantages.add(frameAdvantages);
+    scrolledAdvantages.set_min_content_height(250);
+
+    this->attach(scrolledAdvantages, 0,50,10,1);
+
+    this->attach(goFinal,50,50,1,1);
+    // This packs the button into the Window (a container);
+    this->show_all();
+}
+
 void MyGrid::Page6(){
     generateCh();
     pdf.setCh(cr.getCharacter());
+    cr.getCharacter().talk();
     // Clean widgets
     for (Widget *element : this->get_children ())
         this->remove (*element);
@@ -701,672 +895,7 @@ void MyGrid::FinalPage(){
 }
 
 
-void MyGrid::changeTotalMental(){
-   int spin1, spin2, spin3;
-   spin1 = std::stoi(perceptionSpin.get_text().raw());
-   spin2 = std::stoi(intelligenceSpin.get_text().raw());
-   spin3 = std::stoi(witsSpin.get_text().raw());
-   std::string newTotal = std::to_string(spin1 + spin2 + spin3-3);
-   totalPointSocial.set_text(newTotal);
-}
 
-void MyGrid::changeTotalSocial() {
-    int spin4, spin5, spin6;
-    spin4 = std::stoi(charismaSpin.get_text().raw());
-    spin5 = std::stoi(manipulationSpin.get_text().raw());
-    spin6 = std::stoi(appearanceSpin.get_text().raw());
-    std::string newTotalMental = std::to_string(spin4 + spin5 + spin6-3);
-    totalPointMental.set_text(newTotalMental);
-}
 
 
-void MyGrid::changeTotalPhysical() {
-    int spin7, spin8, spin9;
-    spin7 = std::stoi(strengthSpin.get_text().raw());
-    spin8 = std::stoi(dexteritySpin.get_text().raw());
-    spin9 = std::stoi(staminaSpin.get_text().raw());
-    std::string newTotalPhysical = std::to_string(spin7 + spin8 + spin9-3);
-    totalPointPhysical.set_text(newTotalPhysical);
 
-}
-
-int MyGrid::checkCorrectRepartition(){
-    int tot1, tot2, tot3;
-    std::vector<int> values;
-    tot1 = std::stoi(totalPointPhysical.get_text().raw());
-    tot2 = std::stoi(totalPointSocial.get_text().raw());
-    tot3 = std::stoi(totalPointMental.get_text().raw());
-    values.push_back(tot1);values.push_back(tot2); values.push_back(tot3);
-    int key1(7), key2(5), key3(3);
-    if (std::count(values.begin(), values.end(), key1)
-    && std::count(values.begin(), values.end(), key2)
-    && std::count(values.begin(), values.end(), key3))
-    {
-        return 0;
-    }else{return 1;}
-}
-
-void MyGrid::addSkillsClicked() {
-// increase skillClicked to update the positions
-    skillClicked ++;
-    // remove the add button
-    this->remove(addSkills);
-    this->remove(removeSkills);
-    // add a combobox and spinbox
-    Gtk::ComboBoxText *addedP = new Gtk::ComboBoxText;
-    Gtk::SpinButton *addedSpinP = new Gtk::SpinButton;
-    // configure them
-
-    // Copy allSkills but pop back talents selected in another combobox
-    std::vector<std::string> availableSkills;
-    for(std::string skill : allSkills){
-        availableSkills.push_back(skill);
-        for (Gtk::ComboBoxText *c : skillsList){
-            if(c->get_active_text().raw() == skill){
-                availableSkills.pop_back();
-            }
-        }
-    }
-    // if no more skill are available, don't reattach the "add" button
-    if(availableSkills.size() >= 2){
-        this->attach(addSkills, 3, 3+skillClicked,1,1);
-    }
-    // add Available skill to the combobox
-    for(std::string skill : availableSkills){
-        addedP->append(skill);
-    }
-
-    addedP->set_active(0);
-    addedSpinP->set_range(1,3);
-    addedSpinP->set_increments(1,1);
-    // store them in vectors
-    skillsList.push_back(addedP);
-    spinListSkills.push_back(addedSpinP);
-    // add remove skill button (configured in Page4)
-
-    this->attach(removeSkills,4, 3+skillClicked,1,1);
-    // attach and show
-    this->attach(*addedP,3,2+skillClicked,1,1);
-    this->attach(*addedSpinP, 4,2+skillClicked,1,1);
-    this->show_all();
-}
-void MyGrid::removeSkillsClicked() {
-    skillClicked--;
-    this->remove(addSkills);
-    this->remove(removeSkills);
-    this->remove(*skillsList.back());
-    this->remove(*spinListSkills.back());
-    skillsList.pop_back();
-    spinListSkills.pop_back();
-    if (skillClicked >=1){
-
-        this->attach(addSkills, 3, 3+skillClicked,1,1);
-        this->attach(removeSkills,4, 3+skillClicked,1,1);
-    }else{
-        this->attach(addSkills, 3, 3+skillClicked,1,1);
-    }
-
-    this->show_all();
-}
-
-void MyGrid::addKnowledgesClicked() {
-    knowledgeClicked ++;
-    // remove the add button
-    this->remove(addKnowledges);
-    this->remove(removeKnowledges);
-    // add a combobox and spinbox
-    Gtk::ComboBoxText *addedP = new Gtk::ComboBoxText;
-    Gtk::SpinButton *addedSpinP = new Gtk::SpinButton;
-    // configure them
-
-    // Copy allSkills but pop back talents selected in another combobox
-    std::vector<std::string> availableKnowledges;
-    for(std::string know : allKnowledges){
-        availableKnowledges.push_back(know);
-        for (Gtk::ComboBoxText *c : knowledgesList){
-            if(c->get_active_text().raw() == know){
-                availableKnowledges.pop_back();
-            }
-        }
-    }
-    // if no more skill are available, don't reattach the "add" button
-    if(availableKnowledges.size() >= 2){
-        this->attach(addKnowledges, 6, 3+knowledgeClicked,1,1);
-    }
-    // add Available skill to the combobox
-    for(std::string know : availableKnowledges){
-        addedP->append(know);
-    }
-
-    addedP->set_active(0);
-    addedSpinP->set_range(1,3);
-    addedSpinP->set_increments(1,1);
-    // store them in vectors
-    knowledgesList.push_back(addedP);
-    spinListKnowledges.push_back(addedSpinP);
-    // add remove skill button (configured in Page4)
-
-    this->attach(removeKnowledges,7, 3+knowledgeClicked,1,1);
-    // attach and show
-    this->attach(*addedP,6,2+knowledgeClicked,1,1);
-    this->attach(*addedSpinP, 7,2+knowledgeClicked,1,1);
-    this->show_all();
-}
-
-/**
- * executed upon clicking on "remove Knowledges" button.
- * Remove last spinKnowledge and combobox and re attach the
- */
-void MyGrid::removeKnowledgesClicked() {
-    knowledgeClicked--;
-    this->remove(addKnowledges);
-    this->remove(removeKnowledges);
-    this->remove(*knowledgesList.back());
-    this->remove(*spinListKnowledges.back());
-    knowledgesList.pop_back();
-    spinListKnowledges.pop_back();
-    if (knowledgeClicked >=1){
-
-        this->attach(addKnowledges, 6, 3+knowledgeClicked,1,1);
-        this->attach(removeKnowledges,7, 3+knowledgeClicked,1,1);
-    }else{
-        this->attach(addKnowledges, 6, 3+knowledgeClicked,1,1);
-    }
-
-    this->show_all();
-}
-
-void MyGrid::addBackgroundClicked() {
-    backgroundClicked ++;
-    // remove the add button
-    this->remove(addBackgrounds);
-    this->remove(removeBackgrounds);
-    // add a combobox and spinbox
-    Gtk::ComboBoxText *addedP = new Gtk::ComboBoxText;
-    Gtk::SpinButton *addedSpinP = new Gtk::SpinButton;
-    // configure them
-
-    // Copy allSkills but pop back talents selected in another combobox
-    std::vector<std::string> availableBackgrounds;
-    for(std::string bac : allBackgrounds){
-        availableBackgrounds.push_back(bac);
-        for (Gtk::ComboBoxText *c : backgroundList){
-            if(c->get_active_text().raw() == bac){
-                availableBackgrounds.pop_back();
-            }
-        }
-    }
-    // if no more skill are available, don't reattach the "add" button
-    if(availableBackgrounds.size() >= 2){
-        this->attach(addBackgrounds, 4, 3+backgroundClicked,1,1);
-    }
-    // add Available skill to the combobox
-    for(std::string ba : availableBackgrounds){
-        addedP->append(ba);
-    }
-
-    addedP->set_active(0);
-    addedSpinP->set_range(1,3);
-    addedSpinP->set_increments(1,1);
-    // store them in vectors
-    backgroundList.push_back(addedP);
-    spinBackgroundList.push_back(addedSpinP);
-    // add remove skill button (configured in Page4)
-
-    this->attach(removeBackgrounds,5, 3+backgroundClicked,1,1);
-    // attach and show
-    this->attach(*addedP,4,2+backgroundClicked,1,1);
-    this->attach(*addedSpinP, 5,2+backgroundClicked,1,1);
-    this->show_all();
-}
-
-
-void MyGrid::addDisciplineClicked() {
-    disciplineClicked ++;
-    // remove the add button
-    this->remove(addDisciplines);
-    this->remove(removeDisciplines);
-    // add a combobox and spinbox
-    Gtk::ComboBoxText *addedP = new Gtk::ComboBoxText;
-    Gtk::SpinButton *addedSpinP = new Gtk::SpinButton;
-    // configure them
-
-    // Copy allSkills but pop back talents selected in another combobox
-    std::vector<std::string> availableDisciplines;
-    for(std::string bac : allDisciplines){
-        availableDisciplines.push_back(bac);
-        for (Gtk::ComboBoxText *c : disciplineList){
-            if(c->get_active_text().raw() == bac){
-                availableDisciplines.pop_back();
-            }
-        }
-    }
-    // if no more skill are available, don't reattach the "add" button
-    if(availableDisciplines.size() >= 2){
-        this->attach(addDisciplines, 0, 3+disciplineClicked,1,1);
-    }
-    // add Available skill to the combobox
-    for(std::string ba : availableDisciplines){
-        addedP->append(ba);
-    }
-
-    addedP->set_active(0);
-    addedSpinP->set_range(1,3);
-    addedSpinP->set_increments(1,1);
-    // store them in vectors
-    disciplineList.push_back(addedP);
-    spinDisciplineList.push_back(addedSpinP);
-    // add remove skill button (configured in Page4)
-
-    this->attach(removeDisciplines,1, 3+disciplineClicked,1,1);
-    // attach and show
-    this->attach(*addedP,0,2+disciplineClicked,1,1);
-    this->attach(*addedSpinP, 1,2+disciplineClicked,1,1);
-    this->show_all();
-}
-
-void MyGrid::removeBackgroundClicked() {
-    backgroundClicked--;
-    this->remove(addBackgrounds);
-    this->remove(removeBackgrounds);
-    this->remove(*backgroundList.back());
-    this->remove(*spinBackgroundList.back());
-    backgroundList.pop_back();
-    spinBackgroundList.pop_back();
-    if (backgroundClicked >=1){
-        this->attach(addBackgrounds, 4, 3+backgroundClicked,1,1);
-        this->attach(removeBackgrounds,5, 3+backgroundClicked,1,1);
-    }else{
-        this->attach(addBackgrounds, 4, 3+backgroundClicked,1,1);
-    }
-
-    this->show_all();
-}
-
-
-void MyGrid::removeDisciplineClicked() {
-    disciplineClicked--;
-    this->remove(addDisciplines);
-    this->remove(removeDisciplines);
-    this->remove(*disciplineList.back());
-    this->remove(*spinDisciplineList.back());
-    disciplineList.pop_back();
-    spinDisciplineList.pop_back();
-    if (disciplineClicked >=1){
-
-        this->attach(addDisciplines, 0, 3+disciplineClicked,1,1);
-        this->attach(removeDisciplines,1, 3+disciplineClicked,1,1);
-    }else{
-        this->attach(addDisciplines, 0, 3+disciplineClicked,1,1);
-    }
-
-    this->show_all();
-}
-
-void MyGrid::generateCh() {
-    cr.StepZero(nameEntry.get_text(),playerEntry.get_text(), chronicleEntry.get_text(), generationEntry.get_text(), sirEntry.get_text());
-    cr.StepOne(conceptEntry.get_text(), comboClan.get_active_text(), comboNature.get_active_text(), comboDemeanor.get_active_text());
-    Attributes attri;
-    attri.setPhysical(strengthSpin.get_value_as_int(),dexteritySpin.get_value_as_int(),staminaSpin.get_value_as_int());
-    attri.setSocial(charismaSpin.get_value_as_int(),manipulationSpin.get_value_as_int(),appearanceSpin.get_value_as_int());
-    attri.setMental(perceptionSpin.get_value_as_int(),intelligenceSpin.get_value_as_int(),witsSpin.get_value_as_int());
-    cr.StepTwo(attri);
-    /****** abilities *****/
-    Abilities abbi;
-    // get position of selected talents in allTalents
-    std::vector<int> indexTalents;
-    for (Gtk::ComboBoxText *cb : wList){
-        indexTalents.push_back(std::find(allTalents.begin(), allTalents.end(), cb->get_active_text()) - allTalents.begin());
-    }
-    // get position of selected skills in allSkills
-    std::vector<int> indexSkills;
-    for (Gtk::ComboBoxText *cb : skillsList){
-        indexSkills.push_back(std::find(allSkills.begin(), allSkills.end(), cb->get_active_text()) - allSkills.begin());
-    }
-    // get position of selected knowledges in allKnowledges
-    std::vector<int> indexKnowledges;
-    for (Gtk::ComboBoxText *cb : knowledgesList){
-        indexKnowledges.push_back(std::find(allKnowledges.begin(), allKnowledges.end(), cb->get_active_text()) - allKnowledges.begin());
-    }
-    // Values
-    std::vector<int> valuesT;
-    for(Gtk::SpinButton *sp : spinListTalent){
-        valuesT.push_back(sp->get_value_as_int());
-    }
-    std::vector<int> valuesS;
-    for(Gtk::SpinButton *sp : spinListSkills){
-        valuesS.push_back(sp->get_value_as_int());
-    }
-    std::vector<int> valuesK;
-    for(Gtk::SpinButton *sp : spinListKnowledges){
-        valuesK.push_back(sp->get_value_as_int());
-    }
-
-    abbi.setTalents(indexTalents);
-    abbi.setValueTalents(valuesT);
-    abbi.setSkills(indexSkills);
-    abbi.setValueSkills(valuesS);
-    abbi.setKnowledges(indexKnowledges);
-    abbi.setValueKnowledges(valuesK);
-    cr.StepThree(abbi);
-    /***** Advantage *****/
-    Advantages adv;
-    std::vector<std::string> disciplineName;
-    std::vector<int> disciplinePoints;
-
-    for (Gtk::ComboBoxText *cb : disciplineList){
-        disciplineName.push_back(cb->get_active_text());
-    }
-    for(Gtk::SpinButton *sp: spinDisciplineList){
-        disciplinePoints.push_back(sp->get_value_as_int());
-    }
-    adv.setDisciplines(disciplineName, disciplinePoints);
-
-    std::vector<std::string> backgroundName;
-    std::vector<int> backgroundPoints;
-    for (Gtk::ComboBoxText *cb : backgroundList){
-        backgroundName.push_back(cb->get_active_text());
-    }
-    for(Gtk::SpinButton *sp: spinBackgroundList){
-        backgroundPoints.push_back(sp->get_value_as_int());
-    }
-
-    adv.setBackgrounds(backgroundName, backgroundPoints);
-    adv.setVirtue(virtueSpin1.get_value_as_int(), virtueSpin2.get_value_as_int(), virtueSpin3.get_value_as_int());
-    cr.StepFour(adv);
-}
-
-
-
-DrawPDF::DrawPDF(){};
-DrawPDF::~DrawPDF(){};
-
-bool DrawPDF::on_draw(const Cairo::RefPtr<Cairo::Context> &cr) {
-    // scale to unit square and translate (0, 0) to be (0.5, 0.5), i.e.
-    // the center of the window
-    //cr->scale(width, heig
-    Glib::RefPtr<Gdk::Pixbuf> image = Gdk::Pixbuf::create_from_file("/home/hugo/Pictures/testpdf.png");
-    Gtk::Allocation allocation = get_allocation();
-    const int width = allocation.get_width();
-    const int height = allocation.get_height();
-
-    // Draw the image in the middle of the drawing area, or (if the image is
-    // larger than the drawing area) draw the middle part of the image.
-    Gdk::Cairo::set_source_pixbuf(cr, image,
-                                  (width - image->get_width())/2, (height - image->get_height())/2);
-    cr->paint();
-
-    cr->set_source_rgb( 0.1, 0.1, 0.1);
-    cr->set_font_size(10);
-
-    fillPlayerInfo(cr);
-
-    fillAttributes(cr);
-
-    fillAbilities(cr);
-
-    fillAdvantages(cr);
-
-    return Widget::on_draw(cr);
-}
-
-void DrawPDF::setCh(Character ch) {
-    this->ch = ch;
-}
-
-void DrawPDF::fillAttributes(const Cairo::RefPtr<Cairo::Context> &cr) {
-    /***** Attributes *****/
-    // Physical
-    int pointsToAdd = ch.getAttributes().getStrength();
-    cr->set_source_rgb( 0.1, 0.1, 0.1);
-    int dx = 0;
-    for(int i=0; i<pointsToAdd; i++){
-        cr->move_to(0,0);
-        cr->arc(177+dx, 237, 4.5, 0, 2*M_PI);
-
-        dx += 10.17;
-        cr->fill_preserve();
-    }
-
-    pointsToAdd = ch.getAttributes().getDexterity();
-    dx = 0;
-    for(int i=0; i<pointsToAdd; i++){
-        cr->move_to(0,0);
-        cr->arc(177+dx, 252, 4.5, 0, 2*M_PI);
-
-        dx += 10.17;
-        cr->fill_preserve();
-    }
-    cr->save();
-
-    pointsToAdd = ch.getAttributes().getStamina();
-    dx = 0;
-    for(int i=0; i<pointsToAdd; i++){
-        cr->move_to(0,0);
-        cr->arc(177+dx, 269, 4.5, 0, 2*M_PI);
-
-        dx += 10.17;
-        cr->fill_preserve();
-    }
-    cr->save();
-
-    //social
-    pointsToAdd = ch.getAttributes().getCharisma();
-    dx = 0;
-    for(int i=0; i<pointsToAdd; i++){
-        cr->move_to(0,0);
-        cr->arc(388+dx, 237, 4.5, 0, 2*M_PI);
-
-        dx += 10.17;
-        cr->fill_preserve();
-    }
-    cr->save();
-
-    pointsToAdd = ch.getAttributes().getManipulation();
-    dx = 0;
-    for(int i=0; i<pointsToAdd; i++){
-        cr->move_to(0,0);
-        cr->arc(388+dx, 252, 4.5, 0, 2*M_PI);
-
-        dx += 10.17;
-        cr->fill_preserve();
-    }
-    cr->save();
-
-    pointsToAdd = ch.getAttributes().getAppearance();
-    dx = 0;
-    for(int i=0; i<pointsToAdd; i++){
-        cr->move_to(0,0);
-        cr->arc(388+dx, 269, 4.5, 0, 2*M_PI);
-
-        dx += 10.17;
-        cr->fill_preserve();
-    }
-    cr->save();
-
-    // Mental
-
-    pointsToAdd = ch.getAttributes().getPerception();
-    dx = 0;
-    for(int i=0; i<pointsToAdd; i++){
-        cr->move_to(0,0);
-        cr->arc(596+dx, 237, 4.5, 0, 2*M_PI);
-
-        dx += 10.17;
-        cr->fill_preserve();
-    }
-    cr->save();
-
-    pointsToAdd = ch.getAttributes().getIntelligence();
-    dx = 0;
-    for(int i=0; i<pointsToAdd; i++){
-        cr->move_to(0,0);
-        cr->arc(596+dx, 252, 4.5, 0, 2*M_PI);
-
-        dx += 10.17;
-        cr->fill_preserve();
-    }
-    cr->save();
-
-    pointsToAdd = ch.getAttributes().getWits();
-    dx = 0;
-    for(int i=0; i<pointsToAdd; i++){
-        cr->move_to(0,0);
-        cr->arc(596+dx, 269, 4.5, 0, 2*M_PI);
-
-        dx += 10.17;
-        cr->fill_preserve();
-    }
-    cr->save();
-}
-
-void DrawPDF::fillPlayerInfo(const Cairo::RefPtr<Cairo::Context> &cr) {
-    /**** Background ****/
-    // nom
-    cr->move_to(118,137);
-    cr->show_text(ch.getBackground().getName());
-
-    // player
-    cr->move_to(121,158);
-    cr->show_text(ch.getBackground().getPlayer());
-
-
-    // Chronicle
-    cr->move_to(144,177);
-    cr->show_text(ch.getBackground().getChronicle());
-
-    // Nature
-    cr->move_to(336,137);
-    cr->show_text("");
-
-    // Demeanor
-    cr->move_to(354,157);
-    cr->show_text("Test nom ");
-
-    // Concept
-    cr->move_to(344,177);
-    cr->show_text(ch.getBackground().getConcept());
-
-    // Clan
-    cr->move_to(530,137);
-    cr->show_text(ch.getBackground().getClan());
-
-    // Generation
-    cr->move_to(568,156);
-    cr->show_text(ch.getBackground().getGeneration());
-
-    // Sire
-    cr->move_to(528,176);
-    cr->show_text(ch.getBackground().getSire());
-    cr->save();
-}
-
-void DrawPDF::fillAbilities(const Cairo::RefPtr<Cairo::Context> &cr) {
-    int startYcoord = 330;
-    int talentsXcoord = 178;
-    int skillsXcoord = 388;
-    int knowledgesXcoord = 596;
-    int dx = 10.17;
-    int dy = 15;
-    // talents
-    std::vector<int> talents = ch.getAbilities().getTalents();
-    std::vector<int> valueTalents = ch.getAbilities().getValueTalents();
-    int posPoint =0;
-    for (int a : talents){
-        // numberOfPoint for this talent -> valueTalents[posPoint]
-        for(int i=0; i<valueTalents.at(posPoint); i++){
-            cr->move_to(0,0);
-            cr->arc(talentsXcoord+i*dx, startYcoord+a*dy+a-a/2, 4.5, 0, 2*M_PI);
-            cr->fill_preserve();
-        }
-        posPoint++;
-    }
-    cr->save();
-
-    // Skills
-    std::vector<int> skills = ch.getAbilities().getSkills();
-    std::vector<int> valueSkills = ch.getAbilities().getValueSkills();
-    posPoint =0;
-    for (int a : skills){
-        // numberOfPoint for this skill -> valueSkills[posPoint]
-        for(int i=0; i<valueSkills.at(posPoint); i++){
-            cr->move_to(0,0);
-            cr->arc(skillsXcoord+i*dx, startYcoord+a*dy+a-a/2, 4.5, 0, 2*M_PI);
-            cr->fill_preserve();
-        }
-        posPoint++;
-    }
-    cr->save();
-
-    //Knowledges
-    std::vector<int> knowledge = ch.getAbilities().getKnowledge();
-    std::vector<int> valueKnowledge = ch.getAbilities().getValueKnowledge();
-    posPoint =0;
-    for (int a : knowledge){
-        // numberOfPoint for this talent -> valueTalents[posPoint]
-        for(int i=0; i<valueKnowledge.at(posPoint); i++){
-            cr->move_to(0,0);
-            cr->arc(knowledgesXcoord+i*dx, startYcoord+a*dy+a-a/2, 4.5, 0, 2*M_PI);
-            cr->fill_preserve();
-        }
-        posPoint++;
-    }
-    cr->save();
-}
-
-void DrawPDF::fillAdvantages(const Cairo::RefPtr<Cairo::Context> &cr){
-    int labelx=80, startx=178,starty=550, dx=10, dy=15.5;
-    auto disciplineMap = ch.getAdvantages().getDisciplines();
-    int numberDiscipline =0;
-    for (auto it = disciplineMap.begin(); it != disciplineMap.end(); ++it){
-        cr->move_to(labelx,starty+numberDiscipline*dy);
-        cr->show_text(it->first);
-        for (int i=0; i<it->second;i++){
-            cr->move_to(0,0);
-            cr->arc(startx+i*dx, starty+numberDiscipline*dy, 4.5,0,2*M_PI);
-            cr->fill_preserve();
-            cr->save();
-        }
-        numberDiscipline++;
-    }
-    // backgrounds
-    labelx = 290;
-    startx = 388;
-    auto backgroundMap = ch.getAdvantages().getBackgrounds();
-    int numberBackground = 0;
-    for (auto it = backgroundMap.begin(); it != backgroundMap.end(); ++it){
-        cr->move_to(labelx,starty+numberBackground*dy);
-        cr->show_text(it->first);
-        for (int i=0; i<it->second;i++){
-            cr->move_to(0,0);
-            cr->arc(startx+i*dx, starty+numberBackground*dy, 4.5,0,2*M_PI);
-            cr->fill_preserve();
-            cr->save();
-        }
-        numberBackground++;
-    }
-
-    // Virtue
-    int virtue1Points = ch.getAdvantages().getConscience();
-    int virtue2Points = ch.getAdvantages().getInstinct();
-    int virtue3Points = ch.getAdvantages().getCourage();
-    int virtuex = 637, consciencey = 550,instincty = 581,couragey= 612;
-    for(int i=0; i<virtue1Points; i++){
-        cr->move_to(0,0);
-        cr->arc(virtuex+i*dx, consciencey, 4.5, 0, 2*M_PI);
-        cr->fill_preserve();
-        cr->save();
-    }
-    for(int i=0; i<virtue2Points; i++){
-        cr->move_to(0,0);
-        cr->arc(virtuex+i*dx, instincty, 4.5, 0, 2*M_PI);
-        cr->fill_preserve();
-        cr->save();
-    }
-    for(int i=0; i<virtue3Points; i++){
-        cr->move_to(0,0);
-        cr->arc(virtuex+i*dx, couragey, 4.5, 0, 2*M_PI);
-        cr->fill_preserve();
-        cr->save();
-    }
-}
