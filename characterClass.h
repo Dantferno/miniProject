@@ -212,10 +212,11 @@ public:
     void talk(); // cout text description of the chosen disciplines and backgrounds
 };
 
-/**
- *  Blood pool
- */
+
 class BloodPool{
+    /**
+ *  record Bloodpool
+ */
     int maxBloodPool;
     int currentBloodPool;
 public:
@@ -226,11 +227,12 @@ public:
     void talk();
 };
 
-/**
- * Humanity and Willpower
- */
+
 
 class HumanityWill{
+    /**
+ * Humanity and Willpower
+ */
     int humanityPoints;
     int willpowerPoints;
 public:
@@ -331,12 +333,13 @@ public:
 };
 
 
-/**
+
+class CharacterCreation{
+    /**
  * Will be used by the GUI to create the character
  * each step will be a window and the arguments passed to the step will be the form to complete
  * For now serve as a proof of concept
  */
-class CharacterCreation{
     Character ch;
     CharacterBackground &background = ch.getBackground();
 public:

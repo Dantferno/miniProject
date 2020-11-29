@@ -14,21 +14,18 @@
 #include <vector>
 #include <gtkmm/label.h>
 #include <gtkmm/entry.h>
-#include <gtkmm/listbox.h>
 #include <gtkmm/image.h>
 #include <gtkmm/treeview.h>
-#include <gtkmm/liststore.h>
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/spinbutton.h>
 #include "characterClass.h"
 #include <pangomm.h>
-#include <gtkmm/radiobutton.h>
 #include <gtkmm/messagedialog.h>
 #include <gtkmm/separator.h>
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/textview.h>
 #include <gtkmm/drawingarea.h>
-#include <gtkmm/filechooserdialog.h>
+
 
 class CustomSpinButton: public Gtk::SpinButton{
 public:
@@ -107,11 +104,11 @@ class MyGrid: public Gtk::Grid
 
     Gtk::ComboBoxText comboNature, comboDemeanor, comboClan;
     Gtk::Button goPage3, goBack, goPage2;
-    Gtk::Image firstPart;
+
 
 
     /**** Page 3 ****/
-    Gtk::Image attribImage;
+
     Gtk::Label totalPoint, totalPointPhysical, totalPointSocial, totalPointMental;
     Gtk::Label attributesLabel, physicalLabel, strengthLabel, dexterityLabel, staminaLabel,
                 socialLabel, charismaLabel, manipulationLabel, appearanceLabel,
@@ -141,7 +138,6 @@ class MyGrid: public Gtk::Grid
     int backgroundClicked =0, disciplineClicked=0;
     std::vector<Gtk::ComboBoxText*> backgroundList,  disciplineList;
     std::vector<Gtk::SpinButton*>  spinBackgroundList,  spinDisciplineList;
-    Gtk::Image advantagesImage;
     Gtk::Label advantageLabel, disciplineLabel, backgroundLabel, virtuesLabel, conscienceLabel, instinctLabel, courageLabel,
     pointsDiscipline, pointsBackground, pointsVirtue;
     Gtk::ComboBoxText disciplineCombo, backgroundCombo;
@@ -150,17 +146,13 @@ class MyGrid: public Gtk::Grid
     std::vector<std::string> allDisciplines = Parser::parseDisciplines();
     std::vector<std::string> allBackgrounds = Parser::parseBackgrounds();
 
-    /*** store selected values ***/
-    //int strengthSaved, dexteritySaved, staminaSaved, charismaSaved, manipulationSaved, appearanceSaved,
-    //perceptionSaved, intelligenceSaved, witsSaved;
 
     /**** Freebie page ****/
     sigc::connection signalConnectionDisciplineAdd, signalCBackgrounds, signalTalent, signalSkill, signalKnowledges,
     removeTalentSignal, removeSkillSignal, removeKnowledegeSignal, removeDisciplineSignal, removeBackgroundSignal; // keep reference to sigc::connection to disconnect it
     Gtk::ScrolledWindow scrolledAbilities, scrolledAdvantages;
-    bool isFreebieePage;
     Gtk::Grid frameAdvantages, frameAbilities;
-    Gtk::Button goFinal, goBackFreebie;
+    Gtk::Button goFinal;
     Gtk::Label freebieLabel, totalPointsFreebie, totalsPointsValueFreebie;
     Gtk::HSeparator hsep1;
     int disciplineChoiceCount, talentChoiceCount, skillChoiceCount, knowledgeChoiceCount, backgroundChoiceCount; // number selected before freebie
@@ -190,8 +182,7 @@ public:
     void initPage2();
     void Page2();
     void savePage2();
-    void InitializeCr();
-    void SelectTalents();
+
     void initPage3();
     void Page3();
     void initPage4();
@@ -202,7 +193,7 @@ public:
     void initFreebie();
     void FreebiePage();
     void Page6();
-    void FinalPage(); // display constructed character sheet
+
     // button binding
     void addTalentClicked();
     void removeTalentClicked();
@@ -273,13 +264,15 @@ public:
 
 
 class Fenetre : public Gtk::Window
+        /**
+         * Main window holding the grid
+         */
 {
 
 public:
     Fenetre();
     virtual ~Fenetre(); // Setup window
 
-    void welcomeView(); // Remove the current grid from the window and replace it by WelcomeGrid
 
 protected:
     //Member widgets:

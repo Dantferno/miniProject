@@ -21,10 +21,7 @@ Fenetre::~Fenetre()
 
 }
 
-void Fenetre::welcomeView() {
-    this->remove();
-    this->add(welcome);
-}
+
 
 
 

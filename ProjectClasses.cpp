@@ -5,12 +5,13 @@
 
 #include "characterClass.h"
 
-/*
- * Parser declaration
- * just some dummy value to test the rest of the code
- */
+
 
 std::vector<std::string> Parser::parseClan() {
+    /**
+     * Read vampire file and return all clans
+     * @return std::vector of all clan
+     */
     std::vector<std::string> allClan;
     std::string filepath = "VampireV5.txt";
     std::string line;
@@ -29,6 +30,10 @@ std::vector<std::string> Parser::parseClan() {
 }
 
 std::vector<std::string> Parser::parseNature() {
+    /**
+     * read vampire file and return all Natures
+     * @return std::vector of all natures
+     */
     std::vector<std::string> all;
     std::string filepath = "VampireV5.txt";
     std::string line;
@@ -51,16 +56,13 @@ std::vector<std::string> Parser::parseNature() {
     return all;
 }
 
-auto Parser::parseAbilities() {
-    // just for testing the class, the parser will initialize the maps
-    std::map<std::string, int> talents;
-    talents.insert(std::pair<std::string, int>("Alertness", 0));
-    talents.insert(std::pair<std::string, int>("Awareness", 0));
-    talents.insert(std::pair<std::string, int>("Leadership", 0));
-    return talents;
-}
+
 
  std::vector<std::string> Parser::parseDisciplines() {
+     /**
+  * read vampire file and return all Natures
+  * @return std::vector of all disciplines
+  */
     std::vector<std::string> AvailableDisciplines; // map all disciplined to description, set by the parser
      std::string filepath = "VampireV5.txt";
      std::string line;
@@ -84,6 +86,10 @@ auto Parser::parseAbilities() {
 }
 
 std::vector<std::string> Parser::parseBackgrounds() {
+    /**
+ * read vampire file and return all backgrounds
+ * @return std::vector of all backgrounds
+ */
     std::vector<std::string> AvailableBackgrounds;
     std::string filepath = "VampireV5.txt";
     std::string line;
@@ -108,6 +114,10 @@ std::vector<std::string> Parser::parseBackgrounds() {
 
 
 std::vector<std::string> Parser::parseKnowledges(){
+    /**
+ * read vampire file and return all knowledges
+ * @return std::vector of all knowledges
+ */
     std::vector<std::string> allKnowledges;
     std::string filepath = "VampireV5.txt";
     std::string line;
@@ -131,6 +141,10 @@ std::vector<std::string> Parser::parseKnowledges(){
 }
 
 std::vector<std::string> Parser::parseTalents() {
+    /**
+ * read vampire file and return all talents
+ * @return std::vector of all talents
+ */
     std::vector<std::string> allTalents;
     std::string filepath = "VampireV5.txt";
     std::string line;
@@ -154,6 +168,10 @@ std::vector<std::string> Parser::parseTalents() {
 }
 
 std::vector<std::string> Parser::parseSkills() {
+    /**
+ * read vampire file and return all skills
+ * @return std::vector of all skills
+ */
     std::vector<std::string> allSkills;
     std::string filepath = "VampireV5.txt";
     std::string line;
@@ -177,6 +195,11 @@ std::vector<std::string> Parser::parseSkills() {
 }
 
 std::vector<std::string> Parser::getClanDiscipline(std::string clan) {
+    /**
+ * select clan discipline
+     * @param Name of the clan selected by the user
+ * @return std::vector of available discipline
+ */
     std::vector<std::string> clanDiscipline;
     if(clan=="Assamite"){
         clanDiscipline.push_back("Celerity");clanDiscipline.push_back("Obfuscate");clanDiscipline.push_back("Quietus");
@@ -469,12 +492,7 @@ std::vector<int> Abilities::getValueKnowledge() {
  */
 
 
-Advantages::Advantages()
-{
-    // parser will initialize AvailableDisciplines and AvailableBackgrounds
-    // lets just put dummy value for now
-
-}
+Advantages::Advantages(){}
 
 void Advantages::increaseVirtue(int conscience, int instinct, int courage)
 {
