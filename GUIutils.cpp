@@ -491,6 +491,9 @@ void MyGrid::removeSkillsClicked() {
 }
 
 void MyGrid::addKnowledgesClicked() {
+    /**
+ * Triggers the addition of a knowledge combobox and a spinbutton
+ */
     knowledgeClicked ++;
     // remove the add button
     this->remove(addKnowledges);
@@ -536,11 +539,11 @@ void MyGrid::addKnowledgesClicked() {
     this->show_all();
 }
 
-/**
- * executed upon clicking on "remove Knowledges" button.
- * Remove last spinKnowledge and combobox and re attach the
- */
+
 void MyGrid::removeKnowledgesClicked() {
+    /**
+ * remove last added combobox and spinbutton for knowledge
+ */
     knowledgeClicked--;
     this->remove(addKnowledges);
     this->remove(removeKnowledges);
@@ -561,6 +564,9 @@ void MyGrid::removeKnowledgesClicked() {
 }
 
 void MyGrid::addBackgroundClicked() {
+    /**
+* Triggers the addition of a background combobox and a spinbutton
+*/
     backgroundClicked ++;
     // remove the add button
     this->remove(addBackgrounds);
@@ -608,6 +614,9 @@ void MyGrid::addBackgroundClicked() {
 
 
 void MyGrid::addDisciplineClicked() {
+    /**
+* Triggers the addition of a discipline combobox and a spinbutton
+*/
     disciplineClicked ++;
     // remove the add button
     this->remove(addDisciplines);
@@ -654,6 +663,10 @@ void MyGrid::addDisciplineClicked() {
 }
 
 void MyGrid::addFreebieBackgrounds(){
+    /**
+* Triggers the addition of a background combobox and a spinbutton on the Freebie Page.
+     * call addBackgroundsCost() to take into account the new points
+*/
         backgroundClicked ++;
         // remove the add button
         this->frameAdvantages.remove(addBackgrounds);
@@ -700,6 +713,10 @@ void MyGrid::addFreebieBackgrounds(){
 };
 
 void MyGrid::addFreebieDiscipline() {
+    /**
+* Triggers the addition of a discipline combobox and a spinbutton on the Freebie Page.
+ * call addBackgroundsCost() to take into account the new points
+*/
     disciplineClicked ++;
     // remove the add button
     this->frameAdvantages.remove(addDisciplines);
@@ -747,6 +764,9 @@ void MyGrid::addFreebieDiscipline() {
 }
 
 void MyGrid::removeBackgroundClicked() {
+    /**
+     * remove last added background combobox and spinbutton
+     */
     backgroundClicked--;
     this->remove(addBackgrounds);
     this->remove(removeBackgrounds);
@@ -767,6 +787,9 @@ void MyGrid::removeBackgroundClicked() {
 
 
 void MyGrid::removeDisciplineClicked() {
+    /**
+ * remove last added discipline combobox and spinbutton
+ */
     disciplineClicked--;
     this->remove(addDisciplines);
     this->remove(removeDisciplines);
@@ -787,6 +810,9 @@ void MyGrid::removeDisciplineClicked() {
 }
 
 void MyGrid::generateCh() {
+    /**
+     * Generate the character by taking all the inputed information in the GUI
+     */
     cr.StepZero(nameEntry.get_text(),playerEntry.get_text(), chronicleEntry.get_text(), generationEntry.get_text(), sirEntry.get_text());
     cr.StepOne(conceptEntry.get_text(), comboClan.get_active_text(), comboNature.get_active_text(), comboDemeanor.get_active_text());
     Attributes attri;
@@ -871,6 +897,9 @@ void MyGrid::generateCh() {
 
 
 void MyGrid::removeTalentClicked(){
+    /**
+     * remove last added talent combobox and spinbutton
+     */
     talentClicked--;
     this->remove(addTalent);
     this->remove(removeTalent);
@@ -892,9 +921,11 @@ void MyGrid::removeTalentClicked(){
 }
 
 void MyGrid::addFreebieTalent() {
+    /**
+     * Add a combox and spinbutton for talent in the freebie page, taking care of the remeaning points
+     */
     // increase talentClicked to update the positions
     talentClicked ++;
-    std::cout << "Talent clicked" << talentClicked << std::endl;
     // remove the add button
     this->frameAbilities.remove(addTalent);
     this->frameAbilities.remove(removeTalent);
@@ -942,9 +973,11 @@ void MyGrid::addFreebieTalent() {
 }
 
 void MyGrid::addTalentClicked(){
+    /**
+     * Add a talent combox andd spinbutton
+     */
     // increase talentClicked to update the positions
     talentClicked ++;
-    std::cout << "Talent clicked" << talentClicked << std::endl;
     // remove the add button
     this->remove(addTalent);
     this->remove(removeTalent);
@@ -990,6 +1023,9 @@ void MyGrid::addTalentClicked(){
 }
 
 void MyGrid::addFreebieSkills() {
+    /**
+     * add a combobox and spinbutton for skills on the freebie page
+     */
 // increase skillClicked to update the positions
     skillClicked ++;
     // remove the add button
@@ -1037,6 +1073,9 @@ void MyGrid::addFreebieSkills() {
 }
 
 void MyGrid::addFreebieKnowledges(){
+    /**
+ * add a combobox and spinbutton for knowledges on the freebie page
+ */
     knowledgeClicked ++;
     // remove the add button
     this->frameAbilities.remove(addKnowledges);
@@ -1083,6 +1122,9 @@ void MyGrid::addFreebieKnowledges(){
 }
 
 void MyGrid::removeFreebieTalent(){
+    /**
+     * remove last added talent from the freebie page
+     */
     talentClicked--;
     this->frameAbilities.remove(addTalent);
     this->frameAbilities.remove(removeTalent);
@@ -1104,6 +1146,9 @@ void MyGrid::removeFreebieTalent(){
 
 
 void MyGrid::removeFreebieSkills() {
+    /**
+     * remove last added skill from the freebie page
+     */
     skillClicked--;
     this->frameAbilities.remove(addSkills);
     this->frameAbilities.remove(removeSkills);
@@ -1123,6 +1168,9 @@ void MyGrid::removeFreebieSkills() {
 }
 
 void MyGrid::removeFreebieKnowledges() {
+    /**
+     * remove last added knowledge from the freebie page
+     */
     knowledgeClicked--;
     this->frameAbilities.remove(addKnowledges);
     this->frameAbilities.remove(removeKnowledges);
@@ -1142,6 +1190,9 @@ void MyGrid::removeFreebieKnowledges() {
 }
 
 void MyGrid::removeFreebieDiscipline() {
+    /**
+ * remove last added discipline from the freebie page
+ */
     disciplineClicked--;
     this->frameAdvantages.remove(addDisciplines);
     this->frameAdvantages.remove(removeDisciplines);
@@ -1161,6 +1212,9 @@ void MyGrid::removeFreebieDiscipline() {
 }
 
 void MyGrid::removeFreebieBackgrounds() {
+    /**
+ * remove last added background from the freebie page
+ */
     backgroundClicked--;
     this->frameAdvantages.remove(addBackgrounds);
     this->frameAdvantages.remove(removeBackgrounds);

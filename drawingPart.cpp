@@ -13,6 +13,9 @@ DrawPDF::~DrawPDF(){};
  * @return
  */
 bool DrawPDF::on_draw(const Cairo::RefPtr<Cairo::Context> &cr) {
+    /**
+     * use previously generated character to draw on the pdf
+     */
     // scale to unit square and translate (0, 0) to be (0.5, 0.5), i.e.
     // the center of the window
     //cr->scale(width, heig
@@ -45,10 +48,16 @@ bool DrawPDF::on_draw(const Cairo::RefPtr<Cairo::Context> &cr) {
 }
 
 void DrawPDF::setCh(Character ch) {
+    /**
+     * give character to the drawing area
+     */
     this->ch = ch;
 }
 
 void DrawPDF::fillAttributes(const Cairo::RefPtr<Cairo::Context> &cr) {
+    /**
+     * Fill all the attributes info on the PDF
+     */
     /***** Attributes *****/
     // Physical
     int pointsToAdd = ch.getAttributes().getStrength();
@@ -159,6 +168,9 @@ void DrawPDF::fillAttributes(const Cairo::RefPtr<Cairo::Context> &cr) {
  * @param cr
  */
 void DrawPDF::fillPlayerInfo(const Cairo::RefPtr<Cairo::Context> &cr) {
+    /**
+     * Fill all the player info on the PDF
+     */
     /**** Background ****/
     // nom
     cr->move_to(118,137);
@@ -200,6 +212,9 @@ void DrawPDF::fillPlayerInfo(const Cairo::RefPtr<Cairo::Context> &cr) {
 }
 
 void DrawPDF::fillAbilities(const Cairo::RefPtr<Cairo::Context> &cr) {
+    /**
+     * fill all the abilities informations on the pdf
+     */
     int startYcoord = 330;
     int talentsXcoord = 178;
     int skillsXcoord = 388;
@@ -253,6 +268,9 @@ void DrawPDF::fillAbilities(const Cairo::RefPtr<Cairo::Context> &cr) {
 }
 
 void DrawPDF::fillAdvantages(const Cairo::RefPtr<Cairo::Context> &cr){
+    /**
+     * fill all the player advantages on the pdf
+     */
     int labelx=80, startx=178,starty=550, dx=10, dy=15.5;
     auto disciplineMap = ch.getAdvantages().getDisciplines();
     int numberDiscipline =0;
@@ -310,6 +328,9 @@ void DrawPDF::fillAdvantages(const Cairo::RefPtr<Cairo::Context> &cr){
 }
 
 void DrawPDF::fillRest(const Cairo::RefPtr<Cairo::Context> &cr) {
+    /**
+     * fill the remeaning informations (humanity, willpower and bloodpool) on the pdf
+     */
     int humanityX=312,dx=10, humanityY= 700, willpowerY=750, bloodpoolY=806;
     // humanity
     for(int i=0; i<ch.getHumanityWill().getHumanity(); i++){
@@ -335,6 +356,9 @@ void DrawPDF::fillRest(const Cairo::RefPtr<Cairo::Context> &cr) {
 }
 
 bool DrawPDF2::on_draw(const Cairo::RefPtr<Cairo::Context> &cr) {
+    /**
+     * Drawing area for the second page
+     */
     // scale to unit square and translate (0, 0) to be (0.5, 0.5), i.e.
     // the center of the window
     //cr->scale(width, heig
@@ -353,6 +377,9 @@ bool DrawPDF2::on_draw(const Cairo::RefPtr<Cairo::Context> &cr) {
     return Widget::on_draw(cr);
 }
 bool DrawPDF3::on_draw(const Cairo::RefPtr<Cairo::Context> &cr) {
+    /**
+     * drawing arean for the third pdf page
+     */
     // scale to unit square and translate (0, 0) to be (0.5, 0.5), i.e.
     // the center of the window
     //cr->scale(width, heig

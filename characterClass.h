@@ -12,11 +12,12 @@
 #include <istream>
 #include <fstream>
 
-/**
- * Emulate what the real parser will return
- * all method returns maps for now, the data struct will be decided once we create the real parser
- */
+
 class Parser{
+    /**
+ * Parse file and return the informations
+ *
+ */
     std::string filePath;
 public:
     static std::vector<std::string> parseClan(); // return vector fill with clan name
@@ -36,11 +37,12 @@ public:
 };
 
 
-/**
+
+class CharacterBackground{
+    /**
  * CharacterBackground holds all the background of the Vampire.
  * Everything in here will not change once created
  */
-class CharacterBackground{
     std::string Name;
     std::string Player;
     std::string Chronicle;
@@ -78,10 +80,11 @@ public:
 };
 
 
-/**
+
+class Attributes{
+    /**
  * class holding all the attributes, get and set them
  */
-class Attributes{
     int Strength =1;
     int Dexterity=1;
     int Stamina=1;
@@ -122,12 +125,13 @@ public:
 };
 
 
-/**
+
+class Abilities{
+    /**
  *  Parsing will return 3 maps of all abilities (talents, skills, knowledges) associated with 0
  *  set them with a map. input <"Brawl":1> will increase brawl inside talents by 1
  */
 
-class Abilities{
     std::vector<std::string>  talents;
     std::vector<int>  chosenTalents; // index of selected talents from talents
     std::vector<int>  valueTalents; // number of points for each selected talents
@@ -157,14 +161,15 @@ public:
 };
 
 
-/**
+
+class Advantages{
+    /**
  * Same as abilities except the maps are empty and the key will be checked against the
  * available disciplines/backgrounds
  * example : setDiscipline(<"Thaumaturgy": 2> will add thaumaturgie to the Discipline map
  * after checking that it is a valid discipline, if the key is already in Discipline,
  * it will just increase the value by 2.
  */
-class Advantages{
     std::map<std::string, int> Disciplines; // map selected discipline to points
     std::map<std::string, int> backgrounds;
     std::map<std::string, std::string> AvailableDisciplines; // map all disciplined to description, set by the parser

@@ -30,9 +30,11 @@ holding the informations may be shown to stay consistent with the final output, 
 
 ## Usage 
 
-Compilation using Cmake, just run :
+Compilation using Cmake (minimum version 2.8) , just run :
 ```
     cmake CmakeLists.txt
+    make 
+    ./miniProject
 ```
 
 ## Output of main.cpp

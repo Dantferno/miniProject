@@ -346,7 +346,6 @@ void MyGrid::ApplyPage3(){
      * with user input
      */
     // save input
-    std::cout << strengthSpin.get_value() << std::endl; 
     strengthSpin.set_value(strengthSpin.get_value());
     dexteritySpin.set_value(dexteritySpin.get_value());
     staminaSpin.set_value(staminaSpin.get_value());
@@ -529,7 +528,6 @@ void MyGrid::go5() {
             initPage5();
             isSavedPage5 = true;
         }
-        std::cout << comboClan.get_active_text();
         Page5();
     }
 }
