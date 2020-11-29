@@ -39,7 +39,6 @@ MyGrid::MyGrid() {
     message.set_label("Welcome on the Vampire creation interface.");
     message.override_font(myfont);
     nextButton.set_size_request(100,50);
-
     Page1();
 }
 
@@ -49,7 +48,7 @@ void MyGrid::Page1(){
         this->remove (*element);
 
 
-    coverVampire.set("/home/hugo/Pictures/covervampire.png");
+    coverVampire.set("covervampire.png");
 
 
     //this->attach(message, 0, 0, 1, 1);
@@ -168,28 +167,22 @@ void MyGrid::savePage2(){
     sirEntry.set_text(sirEntry.get_text());
     conceptEntry.set_text(conceptEntry.get_text());
 
-//    if(nameEntry.get_text()!="" && playerEntry.get_text()!="" && chronicleEntry.get_text()!="" && sirEntry.get_text()!="" && conceptEntry.get_text()!="") {
-//        if (!isSavedPage2) {
-//            isSavedPage2 = true;
-//            initPage3();
-//        }
-//        comboNature.set_active_text(comboNature.get_active_text());
-//        Page3();
-//    }else{
-//        Gtk::MessageDialog d("Missing Input", false, Gtk::MESSAGE_INFO);
-//        d.set_secondary_text("Please fill all the fields.");
-//        d.run();
-//    }
-    initPage3();Page3(); // <----- delete this after uncomment
+    if(nameEntry.get_text()!="" && playerEntry.get_text()!="" && chronicleEntry.get_text()!="" && sirEntry.get_text()!="" && conceptEntry.get_text()!="") {
+        if (!isSavedPage2) {
+            isSavedPage2 = true;
+            initPage3();
+        }
+        comboNature.set_active_text(comboNature.get_active_text());
+        Page3();
+    }else{
+        Gtk::MessageDialog d("Missing Input", false, Gtk::MESSAGE_INFO);
+       d.set_secondary_text("Please fill all the fields.");
+        d.run();
+    }
+
 }
 
-void MyGrid::InitializeCr(){
-//    cr.StepZero(nameEntry.get_text(),playerEntry.get_text(), chronicleEntry.get_text(), generationEntry.get_text(), sirEntry.get_text());
-//
-//    cr.StepOne(conceptEntry.get_text(), comboClan.get_active_text(), comboNature.get_active_text(), comboDemeanor.get_active_text());
-//    cr.getCharacter().talk();
-    //Page3();
-}
+
 
 void MyGrid::initPage3(){
     /***** Attributes ******/
@@ -335,15 +328,15 @@ void MyGrid::ApplyPage3(){
     perceptionSpin.set_value(perceptionSpin.get_value());
     intelligenceSpin.set_value(intelligenceSpin.get_value());
     witsSpin.set_value(witsSpin.get_value());
-//    if (checkCorrectRepartition()==1){ // if repartition is not correct
-//         Gtk::MessageDialog d("Repartition error", false, Gtk::MESSAGE_INFO);
-//        d.set_secondary_text("Please put (7/5/3) points.");
-//       d.run();
-//    }else {
+   if (checkCorrectRepartition()==1){ // if repartition is not correct
+         Gtk::MessageDialog d("Repartition error", false, Gtk::MESSAGE_INFO);
+        d.set_secondary_text("Please put (7/5/3) points.");
+       d.run();
+    }else {
 
     if (!isSavedPage3){initPage4();isSavedPage3=true;}
         Page4();
-    //}
+    }
 }
 
 
@@ -485,20 +478,26 @@ void MyGrid::Page4(){
     this->show_all();
 }
 
-void MyGrid::go5(){
-    if(!isSavedPage5){
-        initPage5();
-        isSavedPage5 = true;
+void MyGrid::go5() {
+    if (!checkRepartitionAbility()) {
+        Gtk::MessageDialog d("Repartition error", false, Gtk::MESSAGE_INFO);
+        d.set_secondary_text("Please put (13/9/5) points.");
+        d.run();
+    } else {
+        if (!isSavedPage5) {
+            initPage5();
+            isSavedPage5 = true;
+        }
+        std::cout << comboClan.get_active_text();
+        Page5();
     }
-    std::cout << comboClan.get_active_text();
-    Page5();
 }
 
 
 void MyGrid::initPage5() {
     pointsDiscipline.set_text("1");
     pointsBackground.set_text("1");
-    pointsVirtue.set_text("1");
+    pointsVirtue.set_text("0");
     advantageLabel.set_label("Advantages");
     disciplineLabel.set_label("Disciplines :");
     backgroundLabel.set_label("Background :");
@@ -552,7 +551,7 @@ void MyGrid::initPage5() {
     goPage4.set_label("Back");
     goPage6.set_label("Next");
     goPage6.signal_clicked().connect(sigc::mem_fun(*this,
-                                                   &MyGrid::initFreebie));
+                                                   &MyGrid::goFreebiePage));
 }
 
 
@@ -641,21 +640,98 @@ void MyGrid::Page5(){
     this->show_all();
 }
 
+void MyGrid::goFreebiePage(){
+    if(!checkRepartitionAbilities()){
+        Gtk::MessageDialog d("Repartition error", false, Gtk::MESSAGE_INFO);
+      d.set_secondary_text("Please put 3 points in disciplines, 5 in backgrounds and 7 in virtues.");
+       d.run();
+    }else{
+        initFreebie();
+    }
+}
+
 void MyGrid::initFreebie() {
-    // Set previous user choice as minimum value of Freebie
-    strengthSpin.set_range(strengthSpin.get_value(), 5);
-    dexteritySpin.set_range(dexteritySpin.get_value(), 5);
-    staminaSpin.set_range(staminaSpin.get_value(), 5);
-    charismaSpin.set_range(charismaSpin.get_value(), 5);
-    manipulationSpin.set_range(manipulationSpin.get_value(), 5);
-    appearanceSpin.set_range(appearanceSpin.get_value(), 5);
-    perceptionSpin.set_range(perceptionSpin.get_value(), 5);
-    intelligenceSpin.set_range(intelligenceSpin.get_value(), 5);
-    witsSpin.set_range(witsSpin.get_value(), 10);
+    // Set previous user choice as minimum value of Freebie, record nonFreebie repartition
+    strengthSpin.set_range(strengthSpin.get_value(), 9);
+    lastStrength = strengthSpin.get_value_as_int();
+    strengthSpin.signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::addStrengthCost));
+    strengthSaved = strengthSpin.get_value();
+
+    dexteritySpin.set_range(dexteritySpin.get_value(), 9);
+    dexteritySpin.signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::addDexterityCost));
+    lastDexterity = dexteritySpin.get_value_as_int();
+
+
+    staminaSpin.set_range(staminaSpin.get_value(), 9);
+    staminaSpin.signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::addStaminaCost));
+    lastStamina = staminaSpin.get_value_as_int();
+
+    charismaSpin.set_range(charismaSpin.get_value(), 9);
+    charismaSpin.signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::addCharismaCost));
+    lastCharisma = charismaSpin.get_value_as_int();
+
+    manipulationSpin.set_range(manipulationSpin.get_value(), 9);
+    manipulationSpin.signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::addManipulationCost));
+    lastManipulation = manipulationSpin.get_value_as_int();
+
+    appearanceSpin.set_range(appearanceSpin.get_value(), 9);
+    appearanceSpin.signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::addAppearanceCost));
+    lastAppearance = appearanceSpin.get_value_as_int();
+
+    perceptionSpin.set_range(perceptionSpin.get_value(), 9);
+    perceptionSpin.signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::addPerceptionCost));
+    lastPerception = perceptionSpin.get_value_as_int();
+
+    intelligenceSpin.set_range(intelligenceSpin.get_value(), 9);
+    intelligenceSpin.signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::addIntelligenceCost));
+    lastIntelligence = intelligenceSpin.get_value_as_int();
+
+    witsSpin.set_range(witsSpin.get_value(), 9);
+    witsSpin.signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::addWitsCost));
+    lastWits = witsSpin.get_value_as_int();
 
     virtueSpin1.set_range(virtueSpin1.get_value(), 5);
+    lastVirtue1 = virtueSpin1.get_value_as_int();
+    virtueSpin1.signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::addVirtue1Cost));
     virtueSpin2.set_range(virtueSpin2.get_value(), 5);
+    lastVirtue2 = virtueSpin2.get_value_as_int();
+    virtueSpin2.signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::addVirtue2Cost));
     virtueSpin3.set_range(virtueSpin3.get_value(), 5);
+    lastVirtue3 = virtueSpin3.get_value_as_int();
+    virtueSpin3.signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::addVirtue3Cost));
+
+    /** Abilities ***/
+    for(Gtk::SpinButton *sp : spinListTalent){
+        lastSumTalents += sp->get_value_as_int();
+        sp->signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::addTalentsCost));
+        sp->set_range(sp->get_value(), 9);
+    }
+
+
+    for(Gtk::SpinButton *sp : spinListSkills){
+        lastSumSkills += sp->get_value_as_int();
+        sp->signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::addSkillsCost));
+        sp->set_range(sp->get_value(), 9);
+    }
+
+
+    for(Gtk::SpinButton *sp : spinListKnowledges){
+        lastSumKnowledge += sp->get_value_as_int();
+        sp->signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::addKnowledgesCost));
+        sp->set_range(sp->get_value(), 9);
+    }
+
+    for(Gtk::SpinButton *sp : spinDisciplineList){
+        lastSumDiscipline += sp->get_value_as_int();
+        sp->signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::addDisciplineCost));
+        sp->set_range(sp->get_value(), 9);
+    }
+
+    for(Gtk::SpinButton *sp : spinBackgroundList){
+        lastSumBackground += sp->get_value_as_int();
+        sp->signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::addBackgroundsCost));
+        sp->set_range(sp->get_value(), 9);
+    }
 
     // Rebinding of add elements and remove elements button
     talentChoiceCount = wList.size();
@@ -689,6 +765,8 @@ void MyGrid::initFreebie() {
     removeBackgrounds.signal_clicked().connect(sigc::mem_fun(*this, &MyGrid::removeFreebieBackgrounds));
     goFinal.set_label("Generate PDF");
     goFinal.signal_clicked().connect(sigc::mem_fun(*this, &MyGrid::Page6));
+    totalPointsFreebie.set_label("Remaining points : ");
+    totalsPointsValueFreebie.set_label("15");
     FreebiePage();
 }
 
@@ -700,7 +778,9 @@ void MyGrid::FreebiePage(){
 
     /***** Attributes ******/
     freebieLabel.set_label("Freebie points");
-    this->attach(freebieLabel, 0,0,6,1);
+    this->attach(totalPointsFreebie,4,0,1,1);
+    this->attach(totalsPointsValueFreebie,6,0,1,1);
+    this->attach(freebieLabel, 0,0,2,1);
 
     // Physical
     this->attach(physicalLabel, 0,1,2,1);
@@ -847,9 +927,9 @@ void MyGrid::FreebiePage(){
     scrolledAdvantages.add(frameAdvantages);
     scrolledAdvantages.set_min_content_height(250);
 
-    this->attach(scrolledAdvantages, 0,50,10,1);
+    this->attach(scrolledAdvantages, 0,40,10,1);
 
-    this->attach(goFinal,50,50,1,1);
+    this->attach(goFinal,8,50,1,1);
     // This packs the button into the Window (a container);
     this->show_all();
 }
@@ -871,7 +951,8 @@ void MyGrid::Page6(){
     scrolledForDescription.add(pdf);
     scrolledForDescription.set_size_request(768,600);
     this->attach(scrolledForDescription, 0,1,3,1);
-    save.set_label("Save")                          ;
+    save.set_label("Save");
+
      this->attach(save,2,10,1,1) ;
     //this->attach(moreImage,10,10,1,1);
 
@@ -893,6 +974,7 @@ void MyGrid::FinalPage(){
 
 
 }
+
 
 
 

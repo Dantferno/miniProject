@@ -28,7 +28,7 @@
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/textview.h>
 #include <gtkmm/drawingarea.h>
-
+#include <gtkmm/filechooserdialog.h>
 
 class CustomSpinButton: public Gtk::SpinButton{
 public:
@@ -123,6 +123,10 @@ class MyGrid: public Gtk::Grid
     std::vector<std::string> allDisciplines = Parser::parseDisciplines();
     std::vector<std::string> allBackgrounds = Parser::parseBackgrounds();
 
+    /*** store selected values ***/
+    int strengthSaved, dexteritySaved, staminaSaved, charismaSaved, manipulationSaved, appearanceSaved,
+    perceptionSaved, intelligenceSaved, witsSaved;
+
     /**** Freebie page ****/
     sigc::connection signalConnectionDisciplineAdd, signalCBackgrounds, signalTalent, signalSkill, signalKnowledges,
     removeTalentSignal, removeSkillSignal, removeKnowledegeSignal, removeDisciplineSignal, removeBackgroundSignal; // keep reference to sigc::connection to disconnect it
@@ -130,9 +134,11 @@ class MyGrid: public Gtk::Grid
     bool isFreebieePage;
     Gtk::Grid frameAdvantages, frameAbilities;
     Gtk::Button goFinal, goBackFreebie;
-    Gtk::Label freebieLabel;
+    Gtk::Label freebieLabel, totalPointsFreebie, totalsPointsValueFreebie;
     Gtk::HSeparator hsep1;
     int disciplineChoiceCount, talentChoiceCount, skillChoiceCount, knowledgeChoiceCount, backgroundChoiceCount; // number selected before freebie
+    int lastStrength, lastDexterity, lastStamina, lastCharisma, lastManipulation, lastAppearance, lastPerception, lastIntelligence, lastWits,
+    lastVirtue1, lastVirtue2, lastVirtue3, lastSumTalents=0, lastSumSkills=0, lastSumKnowledge=0, lastSumDiscipline=0, lastSumBackground=0;
 
     /*** Page 6 ***/
     Gtk::Image moreImage;
@@ -164,6 +170,7 @@ public:
     void Page4();
     void initPage5();
     void Page5();
+    void goFreebiePage();
     void initFreebie();
     void FreebiePage();
     void Page6();
@@ -193,7 +200,24 @@ public:
     void removeFreebieDiscipline();
     void removeFreebieBackgrounds();
 
-
+    // handle value change for total freebie points
+    void addStrengthCost();
+    void addDexterityCost();
+    void addStaminaCost();
+    void addCharismaCost();
+    void addManipulationCost();
+    void addAppearanceCost();
+    void addPerceptionCost();
+    void addIntelligenceCost();
+    void addWitsCost();
+    void addVirtue1Cost();
+    void addVirtue2Cost();
+    void addVirtue3Cost();
+    void addTalentsCost();
+    void addSkillsCost();
+    void addKnowledgesCost();
+    void addDisciplineCost();
+    void addBackgroundsCost();
 
 
     void ApplyPage3();
@@ -210,8 +234,12 @@ public:
     void changeTotalBackground();
     void changeTotalVirtue();
     int checkCorrectRepartition();
+    bool checkRepartitionAbility();
+    bool checkRepartitionAbilities();
 
     void go5();
+
+    void savePDF();
 };
 
 

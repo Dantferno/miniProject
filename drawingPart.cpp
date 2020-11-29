@@ -17,7 +17,7 @@ bool DrawPDF::on_draw(const Cairo::RefPtr<Cairo::Context> &cr) {
     // the center of the window
     //cr->scale(width, heig
     Glib::RefPtr<Gdk::Pixbuf> image;
-    image = Gdk::Pixbuf::create_from_file("/home/hugo/Pictures/testpdf.png");
+    image = Gdk::Pixbuf::create_from_file("testpdf.png");
     Gtk::Allocation allocation = get_allocation();
     const int width = allocation.get_width();
     const int height = allocation.get_height();

@@ -82,6 +82,204 @@ void MyGrid::changeTotalVirtue() {
     pointsVirtue.set_text(newTotal);
 }
 
+
+void MyGrid::addStrengthCost(){
+    if(lastStrength - strengthSpin.get_value_as_int()>0){
+        totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) + 5));
+    }else{
+        totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) - 5));
+    }
+    lastStrength = strengthSpin.get_value_as_int();
+}
+
+void MyGrid::addDexterityCost() {
+    if(lastDexterity - dexteritySpin.get_value_as_int()>0){
+        totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) + 5));
+    }else{
+        totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) - 5));
+    }
+    lastDexterity = dexteritySpin.get_value_as_int();
+}
+
+void MyGrid::addStaminaCost() {
+    if(lastStamina - staminaSpin.get_value_as_int()>0){
+        totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) + 5));
+    }else{
+        totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) - 5));
+    }
+    lastStamina = staminaSpin.get_value_as_int();
+}
+
+void MyGrid::addCharismaCost() {
+    if(lastCharisma - charismaSpin.get_value_as_int()>0){
+        totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) + 5));
+    }else{
+        totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) - 5));
+    }
+    lastCharisma = charismaSpin.get_value_as_int();
+}
+
+void MyGrid::addManipulationCost() {
+    if(lastManipulation - manipulationSpin.get_value_as_int()>0){
+        totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) + 5));
+    }else{
+        totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) - 5));
+    }
+    lastManipulation = manipulationSpin.get_value_as_int();
+}
+
+void MyGrid::addAppearanceCost() {
+    if(lastAppearance - appearanceSpin.get_value_as_int()>0){
+        totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) + 5));
+    }else{
+        totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) - 5));
+    }
+    lastAppearance = appearanceSpin.get_value_as_int();
+}
+
+void MyGrid::addPerceptionCost() {
+    if(lastPerception - perceptionSpin.get_value_as_int()>0){
+        totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) + 5));
+    }else{
+        totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) - 5));
+    }
+    lastPerception = perceptionSpin.get_value_as_int();
+}
+void MyGrid::addIntelligenceCost() {
+    if(lastIntelligence - intelligenceSpin.get_value_as_int()>0){
+        totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) + 5));
+    }else{
+        totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) - 5));
+    }
+    lastIntelligence = intelligenceSpin.get_value_as_int();
+}
+
+void MyGrid::addWitsCost() {
+    if(lastWits - witsSpin.get_value_as_int()>0){
+        totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) + 5));
+    }else{
+        totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) - 5));
+    }
+    lastWits = witsSpin.get_value_as_int();
+}
+
+void MyGrid::addVirtue1Cost() {
+    if(lastVirtue1 - virtueSpin1.get_value_as_int()>0){
+        totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) + 2));
+    }else{
+        totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) - 2));
+    }
+    lastVirtue1 = virtueSpin1.get_value_as_int();
+}
+
+void MyGrid::addVirtue2Cost() {
+    if(lastVirtue2 - virtueSpin2.get_value_as_int()>0){
+        totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) + 2));
+    }else{
+        totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) - 2));
+    }
+    lastVirtue2 = virtueSpin2.get_value_as_int();
+}
+
+void MyGrid::addVirtue3Cost() {
+    if(lastVirtue3 - virtueSpin3.get_value_as_int()>0){
+        totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) + 2));
+    }else{
+        totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) - 2));
+    }
+    lastVirtue3 = virtueSpin3.get_value_as_int();
+}
+
+
+void MyGrid::addTalentsCost() {
+    int currentSum= 0;
+    for(Gtk::SpinButton *sp : spinListTalent){
+        currentSum += sp->get_value_as_int();
+    }
+    if (currentSum>lastSumTalents){
+        for(int i =0; i<currentSum-lastSumTalents; i++){
+            totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) -2));
+        }
+    }else{
+        for(int i =0; i<lastSumTalents-currentSum; i++){
+            totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) +2));
+        }
+    }
+    lastSumTalents = currentSum;
+}
+
+void MyGrid::addSkillsCost() {
+    int currentSum= 0;
+    for(Gtk::SpinButton *sp : spinListSkills){
+        currentSum += sp->get_value_as_int();
+    }
+    if (currentSum>lastSumSkills){
+        for(int i =0; i<currentSum-lastSumSkills; i++){
+            totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) -2));
+        }
+    }else{
+        for(int i =0; i<lastSumSkills-currentSum; i++){
+            totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) +2));
+        }
+    }
+    lastSumSkills = currentSum;
+}
+
+
+void MyGrid::addKnowledgesCost() {
+    int currentSum= 0;
+    for(Gtk::SpinButton *sp : spinListKnowledges){
+        currentSum += sp->get_value_as_int();
+    }
+    if (currentSum>lastSumKnowledge){
+        for(int i =0; i<currentSum-lastSumKnowledge; i++){
+            totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) -2));
+        }
+    }else{
+        for(int i =0; i<lastSumKnowledge-currentSum; i++){
+            totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) +2));
+        }
+    }
+    lastSumKnowledge = currentSum;
+}
+
+void MyGrid::addDisciplineCost(){
+
+    int currentSum= 0;
+    for(Gtk::SpinButton *sp : spinDisciplineList){
+        currentSum += sp->get_value_as_int();
+    }
+    if (currentSum>lastSumDiscipline){
+        for(int i =0; i<currentSum-lastSumDiscipline; i++){
+            totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) -7));
+        }
+    }else{
+        for(int i =0; i<lastSumDiscipline-currentSum; i++){
+            totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) +7));
+        }
+    }
+    lastSumDiscipline = currentSum;
+}
+
+void MyGrid::addBackgroundsCost() {
+    int currentSum= 0;
+    for(Gtk::SpinButton *sp : spinBackgroundList){
+        currentSum += sp->get_value_as_int();
+    }
+    if (currentSum>lastSumBackground){
+        for(int i =0; i<currentSum-lastSumBackground; i++){
+            totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) -1));
+        }
+    }else{
+        for(int i =0; i<lastSumBackground-currentSum; i++){
+            totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) +1));
+        }
+    }
+    lastSumBackground = currentSum;
+}
+
+
+
 int MyGrid::checkCorrectRepartition(){
     int tot1, tot2, tot3;
     std::vector<int> values;
@@ -96,6 +294,31 @@ int MyGrid::checkCorrectRepartition(){
     {
         return 0;
     }else{return 1;}
+}
+
+bool MyGrid::checkRepartitionAbility(){
+    int tot1, tot2, tot3;
+    std::vector<int> values;
+    tot1 = std::stoi(pointsTalents.get_text().raw());
+    tot2 = std::stoi(pointsSkills.get_text().raw());
+    tot3 = std::stoi(pointsKnowledges.get_text().raw());
+    values.push_back(tot1);values.push_back(tot2); values.push_back(tot3);
+    int key1(13), key2(9), key3(5);
+    if (std::count(values.begin(), values.end(), key1)
+        && std::count(values.begin(), values.end(), key2)
+        && std::count(values.begin(), values.end(), key3))
+    {
+        return true;
+    }else{return false;}
+}
+
+bool MyGrid::checkRepartitionAbilities(){
+    if(std::stoi(pointsDiscipline.get_text())!=3 || std::stoi(pointsBackground.get_text())!=5 || std::stoi(pointsVirtue.get_text())!=7){
+        return false;
+    }else{
+        return true;
+
+    }
 }
 
 void MyGrid::addSkillsClicked() {
@@ -264,7 +487,7 @@ void MyGrid::addBackgroundClicked() {
     }
     backgroundList.back()->set_sensitive(false);
     addedP->set_active(0);
-    addedSpinP->set_range(1,3);
+    addedSpinP->set_range(1,5);
     addedSpinP->set_increments(1,1);
     addedSpinP->signal_show().connect(sigc::mem_fun(*this, &MyGrid::changeTotalBackground));
     addedSpinP->signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::changeTotalBackground));
@@ -359,6 +582,7 @@ void MyGrid::addFreebieBackgrounds(){
         addedP->set_active(0);
         addedSpinP->set_range(1,3);
         addedSpinP->set_increments(1,1);
+        addedSpinP->signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::addBackgroundsCost));
         // store them in vectors
         backgroundList.push_back(addedP);
         spinBackgroundList.push_back(addedSpinP);
@@ -368,6 +592,7 @@ void MyGrid::addFreebieBackgrounds(){
         // attach and show
         this->frameAdvantages.attach(*addedP,4,2+backgroundClicked,1,1);
         this->frameAdvantages.attach(*addedSpinP, 5,2+backgroundClicked,1,1);
+        addBackgroundsCost();
         this->show_all();
 };
 
@@ -403,6 +628,7 @@ void MyGrid::addFreebieDiscipline() {
     addedP->set_active(0);
     addedSpinP->set_range(1,3);
     addedSpinP->set_increments(1,1);
+    addedSpinP->signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::addDisciplineCost));
     disciplineList.back()->set_sensitive(false);
     // store them in vectors
     disciplineList.push_back(addedP);
@@ -412,7 +638,9 @@ void MyGrid::addFreebieDiscipline() {
     // attach and show
     this->frameAdvantages.attach(*addedP,0,2+disciplineClicked,1,1);
     this->frameAdvantages.attach(*addedSpinP, 1,2+disciplineClicked,1,1);
+    addDisciplineCost();
     this->show_all();
+
 }
 
 void MyGrid::removeBackgroundClicked() {
@@ -594,8 +822,9 @@ void MyGrid::addFreebieTalent() {
     wList.back()->set_sensitive(false);
 
     addedP->set_active(0);
-    addedSpinP->set_range(1,3);
+    addedSpinP->set_range(1,9);
     addedSpinP->set_increments(1,1);
+    addedSpinP->signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::addTalentsCost));
     // store them in vectors
     wList.push_back(addedP);
     spinListTalent.push_back(addedSpinP);
@@ -605,6 +834,7 @@ void MyGrid::addFreebieTalent() {
     // attach and show
     this->frameAbilities.attach(*addedP,0,2+talentClicked,1,1);
     this->frameAbilities.attach(*addedSpinP, 1,2+talentClicked,1,1);
+    addTalentsCost();
     this->show_all();
 }
 
@@ -687,8 +917,9 @@ void MyGrid::addFreebieSkills() {
     }
     skillsList.back()->set_sensitive(false);
     addedP->set_active(0);
-    addedSpinP->set_range(1,3);
+    addedSpinP->set_range(1,9);
     addedSpinP->set_increments(1,1);
+    addedSpinP->signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::addSkillsCost));
     // store them in vectors
     skillsList.push_back(addedP);
     spinListSkills.push_back(addedSpinP);
@@ -698,6 +929,7 @@ void MyGrid::addFreebieSkills() {
     // attach and show
     this->frameAbilities.attach(*addedP,3,2+skillClicked,1,1);
     this->frameAbilities.attach(*addedSpinP, 4,2+skillClicked,1,1);
+    addSkillsCost();
     this->show_all();
 }
 
@@ -731,8 +963,9 @@ void MyGrid::addFreebieKnowledges(){
     }
     knowledgesList.back()->set_sensitive(false);
     addedP->set_active(0);
-    addedSpinP->set_range(1,3);
+    addedSpinP->set_range(1,9);
     addedSpinP->set_increments(1,1);
+    addedSpinP->signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::addKnowledgesCost));
     // store them in vectors
     knowledgesList.push_back(addedP);
     spinListKnowledges.push_back(addedSpinP);
@@ -742,6 +975,7 @@ void MyGrid::addFreebieKnowledges(){
     // attach and show
     this->frameAbilities.attach(*addedP,6,2+knowledgeClicked,1,1);
     this->frameAbilities.attach(*addedSpinP, 7,2+knowledgeClicked,1,1);
+    addKnowledgesCost();
     this->show_all();
 }
 
@@ -761,7 +995,7 @@ void MyGrid::removeFreebieTalent(){
     }else{
         this->frameAbilities.attach(addTalent, 0, 3+talentClicked,1,1);
     }
-
+    addTalentsCost();
     this->show_all();
 }
 
@@ -781,7 +1015,7 @@ void MyGrid::removeFreebieSkills() {
     }else{
         this->frameAbilities.attach(addSkills, 3, 3+skillClicked,1,1);
     }
-
+    addSkillsCost();
     this->show_all();
 }
 
@@ -800,7 +1034,7 @@ void MyGrid::removeFreebieKnowledges() {
     }else{
         this->frameAbilities.attach(addKnowledges, 6, 3+knowledgeClicked,1,1);
     }
-
+    addKnowledgesCost();
     this->show_all();
 }
 
@@ -819,7 +1053,7 @@ void MyGrid::removeFreebieDiscipline() {
     }else{
         this->frameAdvantages.attach(addDisciplines, 0, 3+disciplineClicked,1,1);
     }
-
+    addDisciplineCost();
     this->show_all();
 }
 
@@ -838,6 +1072,6 @@ void MyGrid::removeFreebieBackgrounds() {
     }else{
         this->frameAdvantages.attach(addBackgrounds, 4, 3+backgroundClicked,1,1);
     }
-
+    addBackgroundsCost();
     this->show_all();
 }

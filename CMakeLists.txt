@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
 project(miniProject)
-
 set(CMAKE_CXX_STANDARD 14)
 FIND_PACKAGE(PkgConfig REQUIRED)
 PKG_CHECK_MODULES(GTKMM REQUIRED gtkmm-3.0)
