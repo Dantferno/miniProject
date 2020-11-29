@@ -83,10 +83,13 @@ protected:
     double m_line_width;
 };
 
-
+/**
+ * Main grid added to the window.
+ *
+ */
 class MyGrid: public Gtk::Grid
 {
-    CharacterCreation cr;
+    CharacterCreation cr; /*!< Character creation entity, serves as controller of the model Character */
     Pango::FontDescription myfont, myfont2;
 
     Gtk::VSeparator vsep1, vsep2, vsep3, vsep4;
@@ -148,8 +151,8 @@ class MyGrid: public Gtk::Grid
     std::vector<std::string> allBackgrounds = Parser::parseBackgrounds();
 
     /*** store selected values ***/
-    int strengthSaved, dexteritySaved, staminaSaved, charismaSaved, manipulationSaved, appearanceSaved,
-    perceptionSaved, intelligenceSaved, witsSaved;
+    //int strengthSaved, dexteritySaved, staminaSaved, charismaSaved, manipulationSaved, appearanceSaved,
+    //perceptionSaved, intelligenceSaved, witsSaved;
 
     /**** Freebie page ****/
     sigc::connection signalConnectionDisciplineAdd, signalCBackgrounds, signalTalent, signalSkill, signalKnowledges,
@@ -168,8 +171,7 @@ class MyGrid: public Gtk::Grid
     Gtk::Image moreImage;
 
     Gtk::ScrolledWindow scrolledForDescription, scrolledForDescription2,scrolledForDescription3;
-    Gtk::TextView textViewDescription;
-    Glib::RefPtr<Gtk::TextBuffer> bufferDescription;
+
 
     /**** Final Page ****/
     DrawPDF pdf;

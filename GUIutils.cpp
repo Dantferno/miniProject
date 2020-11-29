@@ -5,6 +5,9 @@
 #include "GUI.h"
 
 void MyGrid::changeTotalMental(){
+    /**
+     * Increase or decrease the total value of points added to mental, and change the value of the corresponding label
+     */
     int spin1, spin2, spin3;
     spin1 = std::stoi(perceptionSpin.get_text().raw());
     spin2 = std::stoi(intelligenceSpin.get_text().raw());
@@ -14,6 +17,9 @@ void MyGrid::changeTotalMental(){
 }
 
 void MyGrid::changeTotalSocial() {
+    /**
+ * Increase or decrease the total value of points added to social, and change the value of the corresponding label
+ */
     int spin4, spin5, spin6;
     spin4 = std::stoi(charismaSpin.get_text().raw());
     spin5 = std::stoi(manipulationSpin.get_text().raw());
@@ -24,6 +30,9 @@ void MyGrid::changeTotalSocial() {
 
 
 void MyGrid::changeTotalPhysical() {
+    /**
+ * Increase or decrease the total value of points added to physical, and change the value of the corresponding label
+ */
     int spin7, spin8, spin9;
     spin7 = std::stoi(strengthSpin.get_text().raw());
     spin8 = std::stoi(dexteritySpin.get_text().raw());
@@ -34,6 +43,9 @@ void MyGrid::changeTotalPhysical() {
 }
 
 void MyGrid::changeTotalTalents(){
+    /**
+ * Increase or decrease the total value of points added to talents, and change the value of the corresponding label
+ */
     int points = 0;
     for(Gtk::SpinButton *sp : spinListTalent) {
         points += sp->get_value_as_int();
@@ -42,6 +54,9 @@ void MyGrid::changeTotalTalents(){
 }
 
 void MyGrid::changeTotalSkill() {
+    /**
+ * Increase or decrease the total value of points added to skills, and change the value of the corresponding label
+ */
     int points = 0;
     for(Gtk::SpinButton *sp : spinListSkills) {
         points += sp->get_value_as_int();
@@ -50,6 +65,9 @@ void MyGrid::changeTotalSkill() {
 }
 
 void MyGrid::changeTotalKnowledge() {
+    /**
+ * Increase or decrease the total value of points added to knowledges, and change the value of the corresponding label
+ */
     int points = 0;
     for(Gtk::SpinButton *sp : spinListKnowledges) {
         points += sp->get_value_as_int();
@@ -58,6 +76,9 @@ void MyGrid::changeTotalKnowledge() {
 }
 
 void MyGrid::changeTotalDiscipline() {
+    /**
+ * Increase or decrease the total value of points added to disciplines, and change the value of the corresponding label
+ */
     int points = 0;
     for(Gtk::SpinButton *sp : spinDisciplineList) {
         points += sp->get_value_as_int();
@@ -66,6 +87,9 @@ void MyGrid::changeTotalDiscipline() {
 }
 
 void MyGrid::changeTotalBackground() {
+    /**
+ * Increase or decrease the total value of points added to background, and change the value of the corresponding label
+ */
     int points = 0;
     for(Gtk::SpinButton *sp : spinBackgroundList) {
         points += sp->get_value_as_int();
@@ -74,6 +98,9 @@ void MyGrid::changeTotalBackground() {
 }
 
 void MyGrid::changeTotalVirtue() {
+    /**
+ * Increase or decrease the total value of points added to virtue, and change the value of the corresponding label
+ */
     int spin1, spin2, spin3;
     spin1 = virtueSpin1.get_value_as_int();
     spin2 = virtueSpin2.get_value_as_int();
@@ -84,6 +111,9 @@ void MyGrid::changeTotalVirtue() {
 
 
 void MyGrid::addStrengthCost(){
+    /**
+     * Change available freebie point displayed, considering that increasing strength cost 5 freebie points
+     */
     if(lastStrength - strengthSpin.get_value_as_int()>0){
         totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) + 5));
     }else{
@@ -93,6 +123,9 @@ void MyGrid::addStrengthCost(){
 }
 
 void MyGrid::addDexterityCost() {
+    /**
+ * Change available freebie point displayed, considering that increasing dexterity cost 5 freebie points
+ */
     if(lastDexterity - dexteritySpin.get_value_as_int()>0){
         totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) + 5));
     }else{
@@ -102,6 +135,9 @@ void MyGrid::addDexterityCost() {
 }
 
 void MyGrid::addStaminaCost() {
+    /**
+ * Change available freebie point displayed, considering that increasing stamina cost 5 freebie points
+ */
     if(lastStamina - staminaSpin.get_value_as_int()>0){
         totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) + 5));
     }else{
@@ -111,6 +147,9 @@ void MyGrid::addStaminaCost() {
 }
 
 void MyGrid::addCharismaCost() {
+    /**
+ * Change available freebie point displayed, considering that increasing charisma cost 5 freebie points
+ */
     if(lastCharisma - charismaSpin.get_value_as_int()>0){
         totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) + 5));
     }else{
@@ -120,6 +159,9 @@ void MyGrid::addCharismaCost() {
 }
 
 void MyGrid::addManipulationCost() {
+    /**
+ * Change available freebie point displayed, considering that increasing manipulation cost 5 freebie points
+ */
     if(lastManipulation - manipulationSpin.get_value_as_int()>0){
         totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) + 5));
     }else{
@@ -129,6 +171,9 @@ void MyGrid::addManipulationCost() {
 }
 
 void MyGrid::addAppearanceCost() {
+    /**
+ * Change available freebie point displayed, considering that increasing appearance cost 5 freebie points
+ */
     if(lastAppearance - appearanceSpin.get_value_as_int()>0){
         totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) + 5));
     }else{
@@ -138,6 +183,9 @@ void MyGrid::addAppearanceCost() {
 }
 
 void MyGrid::addPerceptionCost() {
+    /**
+ * Change available freebie point displayed, considering that increasing perception cost 5 freebie points
+ */
     if(lastPerception - perceptionSpin.get_value_as_int()>0){
         totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) + 5));
     }else{
@@ -146,6 +194,9 @@ void MyGrid::addPerceptionCost() {
     lastPerception = perceptionSpin.get_value_as_int();
 }
 void MyGrid::addIntelligenceCost() {
+    /**
+ * Change available freebie point displayed, considering that increasing intelligence cost 5 freebie points
+ */
     if(lastIntelligence - intelligenceSpin.get_value_as_int()>0){
         totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) + 5));
     }else{
@@ -155,6 +206,9 @@ void MyGrid::addIntelligenceCost() {
 }
 
 void MyGrid::addWitsCost() {
+    /**
+ * Change available freebie point displayed, considering that increasing wits cost 5 freebie points
+ */
     if(lastWits - witsSpin.get_value_as_int()>0){
         totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) + 5));
     }else{
@@ -164,6 +218,9 @@ void MyGrid::addWitsCost() {
 }
 
 void MyGrid::addVirtue1Cost() {
+    /**
+ * Change available freebie point displayed, considering that increasing Virtue 1 cost 2 freebie points
+ */
     if(lastVirtue1 - virtueSpin1.get_value_as_int()>0){
         totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) + 2));
     }else{
@@ -173,6 +230,9 @@ void MyGrid::addVirtue1Cost() {
 }
 
 void MyGrid::addVirtue2Cost() {
+    /**
+* Change available freebie point displayed, considering that increasing Virtue 2 cost 2 freebie points
+*/
     if(lastVirtue2 - virtueSpin2.get_value_as_int()>0){
         totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) + 2));
     }else{
@@ -182,6 +242,9 @@ void MyGrid::addVirtue2Cost() {
 }
 
 void MyGrid::addVirtue3Cost() {
+    /**
+* Change available freebie point displayed, considering that increasing Virtue 3 cost 2 freebie points
+*/
     if(lastVirtue3 - virtueSpin3.get_value_as_int()>0){
         totalsPointsValueFreebie.set_text(std::to_string(std::stoi(totalsPointsValueFreebie.get_text()) + 2));
     }else{
@@ -192,6 +255,11 @@ void MyGrid::addVirtue3Cost() {
 
 
 void MyGrid::addTalentsCost() {
+    /**
+* Change available freebie point displayed, considering that increasing talents cost 2 freebie points
+     * Use the sum of talents and the new sum to see if the value increased or decreased.
+     * Use the difference of the sum to know how many points have been removed in the case of the deletion of a spin with value >1
+*/
     int currentSum= 0;
     for(Gtk::SpinButton *sp : spinListTalent){
         currentSum += sp->get_value_as_int();
@@ -209,6 +277,11 @@ void MyGrid::addTalentsCost() {
 }
 
 void MyGrid::addSkillsCost() {
+    /**
+* Change available freebie point displayed, considering that increasing skills cost 2 freebie points
+ * Use the sum of talents and the new sum to see if the value increased or decreased.
+ * Use the difference of the sum to know how many points have been removed in the case of the deletion of a spin with value >1
+*/
     int currentSum= 0;
     for(Gtk::SpinButton *sp : spinListSkills){
         currentSum += sp->get_value_as_int();
@@ -227,6 +300,11 @@ void MyGrid::addSkillsCost() {
 
 
 void MyGrid::addKnowledgesCost() {
+    /**
+* Change available freebie point displayed, considering that increasing knowledges cost 2 freebie points
+ * Use the sum of talents and the new sum to see if the value increased or decreased.
+ * Use the difference of the sum to know how many points have been removed in the case of the deletion of a spin with value >1
+*/
     int currentSum= 0;
     for(Gtk::SpinButton *sp : spinListKnowledges){
         currentSum += sp->get_value_as_int();
@@ -244,6 +322,11 @@ void MyGrid::addKnowledgesCost() {
 }
 
 void MyGrid::addDisciplineCost(){
+    /**
+* Change available freebie point displayed, considering that increasing discipline cost 7 freebie points
+ * Use the sum of talents and the new sum to see if the value increased or decreased.
+ * Use the difference of the sum to know how many points have been removed in the case of the deletion of a spin with value >1
+*/
 
     int currentSum= 0;
     for(Gtk::SpinButton *sp : spinDisciplineList){
@@ -262,6 +345,11 @@ void MyGrid::addDisciplineCost(){
 }
 
 void MyGrid::addBackgroundsCost() {
+    /**
+* Change available freebie point displayed, considering that increasing background cost 2 freebie points
+ * Use the sum of talents and the new sum to see if the value increased or decreased.
+ * Use the difference of the sum to know how many points have been removed in the case of the deletion of a spin with value >1
+*/
     int currentSum= 0;
     for(Gtk::SpinButton *sp : spinBackgroundList){
         currentSum += sp->get_value_as_int();
@@ -281,6 +369,9 @@ void MyGrid::addBackgroundsCost() {
 
 
 int MyGrid::checkCorrectRepartition(){
+    /**
+     * Check for the correct repartition of attributes. Used to allow the progression to the ability page
+     */
     int tot1, tot2, tot3;
     std::vector<int> values;
     tot1 = std::stoi(totalPointPhysical.get_text().raw());
@@ -297,6 +388,9 @@ int MyGrid::checkCorrectRepartition(){
 }
 
 bool MyGrid::checkRepartitionAbility(){
+    /**
+     * Check for the correct repartition of abilities. Used to allow the progression to the advantage page
+     */
     int tot1, tot2, tot3;
     std::vector<int> values;
     tot1 = std::stoi(pointsTalents.get_text().raw());
@@ -313,6 +407,9 @@ bool MyGrid::checkRepartitionAbility(){
 }
 
 bool MyGrid::checkRepartitionAbilities(){
+    /**
+ * Check for the correct repartition of advantages. Used to allow the progression to the advantage page
+ */
     if(std::stoi(pointsDiscipline.get_text())!=3 || std::stoi(pointsBackground.get_text())!=5 || std::stoi(pointsVirtue.get_text())!=7){
         return false;
     }else{
@@ -322,6 +419,9 @@ bool MyGrid::checkRepartitionAbilities(){
 }
 
 void MyGrid::addSkillsClicked() {
+    /**
+     * Triggers the addition of a skill combobox and a spinbutton
+     */
 // increase skillClicked to update the positions
     skillClicked ++;
     // remove the add button
@@ -368,6 +468,9 @@ void MyGrid::addSkillsClicked() {
     this->show_all();
 }
 void MyGrid::removeSkillsClicked() {
+    /**
+ * Triggers the supression of a skill combobox and a spinbutton
+ */
     skillClicked--;
     this->remove(addSkills);
     this->remove(removeSkills);

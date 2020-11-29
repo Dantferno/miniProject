@@ -29,6 +29,9 @@ void Fenetre::welcomeView() {
 
 
 MyGrid::MyGrid() {
+    /**
+     * Grid constructor, will set the different fonts, set parameters for the first page, connect all signals
+     */
     myfont.set_size(16000);
     myfont.set_family("Arial");
     myfont2.set_size(13000);
@@ -45,6 +48,9 @@ MyGrid::MyGrid() {
 }
 
 void MyGrid::Page1(){
+    /**
+     *  Display first page, with Vampire cover and the create character button
+     */
     // Clean widgets
     for (Widget *element : this->get_children ())
         this->remove (*element);
@@ -62,6 +68,9 @@ void MyGrid::Page1(){
 
 
 void MyGrid::initPage2() {
+    /**
+     * Initialize page 2. Set the labels, connect the buttons, and user the Parser to fill the comboboxes
+     */
     nameLabel.set_label("Name :");
     playerLabel.set_label("Player name :");
     chronicleLabel.set_label("Chronicle :");
@@ -95,6 +104,10 @@ void MyGrid::initPage2() {
 
 
 void MyGrid::Page2() {
+    /**
+     * Check if the Page 2 has been initialize before, otherwise initialize it.
+     *  Attach all the widgets after cleaning the remeaning ones.
+     */
     if (!isSavedPage2){
         initPage2();
     }
@@ -142,10 +155,6 @@ void MyGrid::Page2() {
     this->attach(demeanorLabel,2,5,1,1);
 
     this->attach(comboDemeanor, 3,5,1,1);
-//
-//    // image
-//    firstPart.set("/home/hugo/Pictures/firstpart.png");
-//    this->attach(firstPart,0,7,4,1);
 
     // Go back
 
@@ -161,6 +170,9 @@ void MyGrid::Page2() {
 }
 
 void MyGrid::savePage2(){
+    /**
+     * Check if all the entry were filled, otherwise display info dialog and block progression. Set the value of the fields
+     */
     // save the value of the entry if the user go back
     nameEntry.set_text(nameEntry.get_text());
     playerEntry.set_text(playerEntry.get_text());
@@ -187,6 +199,9 @@ void MyGrid::savePage2(){
 
 
 void MyGrid::initPage3(){
+    /**
+     * Initialize Page 3, set the labels, parameters of spinButton and connect the buttons
+     */
     /***** Attributes ******/
     attributesLabel.set_text("Attributes");
     attributesLabel.override_font(myfont);
@@ -266,6 +281,9 @@ void MyGrid::initPage3(){
  * Open page 3
  */
 void MyGrid::Page3(){
+    /**
+     * Clean previous page Widgets, attach Page 3 widgets
+     */
     // Clean widgets
     for (Widget *element : this->get_children ())
         this->remove (*element);
@@ -323,6 +341,10 @@ void MyGrid::Page3(){
 }
 
 void MyGrid::ApplyPage3(){
+    /**
+     * Check if the repartition of the points are correct, otherwise block progression. Set the values of the spins
+     * with user input
+     */
     // save input
     std::cout << strengthSpin.get_value() << std::endl; 
     strengthSpin.set_value(strengthSpin.get_value());
@@ -347,6 +369,9 @@ void MyGrid::ApplyPage3(){
 
 
 void MyGrid::initPage4(){
+    /**
+     * Initialize page 4. Set labels, fill widgets, connect signals
+     */
     pointsTalents.set_text("1");
     pointsSkills.set_text("1");
     pointsKnowledges.set_text("1");
@@ -418,6 +443,9 @@ void MyGrid::initPage4(){
 
 
 void MyGrid::Page4(){
+    /**
+     * Clean previous page widget and attach Page  widgets
+     */
     // Clean widgets
     for (Widget *element : this->get_children ())
         this->remove (*element);
@@ -489,6 +517,9 @@ void MyGrid::Page4(){
 }
 
 void MyGrid::go5() {
+    /**
+     * Check the good repartition of abilities, block progression or display info error
+     */
     if (!checkRepartitionAbility()) {
         Gtk::MessageDialog d("Repartition error", false, Gtk::MESSAGE_INFO);
         d.set_secondary_text("Please put (13/9/5) points.");
@@ -505,6 +536,9 @@ void MyGrid::go5() {
 
 
 void MyGrid::initPage5() {
+    /**
+     * Initialize page 5, sets parameters for all widgets
+     */
     pointsDiscipline.set_text("1");
     pointsBackground.set_text("1");
     pointsVirtue.set_text("0");
@@ -566,6 +600,9 @@ void MyGrid::initPage5() {
 
 
 void MyGrid::Page5(){
+    /**
+     * Attach page 5 widgets, remove previously selected disciplines if the user went back and changed clan.
+     */
     // Clean widgets
     for (Widget *element : this->get_children ())
         this->remove (*element);
@@ -651,6 +688,9 @@ void MyGrid::Page5(){
 }
 
 void MyGrid::goFreebiePage(){
+    /**
+     * Check for the good repartition of Abilities points, block progression of go to freebie page
+     */
     if(!checkRepartitionAbilities()){
         Gtk::MessageDialog d("Repartition error", false, Gtk::MESSAGE_INFO);
       d.set_secondary_text("Please put 3 points in disciplines, 5 in backgrounds and 7 in virtues.");
@@ -661,11 +701,14 @@ void MyGrid::goFreebiePage(){
 }
 
 void MyGrid::initFreebie() {
+    /**
+     * record previous user choices, set up widgets with previous choices. Allows to add freebies
+     */
     // Set previous user choice as minimum value of Freebie, record nonFreebie repartition
     strengthSpin.set_range(strengthSpin.get_value(), 9);
     lastStrength = strengthSpin.get_value_as_int();
     strengthSpin.signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::addStrengthCost));
-    strengthSaved = strengthSpin.get_value();
+    //strengthSaved = strengthSpin.get_value();
 
     dexteritySpin.set_range(dexteritySpin.get_value(), 9);
     dexteritySpin.signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::addDexterityCost));
@@ -781,6 +824,9 @@ void MyGrid::initFreebie() {
 }
 
 void MyGrid::FreebiePage(){
+    /**
+     * Attach widgets of the freebie page
+     */
     // Clean widgets
     for (Widget *element : this->get_children ())
         this->remove (*element);
@@ -947,6 +993,9 @@ void MyGrid::FreebiePage(){
 
 
 void MyGrid::Page6(){
+    /**
+     * Generate Character, fill the PDF and display it in a scrolled window
+     */
     generateCh();
     pdf.setCh(cr.getCharacter());
     cr.getCharacter().talk();
@@ -971,6 +1020,9 @@ void MyGrid::Page6(){
 
 
 void MyGrid::secondPDF(){
+    /**
+     * Display second and third page of the character sheet
+     */
     // Clean widgets
     for (Widget *element : this->get_children ())
         this->remove (*element);
@@ -987,6 +1039,9 @@ void MyGrid::secondPDF(){
 }
 
 void MyGrid::goToPDF1() {
+    /**
+     * Check if the freebie are correctly distributed, display pdf or block progression
+     */
     if(std::stoi(totalsPointsValueFreebie.get_text())>=0){
         Page6();
     }else{
