@@ -352,7 +352,7 @@ void MyGrid::addSkillsClicked() {
     }
     skillsList.back()->set_sensitive(false);
     addedP->set_active(0);
-    addedSpinP->set_range(1,3);
+    addedSpinP->set_range(1,9);
     addedSpinP->set_increments(1,1);
     addedSpinP->signal_show().connect(sigc::mem_fun(*this, &MyGrid::changeTotalSkill));
     addedSpinP->signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::changeTotalSkill));
@@ -417,7 +417,7 @@ void MyGrid::addKnowledgesClicked() {
     }
     knowledgesList.back()->set_sensitive(false);
     addedP->set_active(0);
-    addedSpinP->set_range(1,3);
+    addedSpinP->set_range(1,9);
     addedSpinP->set_increments(1,1);
     addedSpinP->signal_show().connect(sigc::mem_fun(*this, &MyGrid::changeTotalKnowledge));
     addedSpinP->signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::changeTotalKnowledge));
@@ -870,7 +870,7 @@ void MyGrid::addTalentClicked(){
     }
     wList.back()->set_sensitive(false);
     addedP->set_active(0);
-    addedSpinP->set_range(1,3);
+    addedSpinP->set_range(1,9);
     addedSpinP->set_increments(1,1);
     addedSpinP->signal_show().connect(sigc::mem_fun(*this, &MyGrid::changeTotalTalents));
     addedSpinP->signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::changeTotalTalents));

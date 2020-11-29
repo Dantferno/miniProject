@@ -13,7 +13,7 @@ For example, for the step 0, the GUI will ask for the name, player, generation, 
 will be fed to the character creation method "stepZero". 
 At the end the CharacterCreation class will return the Character object.  
 The CharacterCreation class allows to pass only one object between views, and free the Character object of initialization method 
-that will not be usefull if we extend the program (meaning more than just the creation step but also updating the character sheet while playing).
+that will not be useful if we extend the program (meaning more than just the creation step but also updating the character sheet while playing).
 \
 
 Safeguards, such as checking that the user don't choose more than 3 discplines will be implemented in the GUI rather 

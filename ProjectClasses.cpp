@@ -12,7 +12,7 @@
 
 std::vector<std::string> Parser::parseClan() {
     std::vector<std::string> allClan;
-    std::string filepath = "/home/hugo/CLionProjects/miniProject/VampireV5.txt";
+    std::string filepath = "VampireV5.txt";
     std::string line;
     std::ifstream infile(filepath);
 
@@ -30,7 +30,7 @@ std::vector<std::string> Parser::parseClan() {
 
 std::vector<std::string> Parser::parseNature() {
     std::vector<std::string> all;
-    std::string filepath = "/home/hugo/CLionProjects/miniProject/VampireV5.txt";
+    std::string filepath = "VampireV5.txt";
     std::string line;
     int lineNumber=0;
     std::ifstream infile(filepath);
@@ -62,7 +62,7 @@ auto Parser::parseAbilities() {
 
  std::vector<std::string> Parser::parseDisciplines() {
     std::vector<std::string> AvailableDisciplines; // map all disciplined to description, set by the parser
-     std::string filepath = "/home/hugo/CLionProjects/miniProject/VampireV5.txt";
+     std::string filepath = "VampireV5.txt";
      std::string line;
      int lineNumber=0;
      std::ifstream infile(filepath);
@@ -85,7 +85,7 @@ auto Parser::parseAbilities() {
 
 std::vector<std::string> Parser::parseBackgrounds() {
     std::vector<std::string> AvailableBackgrounds;
-    std::string filepath = "/home/hugo/CLionProjects/miniProject/VampireV5.txt";
+    std::string filepath = "VampireV5.txt";
     std::string line;
     int lineNumber=0;
     std::ifstream infile(filepath);
@@ -109,7 +109,7 @@ std::vector<std::string> Parser::parseBackgrounds() {
 
 std::vector<std::string> Parser::parseKnowledges(){
     std::vector<std::string> allKnowledges;
-    std::string filepath = "/home/hugo/CLionProjects/miniProject/VampireV5.txt";
+    std::string filepath = "VampireV5.txt";
     std::string line;
     int lineNumber=0;
     std::ifstream infile(filepath);
@@ -132,7 +132,7 @@ std::vector<std::string> Parser::parseKnowledges(){
 
 std::vector<std::string> Parser::parseTalents() {
     std::vector<std::string> allTalents;
-    std::string filepath = "/home/hugo/CLionProjects/miniProject/VampireV5.txt";
+    std::string filepath = "VampireV5.txt";
     std::string line;
     int lineNumber=0;
     std::ifstream infile(filepath);
@@ -155,7 +155,7 @@ std::vector<std::string> Parser::parseTalents() {
 
 std::vector<std::string> Parser::parseSkills() {
     std::vector<std::string> allSkills;
-    std::string filepath = "/home/hugo/CLionProjects/miniProject/VampireV5.txt";
+    std::string filepath = "VampireV5.txt";
     std::string line;
     int lineNumber=0;
     std::ifstream infile(filepath);
@@ -239,13 +239,7 @@ std::vector<std::string> Parser::getClanDiscipline(std::string clan) {
         clanDiscipline.push_back("Auspex");clanDiscipline.push_back("Fortitude");
         clanDiscipline.push_back("Necromancy");
     }else if (clan=="Children of Osiris"){
-        clanDiscipline.push_back("?");
-
-
-
-
-
-
+        clanDiscipline = Parser::parseDisciplines();
     }else if (clan=="Lamia"){
         clanDiscipline.push_back("Fortitude");clanDiscipline.push_back("Necromancy");
         clanDiscipline.push_back("Potence");

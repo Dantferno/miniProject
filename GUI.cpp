@@ -29,8 +29,10 @@ void Fenetre::welcomeView() {
 
 
 MyGrid::MyGrid() {
-    myfont.set_size(15000);
+    myfont.set_size(16000);
     myfont.set_family("Arial");
+    myfont2.set_size(13000);
+    myfont2.set_family("Arial");
     this->set_row_spacing(10);
     nextButton.override_font(myfont);
     nextButton.set_label("Create new character.");
@@ -187,7 +189,9 @@ void MyGrid::savePage2(){
 void MyGrid::initPage3(){
     /***** Attributes ******/
     attributesLabel.set_text("Attributes");
+    attributesLabel.override_font(myfont);
     physicalLabel.set_text("Physical");
+    physicalLabel.override_font(myfont2);
     strengthLabel.set_text("Strength");
     strengthSpin.set_range(1,7);
     strengthSpin.set_value(1);
@@ -207,6 +211,7 @@ void MyGrid::initPage3(){
     staminaSpin.signal_value_changed().connect(sigc::mem_fun(*this,
                                                              &MyGrid::changeTotalPhysical));
     socialLabel.set_text("Social");
+    socialLabel.override_font(myfont2);
     charismaLabel.set_text("Charisma :");
     charismaSpin.set_range(1,7);
     charismaSpin.set_value(1);
@@ -226,6 +231,7 @@ void MyGrid::initPage3(){
     appearanceSpin.signal_value_changed().connect(sigc::mem_fun(*this,
                                                                 &MyGrid::changeTotalSocial));
     mentalLabel.set_text("Mental");
+    mentalLabel.override_font(myfont2);
     perceptionLabel.set_text("Perception :");
     perceptionSpin.set_range(1,7);
     perceptionSpin.set_value(1);
@@ -345,7 +351,9 @@ void MyGrid::initPage4(){
     pointsSkills.set_text("1");
     pointsKnowledges.set_text("1");
     abilitiesLabel.set_text("Abilities");
+    abilitiesLabel.override_font(myfont);
     talentsLabel.set_text("Talents :");
+    talentsLabel.override_font(myfont2);
     for(std::string talent : allTalents){talentsCombo.append(talent);}
     talentsCombo.set_active(0);
 
@@ -366,6 +374,7 @@ void MyGrid::initPage4(){
                                                         &MyGrid::removeTalentClicked));
 
     skillsLabel.set_label("Skills :");
+    skillsLabel.override_font(myfont2);
     for(std::string skill : allSkills){skillsCombo.append(skill);}
     skillsCombo.set_active(0);
 
@@ -383,6 +392,7 @@ void MyGrid::initPage4(){
                                                         &MyGrid::removeSkillsClicked));
 
     knowledgesLabel.set_label("Knowledges :");
+    knowledgesLabel.override_font(myfont2);
     for(std::string know : allKnowledges){knowledgesCombo.append(know);}
     knowledgesCombo.set_active(0);
 

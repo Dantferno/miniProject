@@ -63,7 +63,7 @@ protected:
 class MyGrid: public Gtk::Grid
 {
     CharacterCreation cr;
-    Pango::FontDescription myfont;
+    Pango::FontDescription myfont, myfont2;
 
     Gtk::VSeparator vsep1, vsep2, vsep3, vsep4;
 
