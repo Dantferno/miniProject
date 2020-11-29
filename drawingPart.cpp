@@ -334,3 +334,45 @@ void DrawPDF::fillRest(const Cairo::RefPtr<Cairo::Context> &cr) {
     }
 }
 
+bool DrawPDF2::on_draw(const Cairo::RefPtr<Cairo::Context> &cr) {
+    // scale to unit square and translate (0, 0) to be (0.5, 0.5), i.e.
+    // the center of the window
+    //cr->scale(width, heig
+    Glib::RefPtr<Gdk::Pixbuf> image;
+    image = Gdk::Pixbuf::create_from_file("pdf2.png");
+    Gtk::Allocation allocation = get_allocation();
+    const int width = allocation.get_width();
+    const int height = allocation.get_height();
+
+    // Draw the image in the middle of the drawing area, or (if the image is
+    // larger than the drawing area) draw the middle part of the image.
+    Gdk::Cairo::set_source_pixbuf(cr, image,
+                                  (width - image->get_width())/2, (height - image->get_height())/2);
+    cr->paint();
+
+    return Widget::on_draw(cr);
+}
+bool DrawPDF3::on_draw(const Cairo::RefPtr<Cairo::Context> &cr) {
+    // scale to unit square and translate (0, 0) to be (0.5, 0.5), i.e.
+    // the center of the window
+    //cr->scale(width, heig
+    Glib::RefPtr<Gdk::Pixbuf> image;
+    image = Gdk::Pixbuf::create_from_file("pdf3.png");
+    Gtk::Allocation allocation = get_allocation();
+    const int width = allocation.get_width();
+    const int height = allocation.get_height();
+
+    // Draw the image in the middle of the drawing area, or (if the image is
+    // larger than the drawing area) draw the middle part of the image.
+    Gdk::Cairo::set_source_pixbuf(cr, image,
+                                  (width - image->get_width())/2, (height - image->get_height())/2);
+    cr->paint();
+
+    return Widget::on_draw(cr);
+}
+
+DrawPDF2::DrawPDF2(){};
+DrawPDF2::~DrawPDF2(){};
+
+DrawPDF3::DrawPDF3(){};
+DrawPDF3::~DrawPDF3(){};

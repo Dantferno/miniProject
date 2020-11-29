@@ -358,7 +358,7 @@ void MyGrid::initPage4(){
     talentsCombo.set_active(0);
 
     wList.push_back(&talentsCombo);
-    talentsSpin.set_range(1,3);
+    talentsSpin.set_range(1,9);
     talentsSpin.set_value(1);
     talentsSpin.set_increments(1,1);
     talentsSpin.signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::changeTotalTalents));
@@ -379,7 +379,7 @@ void MyGrid::initPage4(){
     skillsCombo.set_active(0);
 
     skillsList.push_back(&skillsCombo);
-    skillsSpin.set_range(1,3);
+    skillsSpin.set_range(1,9);
     skillsSpin.set_value(1);
     skillsSpin.set_increments(1,1);
     skillsSpin.signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::changeTotalSkill));
@@ -397,7 +397,7 @@ void MyGrid::initPage4(){
     knowledgesCombo.set_active(0);
 
     knowledgesList.push_back(&knowledgesCombo);
-    knowledgesSpin.set_range(1,3);
+    knowledgesSpin.set_range(1,9);
     knowledgesSpin.set_value(1);
     knowledgesSpin.set_increments(1,1);
     knowledgesSpin.signal_value_changed().connect(sigc::mem_fun(*this, &MyGrid::changeTotalKnowledge));
@@ -774,7 +774,7 @@ void MyGrid::initFreebie() {
     removeBackgroundSignal.disconnect();
     removeBackgrounds.signal_clicked().connect(sigc::mem_fun(*this, &MyGrid::removeFreebieBackgrounds));
     goFinal.set_label("Generate PDF");
-    goFinal.signal_clicked().connect(sigc::mem_fun(*this, &MyGrid::Page6));
+    goFinal.signal_clicked().connect(sigc::mem_fun(*this, &MyGrid::goToPDF1));
     totalPointsFreebie.set_label("Remaining points : ");
     totalsPointsValueFreebie.set_label("15");
     FreebiePage();
@@ -944,6 +944,8 @@ void MyGrid::FreebiePage(){
     this->show_all();
 }
 
+
+
 void MyGrid::Page6(){
     generateCh();
     pdf.setCh(cr.getCharacter());
@@ -954,35 +956,44 @@ void MyGrid::Page6(){
 
     //moreImage.set("/home/hugo/Pictures/more.png");
 
-    goPage5.set_label("Back");
-    this->attach(goPage5,0,10,1,1);
+
     pdf.set_size_request(768,946);
 
     scrolledForDescription.add(pdf);
     scrolledForDescription.set_size_request(768,600);
     this->attach(scrolledForDescription, 0,1,3,1);
-    save.set_label("Save");
-
+    save.set_label("Next page");
+    save.signal_clicked().connect(sigc::mem_fun(*this, &MyGrid::secondPDF));
      this->attach(save,2,10,1,1) ;
-    //this->attach(moreImage,10,10,1,1);
 
-    //scrolledForDescription.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
-    //scrolledForDescription.add(textViewDescription);
-    //textViewDescription.set_buffer(bufferDescription);
-
-    //this->attach(scrolledForDescription,1,1,10,10);
-    //this->attach(pdf, 10,10,10,10);
     this->show_all();
 }
 
 
-void MyGrid::FinalPage(){
+void MyGrid::secondPDF(){
     // Clean widgets
     for (Widget *element : this->get_children ())
         this->remove (*element);
+    pdf2.set_size_request(772,986);
+    scrolledForDescription2.add(pdf2);
+    scrolledForDescription2.set_size_request(772,550);
+    pdf3.set_size_request(774,989);
+    scrolledForDescription3.add(pdf3);
+    scrolledForDescription3.set_size_request(774,550);
+    this->attach(scrolledForDescription2, 0,0,1,1);
+    this->attach(scrolledForDescription3,1,0,1,1);
+    this->show_all();
 
+}
 
-
+void MyGrid::goToPDF1() {
+    if(std::stoi(totalsPointsValueFreebie.get_text())>=0){
+        Page6();
+    }else{
+        Gtk::MessageDialog d("Repartition error", false, Gtk::MESSAGE_INFO);
+        d.set_secondary_text("You spent too much freebie points.");
+        d.run();
+    }
 }
 
 

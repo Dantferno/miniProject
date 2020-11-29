@@ -57,7 +57,31 @@ protected:
 
 
 };
+class DrawPDF2 : public Gtk::DrawingArea
+{
+public:
+    DrawPDF2();
+    virtual ~DrawPDF2();
 
+protected:
+    //Override default signal handler:
+    bool on_draw(const Cairo::RefPtr<Cairo::Context>& cr) override;
+    double m_radius;
+    double m_line_width;
+};
+
+class DrawPDF3 : public Gtk::DrawingArea
+{
+public:
+    DrawPDF3();
+    virtual ~DrawPDF3();
+
+protected:
+    //Override default signal handler:
+    bool on_draw(const Cairo::RefPtr<Cairo::Context>& cr) override;
+    double m_radius;
+    double m_line_width;
+};
 
 
 class MyGrid: public Gtk::Grid
@@ -143,12 +167,14 @@ class MyGrid: public Gtk::Grid
     /*** Page 6 ***/
     Gtk::Image moreImage;
 
-    Gtk::ScrolledWindow scrolledForDescription;
+    Gtk::ScrolledWindow scrolledForDescription, scrolledForDescription2,scrolledForDescription3;
     Gtk::TextView textViewDescription;
     Glib::RefPtr<Gtk::TextBuffer> bufferDescription;
 
     /**** Final Page ****/
     DrawPDF pdf;
+    DrawPDF2 pdf2;
+    DrawPDF3 pdf3;
     Gtk::Button save;
 
     /**** advancement ***/
@@ -239,7 +265,8 @@ public:
 
     void go5();
 
-    void savePDF();
+    void goToPDF1();
+    void secondPDF();
 };
 
 
