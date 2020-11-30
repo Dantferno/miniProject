@@ -1023,10 +1023,10 @@ void MyGrid::secondPDF(){
         this->remove (*element);
     pdf2.set_size_request(772,986);
     scrolledForDescription2.add(pdf2);
-    scrolledForDescription2.set_size_request(772,550);
+    scrolledForDescription2.set_size_request(572,550);
     pdf3.set_size_request(774,989);
     scrolledForDescription3.add(pdf3);
-    scrolledForDescription3.set_size_request(774,550);
+    scrolledForDescription3.set_size_request(574,550);
     this->attach(scrolledForDescription2, 0,0,1,1);
     this->attach(scrolledForDescription3,1,0,1,1);
     this->show_all();

@@ -11,11 +11,14 @@ main.cpp launch the GUI.
 
 
 ## Logic 
+
+The character creation controls the model Character, and creates it 
+
 The character creation is handled by a specific class : CharacterCreation.  
 It reflects page 88 of the rules book as well as the GUI. 
-The character generation is made step by step (from 0 to 5). Each stepis a view of the GUI.  
-For example, for the step 0, the GUI will ask for the name, player, generation, sir, etc. By clicking "next", those informations
-will be fed to the character creation method "stepZero". 
+The character generation is made step by step (from 0 to 5). Each step is a view of the GUI.  
+For example, for the step 0, the GUI asks for the name, player, generation, sir, etc. By clicking "next", those informations
+are fed to the character creation method "stepZero". 
 At the end the CharacterCreation class returns the Character object.  
 
 \
@@ -33,3 +36,12 @@ Compilation using Cmake (minimum version 2.8) , just run :
     make 
     ./miniProject
 ```
+
+## Progression with the GUI 
+
+On the first page you will be asked to input your character's informations.
+
+On the second page you wil be able to select your attributes points. 
+
+On the third page the abilities, ont the fourth one the advantages and finally you will be prompted to add the freebies. 
+Finally, the PDF is generated. 
